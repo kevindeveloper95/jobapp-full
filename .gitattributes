@@ -1,0 +1,46 @@
+# ===========================================
+# GIT ATTRIBUTES - LINE ENDINGS
+# ===========================================
+
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Shell scripts should always use LF
+*.sh text eol=lf
+*.bash text eol=lf
+
+# YAML files should use LF
+*.yml text eol=lf
+*.yaml text eol=lf
+
+# JSON files should use LF
+*.json text eol=lf
+
+# JavaScript/TypeScript files should use LF
+*.js text eol=lf
+*.ts text eol=lf
+*.jsx text eol=lf
+*.tsx text eol=lf
+
+# Markdown files should use LF
+*.md text eol=lf
+
+# Docker files should use LF
+Dockerfile* text eol=lf
+*.dockerfile text eol=lf
+
+# Git ignore and attributes should use LF
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+*.rar binary
+*.7z binary
