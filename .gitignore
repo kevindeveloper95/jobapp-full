@@ -20,7 +20,7 @@ services/*/package-lock.json
 services/*/yarn.lock
 services/*/pnpm-lock.yaml
 
-# Build outputs
+# Build outputs (exclude, but allow source code)
 services/*/build/
 services/*/dist/
 services/*/out/
@@ -29,15 +29,26 @@ services/*/.nuxt/
 services/*/.svelte-kit/
 services/*/.docusaurus/
 
-# TypeScript
+# TypeScript cache (exclude, but allow source code)
 services/*/*.tsbuildinfo
 services/*/*.js.map
 
-# Test coverage
+# Test coverage (exclude, but allow source code)
 services/*/coverage/
 services/*/*.lcov
 services/*/.nyc_output/
 services/*/lib-cov/
+
+# IMPORTANT: Allow source code and configuration files
+!services/*/src/
+!services/*/package.json
+!services/*/tsconfig.json
+!services/*/jest.config.ts
+!services/*/Dockerfile*
+!services/*/README.md
+!services/*/.gitignore
+!services/*/.npmrc
+!services/*/.eslintignore
 
 # Logs
 services/*/logs/
