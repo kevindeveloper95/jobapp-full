@@ -117,7 +117,10 @@ services/*/.vscode-test/
 jobber-k8s/*/.git/
 
 # Secrets and sensitive data
+jobber-k8s/*/jobber-secrets/
+jobber-k8s/*/jobber-secrets/*
 jobber-k8s/*/secrets/
+jobber-k8s/*/secrets/*
 jobber-k8s/*/*.secret
 jobber-k8s/*/*.key
 jobber-k8s/*/*.crt
@@ -225,6 +228,22 @@ keys/
 .cache/
 .temp/
 .tmp/
+
+# ===========================================
+# DIAGRAMS & DOCUMENTATION
+# ===========================================
+
+# Permitir archivos .drawio
+!diagrams/
+!diagrams/**/*.drawio
+!diagrams/**/*.png
+!diagrams/**/*.jpg
+!diagrams/**/*.svg
+
+# Excluir archivos temporales de draw.io
+*.drawio~
+*.drawio.bak
+*.drawio.tmp
 
 # ===========================================
 # END OF FILE
