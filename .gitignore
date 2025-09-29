@@ -117,10 +117,17 @@ services/*/.vscode-test/
 jobber-k8s/*/.git/
 
 # Secrets and sensitive data
+# Ignore standard secrets directories and their contents
 jobber-k8s/*/jobber-secrets/
 jobber-k8s/*/jobber-secrets/*
 jobber-k8s/*/secrets/
 jobber-k8s/*/secrets/*
+
+# Explicitly ignore known secret files (anywhere under jobber-k8s)
+jobber-k8s/**/backend-secrets.yaml
+jobber-k8s/**/default-secret-token.yaml
+
+# Common secret file extensions
 jobber-k8s/*/*.secret
 jobber-k8s/*/*.key
 jobber-k8s/*/*.crt
