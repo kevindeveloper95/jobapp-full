@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jobber-kibana
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jobber-kibana
+  template:
+    metadata:
+      labels:
+        app: jobber-kibana
+    spec:
+      containers:
+        - name: jobber-kibana
+          image: docker.elastic.co/kibana/kibana:8.11.0
+          resources:
+            limits:
+              memory: "1Gi"
+              cpu: "1500m"
+            requests:
+              cpu: 250m
+              memory: 1Gi
+          ports:
+          - name: jobber-kibana
+            containerPort: 5601
+          env:
+            - name: ELASTICSEARCH_HOSTS
+              valueFrom:
+                secretKeyRef:
+                  name: jobber-backend-secret
+                  key: jobber-elasticsearch-host
+            - name: ELASTICSEARCH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: jobber-backend-secret
+                  key: jobber-kibana-username
+            - name: ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: jobber-backend-secret
+                  key: jobber-kibana-password
+            - name: XPACK_SECURITY_ENCRYPTIONKEY
+              valueFrom:
+                secretKeyRef:
+                  name: jobber-backend-secret
+                  key: kibana-encryption-key
+            - name: XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY
+              valueFrom:
+                secretKeyRef:
+                  name: jobber-backend-secret
+                  key: kibana-encryption-key
+          volumeMounts:
+            - name: kibana-config
+              mountPath: /usr/share/kibana/config
+          startupProbe:
+            httpGet:
+              path: /api/status
+              port: 5601
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 30
+          readinessProbe:
+            httpGet:
+              path: /api/status
+              port: 5601
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /api/status
+              port: 5601
+            initialDelaySeconds: 60
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 3
+      volumes:
+      - name: kibana-config
+        configMap:
+          name: kibana-config

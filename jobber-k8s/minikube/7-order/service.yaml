@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jobber-order
+  namespace: production
+spec:
+  type: ClusterIP
+  selector:
+    app: jobber-order
+  ports:
+  - name: order
+    port: 4008
+    targetPort: 4008
+    protocol: TCP

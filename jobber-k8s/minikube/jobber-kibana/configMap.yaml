@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kibana-config
+  namespace: production
+data:
+  kibana.yml: |
+    server.name: kibana
+    server.host: "0.0.0.0"
+    server.port: 5601
+
+    # Elasticsearch Connection
+    # Note: Connection details are provided via environment variables:
+    # - ELASTICSEARCH_HOSTS
+    # - ELASTICSEARCH_USERNAME
+    # - ELASTICSEARCH_PASSWORD
+    # - XPACK_SECURITY_ENCRYPTIONKEY
+    # - XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY
+    elasticsearch.hosts: ["http://jobber-elastic.production.svc.cluster.local:9200"]
+
+    monitoring.ui.container.elasticsearch.enabled: true
+
+    ## Misc
+    elasticsearch.requestTimeout: 90000

@@ -1,0 +1,257 @@
+# ===========================================
+# JOBAPP PROJECT - GLOBAL .GITIGNORE
+# ===========================================
+
+# ===========================================
+# MICROSERVICIOS - NODE.JS
+# ===========================================
+
+# Dependencies
+services/*/node_modules/
+services/*/jspm_packages/
+services/*/web_modules/
+services/*/bower_components/
+
+# Git repositories in subdirectories
+services/*/.git/
+
+# Package lock files (regenerated automatically)
+services/*/package-lock.json
+services/*/yarn.lock
+services/*/pnpm-lock.yaml
+
+# Build outputs (exclude, but allow source code)
+services/*/build/
+services/*/dist/
+services/*/out/
+services/*/.next/
+services/*/.nuxt/
+services/*/.svelte-kit/
+services/*/.docusaurus/
+
+# TypeScript cache (exclude, but allow source code)
+services/*/*.tsbuildinfo
+services/*/*.js.map
+
+# Test coverage (exclude, but allow source code)
+services/*/coverage/
+services/*/*.lcov
+services/*/.nyc_output/
+services/*/lib-cov/
+
+# IMPORTANT: Allow source code and configuration files
+!services/*/src/
+!services/*/package.json
+!services/*/tsconfig.json
+!services/*/jest.config.ts
+!services/*/Dockerfile*
+!services/*/README.md
+!services/*/.gitignore
+!services/*/.npmrc
+!services/*/.eslintignore
+
+# Logs
+services/*/logs/
+services/*/*.log
+services/*/npm-debug.log*
+services/*/yarn-debug.log*
+services/*/yarn-error.log*
+services/*/lerna-debug.log*
+services/*/.pnpm-debug.log*
+
+# Runtime data
+services/*/pids/
+services/*/*.pid
+services/*/*.seed
+services/*/*.pid.lock
+
+# Cache directories
+services/*/.cache/
+services/*/.parcel-cache/
+services/*/.eslintcache
+services/*/.stylelintcache
+services/*/.rpt2_cache/
+services/*/.rts2_cache_cjs/
+services/*/.rts2_cache_es/
+services/*/.rts2_cache_umd/
+services/*/.webpack/
+services/*/.fusebox/
+services/*/.grunt/
+
+# Environment files
+services/*/.env
+services/*/.env.local
+services/*/.env.development.local
+services/*/.env.test.local
+services/*/.env.production.local
+# Allow .env.dev template files
+!services/*/.env.dev
+
+# NPM
+services/*/.npm/
+services/*/.yarn/
+services/*/.yarn-integrity
+services/*/.pnpm-debug.log*
+services/*/*.tgz
+
+# REPL history
+services/*/.node_repl_history
+
+# Serverless
+services/*/.serverless/
+
+# DynamoDB
+services/*/.dynamodb/
+
+# TernJS
+services/*/.tern-port
+
+# VSCode test
+services/*/.vscode-test/
+
+# ===========================================
+# KUBERNETES
+# ===========================================
+
+# Git repositories in subdirectories
+jobber-k8s/*/.git/
+
+# Secrets and sensitive data
+# Ignore standard secrets directories and their contents
+jobber-k8s/*/jobber-secrets/
+jobber-k8s/*/jobber-secrets/*
+jobber-k8s/*/secrets/
+jobber-k8s/*/secrets/*
+
+# Explicitly ignore known secret files (anywhere under jobber-k8s)
+jobber-k8s/**/backend-secrets.yaml
+jobber-k8s/**/default-secret-token.yaml
+
+# Common secret file extensions
+jobber-k8s/*/*.secret
+jobber-k8s/*/*.key
+jobber-k8s/*/*.crt
+jobber-k8s/*/*.pem
+
+# Local volumes
+jobber-k8s/*/volumes/
+jobber-k8s/*/data/
+
+# ===========================================
+# DOCKER & VOLUMES
+# ===========================================
+
+# Docker volumes (CRITICAL - NO SUBIR)
+volumes/
+docker-volumes/
+data/
+
+# Docker compose environment files
+.env
+.env.local
+.env.production
+.env.staging
+.env.development
+
+# Docker build context
+.dockerignore
+
+# ===========================================
+# DEVELOPMENT & EDITOR FILES
+# ===========================================
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ===========================================
+# TEMPORARY FILES
+# ===========================================
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+
+# ===========================================
+# LOGS & DEBUG
+# ===========================================
+
+# Application logs
+*.log
+logs/
+debug/
+
+# System logs
+syslog
+messages
+
+# ===========================================
+# BUILD & DEPLOYMENT
+# ===========================================
+
+# Build artifacts
+build/
+dist/
+target/
+out/
+
+# Deployment
+.deploy/
+.deployment/
+
+# ===========================================
+# SECURITY
+# ===========================================
+
+# Secrets and keys
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+secrets/
+keys/
+
+# ===========================================
+# CACHE & TEMP
+# ===========================================
+
+# General cache
+.cache/
+.temp/
+.tmp/
+
+# ===========================================
+# DIAGRAMS & DOCUMENTATION
+# ===========================================
+
+# Permitir archivos .drawio
+!diagrams/
+!diagrams/**/*.drawio
+!diagrams/**/*.png
+!diagrams/**/*.jpg
+!diagrams/**/*.svg
+
+# Excluir archivos temporales de draw.io
+*.drawio~
+*.drawio.bak
+*.drawio.tmp
+
+# ===========================================
+# END OF FILE
+# ===========================================

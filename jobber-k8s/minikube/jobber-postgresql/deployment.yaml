@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jobber-postgres
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jobber-postgres
+  template:
+    metadata:
+      labels:
+        app: jobber-postgres
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: jobber-postgres
+        image: postgres:15-alpine
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: jobber-backend-secret
+              key: jobber-postgres-user
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: jobber-backend-secret
+              key: jobber-postgres-password
+        - name: POSTGRES_DB
+          value: jobber_reviews
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "0.5"
+          requests:
+            cpu: 100m
+            memory: 150Mi
+        ports:
+        - name: jobber-postgres
+          containerPort: 5432
+        volumeMounts:
+        - name: postgres-local-storage
+          mountPath: /var/lib/postgresql/data
+          subPath: postgres
+        readinessProbe:
+          exec:
+            command: 
+            - sh
+            - -c
+            - pg_isready -U jobber -d jobber_reviews
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 5
+        livenessProbe:
+          exec:
+            command: 
+            - sh
+            - -c
+            - pg_isready -h localhost
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: postgres-local-storage
+        persistentVolumeClaim:
+          claimName: postgres-pvc
