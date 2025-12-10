@@ -1,0 +1,11 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: jobber-gateway-pdb
+  namespace: production
+spec:
+  minAvailable: 1        # Al menos 1 pod debe estar disponible
+  selector:
+    matchLabels:
+      app: jobber-gateway
+

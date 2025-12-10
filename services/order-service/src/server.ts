@@ -1,4 +1,5 @@
 import http from 'http';
+
 import 'express-async-errors';
 import { CustomError, IAuthPayload, IErrorResponse, winstonLogger } from '@kevindeveloper95/jobapp-shared';
 import { Logger } from 'winston';
@@ -63,7 +64,7 @@ const routesMiddleware = (app: Application): void => {
 };
 
 const startQueues = async (): Promise<void> => {
-  orderChannel = await createConnection() as Channel;
+  orderChannel = (await createConnection()) as Channel;
   await consumerReviewFanoutMessages(orderChannel);
 };
 

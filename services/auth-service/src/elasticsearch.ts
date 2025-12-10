@@ -4,8 +4,6 @@ import { config } from '@auth/config';
 import { ISellerGig, winstonLogger } from '@kevindeveloper95/jobapp-shared';
 import { Logger } from 'winston';
 
-
-
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'authElasticSearchServer', 'debug');
 
 const elasticSearchClient = new Client({

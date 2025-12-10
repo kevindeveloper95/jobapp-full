@@ -32,6 +32,22 @@ spec:
         ports:
         - name: order
           containerPort: 4008
+        readinessProbe:
+          httpGet:
+            path: /order-health
+            port: 4008
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /order-health
+            port: 4008
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
         env:
           - name: ENABLE_APM
             value: '1'
@@ -75,7 +91,7 @@ spec:
           - name: API_GATEWAY_URL
             value: 'http://jobber-order.production.svc.cluster.local:4000'
           - name: CLIENT_URL
-            value: 'https://jobberapp.info'
+            value: 'https://jobberapp.kevmendeveloper.com'
           - name: STRIPE_API_KEY
             valueFrom:
               secretKeyRef:

@@ -15,6 +15,7 @@ export async function gigsSearch(
   max?: number
 ): Promise<ISearchResult> {
   const { from, size, type } = paginate;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const queryList: any[] = [
     {
       query_string: {

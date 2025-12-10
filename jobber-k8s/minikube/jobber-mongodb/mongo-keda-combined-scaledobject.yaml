@@ -1,0 +1,19 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: jobber-mongo-keda-scaledobject
+  namespace: production
+spec:
+  scaleTargetRef:
+    name: jobber-mongo
+    kind: StatefulSet
+  minReplicaCount: 0
+  maxReplicaCount: 1
+  cooldownPeriod: 30
+  triggers:
+  - type: cron
+    metadata:
+      timezone: America/Mexico_City
+      start: "0 9 * * 1-5"
+      end: "0 19 * * 1-5"
+      desiredReplicas: "1"

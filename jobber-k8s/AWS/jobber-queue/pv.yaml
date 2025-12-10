@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: rabbitmq-pvc
+  namespace: production
+spec:
+  storageClassName: jobber-queue-storage
+  resources:
+    requests:
+      storage: 3Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce

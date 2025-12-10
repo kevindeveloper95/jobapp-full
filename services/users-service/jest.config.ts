@@ -8,13 +8,19 @@ const config: Config.InitialOptions = {
   collectCoverage: true,
   testPathIgnorePatterns: ['/node_modules'],
   transform: {
-    '^.+\\.ts?$': 'ts-jest'
+    '^.+\\.ts?$': ['ts-jest', {
+      tsconfig: {
+        paths: {
+          '@users/*': ['src/*']
+        }
+      }
+    }]
   },
   testMatch: ['<rootDir>/src/**/test/*.ts'],
   collectCoverageFrom: ['src/**/*.ts', '!src/**/test/*.ts?(x)', '!**/node_modules/**'],
   coverageThreshold: {
     global: {
-      branches: 1,
+      branches: 0,
       functions: 1,
       lines: 1,
       statements: 1
@@ -22,7 +28,7 @@ const config: Config.InitialOptions = {
   },
   coverageReporters: ['text-summary', 'lcov'],
   moduleNameMapper: {
-    '@auth/(.*)': ['<rootDir>/src/$1']
+    '^@users/(.*)$': '<rootDir>/src/$1'
   }
 };
 

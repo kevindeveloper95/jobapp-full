@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-autoscaling
+  namespace: production
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: test-autoscaling
+  template:
+    metadata:
+      labels:
+        app: test-autoscaling
+    spec:
+      containers:
+      - name: test
+        image: nginx:alpine
+        resources:
+          requests:
+            cpu: 1000m      # 0.5 CPU por pod
+            memory: 512Mi
+          limits:
+            cpu: 1000m     # 1 CPU máximo
+            memory: 1Gi
+

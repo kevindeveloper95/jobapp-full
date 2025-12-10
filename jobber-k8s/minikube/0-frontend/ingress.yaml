@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jobber-frontend-ingress
+  namespace: production
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: jobber-frontend
+      port: 
+        number: 80
+  tls:
+    - hosts:
+      - jobberapp.kevmendeveloper.com
+      secretName: frontend-ingress-tls
+  rules:
+  - host: jobberapp.kevmendeveloper.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jobber-frontend
+            port: 
+              number: 80

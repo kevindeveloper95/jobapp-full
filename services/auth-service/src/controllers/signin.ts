@@ -1,13 +1,14 @@
 import { randomInt } from 'crypto';
-import { AuthModel } from '@auth/models/auth.schema';
-import { loginSchema } from '@auth/schemes/signin';
-import { getUserByEmail, getUserByUsername, signToken, updateUserOTP } from '@auth/services/auth.service';
-import { BadRequestError, IAuthDocument, IEmailMessageDetails, isEmail } from '@kevindeveloper95/jobapp-shared';
+
 import { Request, Response } from 'express';
 import { StatusCodes } from 'http-status-codes';
 import { omit } from 'lodash';
-import { publishDirectMessage } from '@auth/queues/auth.producer';
+import { BadRequestError, IAuthDocument, IEmailMessageDetails, isEmail } from '@kevindeveloper95/jobapp-shared';
+import { AuthModel } from '@auth/models/auth.schema';
 import { authChannel } from '@auth/server';
+import { publishDirectMessage } from '@auth/queues/auth.producer';
+import { getUserByEmail, getUserByUsername, signToken, updateUserOTP } from '@auth/services/auth.service';
+import { loginSchema } from '@auth/schemes/signin';
 
 export async function read(req: Request, res: Response): Promise<void> {
   const { error } = await Promise.resolve(loginSchema.validate(req.body));

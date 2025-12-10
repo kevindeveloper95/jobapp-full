@@ -1,4 +1,4 @@
-FROM node:23-alpine3.20 as builder
+FROM node:23-alpine3.20 AS builder
 
 WORKDIR /app
 COPY package*.json ./
@@ -16,7 +16,7 @@ ARG GH_PAT
 ENV GH_PAT=${GH_PAT}
 COPY --from=builder /app/build /app/html
 COPY nginx.conf /app
-RUN mkdir -p /app/run && apk add --no-cache bash && apk add --no-cache curl
+RUN mkdir -p /app/run && apk add --no-cache nginx bash curl
 
 EXPOSE 80
 

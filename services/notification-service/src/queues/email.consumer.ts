@@ -19,7 +19,7 @@ async function consumeAuthEmailMessages(channel: Channel): Promise<void> {
     const jobberQueue = await channel.assertQueue(queueName, { durable: true, autoDelete: false });
     await channel.bindQueue(jobberQueue.queue, exchangeName, routingKey);
     channel.consume(jobberQueue.queue, async (msg: ConsumeMessage | null) => {
-        console.log(msg)
+        console.log(msg);
        const { receiverEmail, username, verifyLink, resetLink, template } = JSON.parse(msg!.content.toString());
       const locals: IEmailLocals = {
         appLink: `${config.CLIENT_URL}`,

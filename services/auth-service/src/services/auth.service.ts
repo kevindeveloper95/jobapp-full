@@ -104,7 +104,7 @@ export async function getAuthUserByPasswordToken(token: string): Promise<IAuthDo
       where: {
         passwordResetToken: token,
         passwordResetExpires: { [Op.gt]: new Date() }
-      } as any,
+      },
     }) as Model;
     return user?.dataValues;
   } catch (error) {
@@ -118,7 +118,7 @@ export async function getAuthUserByOTP(otp: string): Promise<IAuthDocument | und
       where: {
         otp: otp,
         otpExpiration: { [Op.gt]: new Date() }
-      } as any,
+      },
     }) as Model;
     return user?.dataValues;
   } catch (error) {

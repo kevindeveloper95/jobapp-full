@@ -7,9 +7,9 @@ const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'usersQueueCon
 
 async function createConnection(): Promise<Channel | undefined> {
   try {
-    const connection = await client.connect(`${config.RABBITMQ_ENDPOINT}`,{
+    const connection = await client.connect(`${config.RABBITMQ_ENDPOINT}`, {
       clientProperties: {
-        connection_name: 'users-service' 
+        connection_name: 'users-service'
       }
     });
     const channel = await connection.createChannel();
@@ -25,7 +25,7 @@ async function createConnection(): Promise<Channel | undefined> {
 interface MyChannel {
   close(): Promise<void>;
 }
- 
+
 interface MyConnection {
   close(): Promise<void>;
 }
@@ -37,4 +37,4 @@ function closeConnection(channel: MyChannel, connection: MyConnection): void {
   });
 }
 
-export { createConnection } ;
+export { createConnection };

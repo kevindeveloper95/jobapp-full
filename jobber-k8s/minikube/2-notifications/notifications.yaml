@@ -32,6 +32,22 @@ spec:
         ports:
         - name: notification
           containerPort: 4002
+        readinessProbe:
+          httpGet:
+            path: /notification-health
+            port: 4002
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /notification-health
+            port: 4002
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
         env:
           - name: ENABLE_APM
             value: '1'

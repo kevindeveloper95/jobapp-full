@@ -133,9 +133,22 @@ jobber-k8s/*/*.key
 jobber-k8s/*/*.crt
 jobber-k8s/*/*.pem
 
+# SSL/TLS Certificates (CSR, EXT, SRL files)
+jobber-k8s/**/*.csr
+jobber-k8s/**/*.ext
+jobber-k8s/**/*.srl
+jobber-k8s/**/certs/
+jobber-k8s/**/certificates/
+
 # Local volumes
 jobber-k8s/*/volumes/
 jobber-k8s/*/data/
+
+# Kubernetes config files (local)
+.kube/
+kubeconfig
+kubeconfig.*
+*.kubeconfig
 
 # ===========================================
 # DOCKER & VOLUMES
@@ -145,6 +158,12 @@ jobber-k8s/*/data/
 volumes/
 docker-volumes/
 data/
+services/volumes/docker-volumes/
+
+# Docker compose files (ignorar el original con credenciales)
+services/volumes/docker-compose.yaml
+# Permitir el archivo de ejemplo
+!services/volumes/docker-compose.example.yaml
 
 # Docker compose environment files
 .env
@@ -175,6 +194,15 @@ data/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# ===========================================
+# API CALLS & TESTING
+# ===========================================
+
+# API test files (pueden contener datos de prueba sensibles)
+apiCalls/
+*.http
+*.rest
 
 # ===========================================
 # TEMPORARY FILES
@@ -237,6 +265,114 @@ keys/
 .tmp/
 
 # ===========================================
+# CLIENT (REACT/VITE)
+# ===========================================
+
+# Dependencies
+jobber-client/node_modules/
+jobber-client/.vite/
+jobber-client/.vitest/
+
+# Build outputs
+jobber-client/dist/
+jobber-client/build/
+jobber-client/.next/
+jobber-client/.nuxt/
+jobber-client/.svelte-kit/
+
+# Package lock files
+jobber-client/package-lock.json
+jobber-client/yarn.lock
+jobber-client/pnpm-lock.yaml
+
+# Test coverage
+jobber-client/coverage/
+jobber-client/*.lcov
+jobber-client/.nyc_output/
+
+# Environment files
+jobber-client/.env
+jobber-client/.env.local
+jobber-client/.env.development.local
+jobber-client/.env.test.local
+jobber-client/.env.production.local
+
+# Cache
+jobber-client/.cache/
+jobber-client/.parcel-cache/
+jobber-client/.eslintcache
+jobber-client/.stylelintcache
+
+# Logs
+jobber-client/*.log
+jobber-client/logs/
+jobber-client/npm-debug.log*
+jobber-client/yarn-debug.log*
+jobber-client/yarn-error.log*
+
+# TypeScript
+jobber-client/*.tsbuildinfo
+jobber-client/*.js.map
+
+# ===========================================
+# JENKINS
+# ===========================================
+
+# Jenkins agent files
+services/volumes/docker-volumes/jenkins_compose/jenkins_agent
+services/volumes/docker-volumes/jenkins_compose/jenkins_agent.pub
+services/volumes/docker-volumes/jenkins_compose/jenkins_agent_new
+services/volumes/docker-volumes/jenkins_compose/jenkins_agent_new.pub
+services/volumes/docker-volumes/jenkins_compose/jenkins_agent_home/
+services/volumes/docker-volumes/jenkins_compose/jenkins_configuration/
+
+# Jenkins workspace
+**/jenkins_workspace/
+**/.jenkins/
+
+# ===========================================
+# AWS
+# ===========================================
+
+# AWS credentials and config
+.aws/
+aws-credentials
+aws-credentials.json
+.aws/credentials
+.aws/config
+
+# AWS CLI
+.aws-cli/
+
+# AWS SAM
+.aws-sam/
+samconfig.toml
+
+# ===========================================
+# TERRAFORM (if used)
+# ===========================================
+
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate.d/
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# ===========================================
+# HELM (if used)
+# ===========================================
+
+.helm/
+helm-charts/*.tgz
+
+# ===========================================
 # DIAGRAMS & DOCUMENTATION
 # ===========================================
 
@@ -251,6 +387,45 @@ keys/
 *.drawio~
 *.drawio.bak
 *.drawio.tmp
+
+# ===========================================
+# DATABASE FILES (CRITICAL - NO SUBIR)
+# ===========================================
+
+# MongoDB data files
+services/volumes/docker-volumes/data/
+**/*.wt
+**/mongod.lock
+**/WiredTiger*
+**/storage.bson
+**/diagnostic.data/
+
+# MySQL data files
+services/volumes/docker-volumes/mysql/
+**/*.ibd
+**/*.dblwr
+**/ibdata*
+**/ib_buffer_pool
+**/binlog.*
+**/mysql.sock
+**/auto.cnf
+
+# PostgreSQL data files
+services/volumes/docker-volumes/postgres/data/
+**/postgresql.conf
+**/pg_hba.conf
+**/postmaster.pid
+
+# Redis data files
+services/volumes/docker-volumes/cache/
+**/dump.rdb
+**/appendonly.aof
+
+# Elasticsearch data files
+services/volumes/docker-volumes/elasticsearch-data/
+**/node.lock
+**/nodes
+**/snapshot_cache/
 
 # ===========================================
 # END OF FILE

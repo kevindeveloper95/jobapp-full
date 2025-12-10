@@ -1,0 +1,44 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: jobber-notification-scaledobject
+  namespace: production
+spec:
+  scaleTargetRef:
+    name: jobber-notification
+    kind: Deployment
+  minReplicaCount: 0      # Puede escalar a 0 cuando no hay mensajes
+  maxReplicaCount: 5     # Máximo 5 réplicas
+  cooldownPeriod: 30     # Espera 30 segundos antes de escalar hacia abajo
+  triggers:
+  - type: rabbitmq
+    metadata:
+      queueName: auth-email-queue
+      host: amqp://jobber-queue.production.svc.cluster.local:5672
+      queueLength: '5'   # Si hay 5+ mensajes, escala
+      activationQueueLength: '1'  # Activa cuando hay 1+ mensajes
+    authenticationRef:
+      name: rabbitmq-trigger-auth
+  - type: rabbitmq
+    metadata:
+      queueName: order-email-queue
+      host: amqp://jobber-queue.production.svc.cluster.local:5672
+      queueLength: '5'
+      activationQueueLength: '1'
+    authenticationRef:
+      name: rabbitmq-trigger-auth
+---
+apiVersion: keda.sh/v1alpha1
+kind: TriggerAuthentication
+metadata:
+  name: rabbitmq-trigger-auth
+  namespace: production
+spec:
+  secretTargetRef:
+  - parameter: username
+    name: jobber-backend-secret
+    key: jobber-rabbitmq-user
+  - parameter: password
+    name: jobber-backend-secret
+    key: jobber-rabbitmq-password
+

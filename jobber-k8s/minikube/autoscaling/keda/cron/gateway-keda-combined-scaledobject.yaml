@@ -1,0 +1,46 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: jobber-gateway-keda-scaledobject
+  namespace: production
+spec:
+  scaleTargetRef:
+    name: jobber-gateway
+    kind: Deployment
+  minReplicaCount: 0      # Puede escalar a 0 en horario inactivo
+  maxReplicaCount: 5      # Máximo 5 réplicas durante picos de carga
+  triggers:
+  # Trigger 1: Cron - Horario activo Lunes-Viernes (09:00-19:00)
+  - type: cron
+    metadata:
+      timezone: America/Mexico_City
+      start: "0 9 * * 1-5"      # 09:00 AM Lunes-Viernes
+      end: "0 19 * * 1-5"       # 07:00 PM Lunes-Viernes
+      desiredReplicas: "1"      # Mínimo 1 réplica durante horario activo
+  # Trigger 2: Cron - Horario inactivo noche Lunes-Viernes (19:00-09:00 día siguiente)
+  - type: cron
+    metadata:
+      timezone: America/Mexico_City
+      start: "0 19 * * 1-5"     # 07:00 PM Lunes-Viernes
+      end: "0 9 * * 2-6"        # 09:00 AM Martes-Sábado (día siguiente)
+      desiredReplicas: "0"     # Apagar completamente en horario inactivo
+  # Trigger 3: Cron - Sábado apagado todo el día
+  - type: cron
+    metadata:
+      timezone: America/Mexico_City
+      start: "0 0 * * 6"        # 00:00 Sábado
+      end: "0 23 * * 6"         # 23:59 Sábado
+      desiredReplicas: "0"     # Apagado todo el sábado
+  # Trigger 4: Cron - Domingo apagado todo el día
+  - type: cron
+    metadata:
+      timezone: America/Mexico_City
+      start: "0 0 * * 0"        # 00:00 Domingo
+      end: "0 23 * * 0"         # 23:59 Domingo
+      desiredReplicas: "0"     # Apagado todo el domingo
+  # Trigger 5: CPU - Escalar por CPU durante horario activo
+  - type: cpu
+    metadata:
+      type: Utilization
+      value: "70"               # Escalar cuando CPU > 70%
+

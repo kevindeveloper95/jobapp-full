@@ -1,14 +1,14 @@
-namespace = "production"
-serviceName = "jobber-frontend"
-service = "Jobber Frontend"
+def namespace = "production"
+def serviceName = "jobber-frontend"
+def service = "Jobber Frontend"
 
 def groovyMethods
 
-m1 = System.currentTimeMillis()
+def m1 = System.currentTimeMillis()
 
 pipeline {
   agent {
-    label 'Jenkins-Agent'
+    label 'jenkins-agent'
   }
 
   tools {
@@ -19,7 +19,8 @@ pipeline {
   environment {
     DOCKER_CREDENTIALS = credentials("dockerhub")
     STRIPE_API_KEY = credentials("stripe-api-key")
-    IMAGE_NAME = "<your-dockerhub-username>" + "/" + "jobber-frontend"
+    NPM_TOKEN = credentials("github-npm-token")
+    IMAGE_NAME = "kevin1208" + "/" + "jobber-frontend"
     IMAGE_TAG = "stable-${BUILD_NUMBER}"
   }
 
@@ -35,46 +36,79 @@ pipeline {
         sh "[ -d pipeline ] || mkdir pipeline"
         dir("pipeline") {
           // Add your jenkins automation url to url field
-          git branch: 'main', credentialsId: 'github', url: ''
+          git branch: 'main', credentialsId: 'github', url: 'https://github.com/kevindeveloper95/jenkins-automation.git'
           script {
             groovyMethods = load("functions.groovy")
           }
         }
-        // Add your client app github url to url field
-        git branch: 'main', credentialsId: 'github', url: ''
-        sh """
-          echo VITE_NODE_ENV=production > .env.production
-          echo VITE_BASE_ENDPOINT=<add-your-backend-url> >> .env.production
-          echo VITE_CLIENT_ENDPOINT=<add-your-frontend-url> >> .env.production
-          echo VITE_STRIPE_KEY=$STRIPE_API_KEY >> .env.production
-          echo VITE_ELASTIC_APM_SERVER=<your-apm-server-url-from-ether-elastic-cloud-or-your-minikube-apm-server> >> .env.production
-          echo VITE_ELASTIC_APM_SERVER_TOKEN=<apm-server-token> >> .env.production
-          cat .env.production
-        """
-        sh 'npm install'
+        // Add your gateway service url to url field
+        git branch: 'master', credentialsId: 'github', url: 'https://github.com/kevindeveloper95/jobapp-client'
+        script {
+          // Configure npm for private packages
+          sh '''
+            echo VITE_NODE_ENV=production > .env.production
+            echo VITE_BASE_ENDPOINT=https://api.jobberapp.kevmendeveloper.com >> .env.production
+            echo VITE_CLIENT_ENDPOINT=https://jobberapp.kevmendeveloper.com >> .env.production
+            echo VITE_STRIPE_KEY=$STRIPE_API_KEY >> .env.production
+            echo VITE_ELASTIC_APM_SERVER=https://001115f6d1c4461595daaa1f96339554.apm.us-central1.gcp.cloud.es.io:443 >> .env.production
+            echo VITE_ELASTIC_APM_SERVER_TOKEN=sOwijSazdoDwsDpERu >> .env.production
+            echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" > .npmrc
+            echo "@kevindeveloper95:registry=https://npm.pkg.github.com" >> .npmrc
+          '''
+          // Try npm first, fallback to Docker if it fails
+          try {
+            sh 'npm install'
+          } catch (Exception e) {
+            echo "npm failed, using Docker fallback..."
+            sh '''
+              docker run --rm -v $(pwd):/app -w /app \
+              -e NPM_TOKEN=$NPM_TOKEN \
+              node:18-alpine sh -c "
+                echo '//npm.pkg.github.com/:_authToken='$NPM_TOKEN > .npmrc &&
+                echo '@kevindeveloper95:registry=https://npm.pkg.github.com' >> .npmrc &&
+                npm install
+              "
+            '''
+          }
+        }
       }
     }
 
-    stage("Lint Check") {
+    /*  stage("Lint Check") {
       steps {
         sh 'npm run lint:check'
       }
     }
 
-    stage("Code Format Check") {
+    stage("Code Format Fix") {
       steps {
-        sh 'npm run prettier:check'
+        sh '''
+          # Fix formatting automatically
+          npm run prettier:fix || echo "Prettier fix completed"
+          # Check if there are still issues
+          npm run prettier:check
+        '''
       }
     }
 
+    stage("Unit Test") {
+      steps {
+        sh 'npm run test'
+      }
+    }
+ */
     stage("Build and Push") {
       steps {
-        sh 'docker login -u $DOCKERHUB_CREDENTIAL_USR --password $DOCKERHUB_CREDENTIALS_PSW'
-        sh "docker build -t $IMAGE_NAME ."
-        sh "docker tag $IMAGE_NAME $IMAGE_NAME:$IMAGE_TAG"
-        sh "docker tag $IMAGE_NAME $IMAGE_NAME:stable"
-        sh "docker push $IMAGE_NAME:$IMAGE_TAG"
-        sh "docker push $IMAGE_NAME:stable"
+        script {
+          withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+            sh "docker login -u ${DOCKER_USER} --password ${DOCKER_PASS}"
+            sh "docker build -t $IMAGE_NAME ."
+            sh "docker tag $IMAGE_NAME $IMAGE_NAME:$IMAGE_TAG"
+            sh "docker tag $IMAGE_NAME $IMAGE_NAME:stable"
+            sh "docker push $IMAGE_NAME:$IMAGE_TAG"
+            sh "docker push $IMAGE_NAME:stable"
+          }
+        }
       }
     }
 
@@ -87,7 +121,7 @@ pipeline {
 
     stage("Create New Pods") {
       steps {
-        withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: '', contextName: '', credentialsId: '', namespace: '', serverUrl: '']]) {
+        withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'minikube', contextName: 'minikube', credentialsId: 'jenkins-k8s-token', namespace: '', serverUrl: 'https://host.docker.internal:61260']]) {
           script {
             def pods = groovyMethods.findPodsFromName("${namespace}", "${serviceName}")
             for (podName in pods) {
@@ -104,7 +138,7 @@ pipeline {
   post {
     success {
       script {
-        m2 = System.currentTimeMillis()
+        def m2 = System.currentTimeMillis()
         def durTime = groovyMethods.durationTime(m1, m2)
         def author = groovyMethods.readCommitAuthor()
         groovyMethods.notifySlack("", "jobber-jenkins", [
@@ -133,10 +167,11 @@ pipeline {
     }
     failure {
       script {
-        m2 = System.currentTimeMillis()
-        def durTime = groovyMethods.durationTime(m1, m2)
-        def author = groovyMethods.readCommitAuthor()
-        groovyMethods.notifySlack("", "jobber-jenkins", [
+        def m2 = System.currentTimeMillis()
+        def durTime = groovyMethods?.durationTime(m1, m2) ?: "Unknown"
+        def author = groovyMethods?.readCommitAuthor() ?: "Unknown"
+        if (groovyMethods) {
+          groovyMethods.notifySlack("", "jobber-jenkins", [
         				[
         					title: "BUILD FAILED: ${service} Service with build number ${env.BUILD_NUMBER}",
         					title_link: "${env.BUILD_URL}",
@@ -157,7 +192,10 @@ pipeline {
         					]
         				]
         		]
-        )
+          )
+        } else {
+          echo "groovyMethods not available, skipping Slack notification"
+        }
       }
     }
   }

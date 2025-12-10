@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jobber-mysql
+  namespace: production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jobber-mysql
+  template:
+    metadata:
+      labels:
+        app: jobber-mysql
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: jobber-mysql
+        image: mysql:8.0.35
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: jobber-backend-secret
+              key: jobber-mysql-root-password
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: jobber-backend-secret
+              key: jobber-mysql-password
+        - name: MYSQL_DATABASE
+          value: jobber_auth
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: jobber-backend-secret
+              key: jobber-mysql-user
+        resources:
+          limits:
+            memory: "1Gi"
+            cpu: "0.5"
+          requests:
+            cpu: 100m
+            memory: 150Mi
+        ports:
+        - name: jobber-mysql
+          containerPort: 3306
+        volumeMounts:
+        - name: mysql-local-storage
+          mountPath: /var/lib/mysql
+          subPath: mysql
+        readinessProbe:
+          exec:
+            command:
+              - bash
+              - "-c"
+              - |
+                mysql -hlocalhost -u$MYSQL_USER -p$MYSQL_PASSWORD -e'SELECT 1'
+          initialDelaySeconds: 300
+          periodSeconds: 60
+          timeoutSeconds: 30
+          failureThreshold: 15
+        livenessProbe:
+          exec:
+            command:
+              - bash
+              - "-c"
+              - |
+                mysqladmin -hlocalhost -u$MYSQL_USER -p$MYSQL_PASSWORD ping
+          initialDelaySeconds: 300
+          periodSeconds: 60
+          timeoutSeconds: 30
+          failureThreshold: 15
+      volumes:
+      - name: mysql-local-storage
+        persistentVolumeClaim:
+          claimName: mysql-pvc

@@ -5,7 +5,6 @@ import { winstonLogger } from '@kevindeveloper95/jobapp-shared';
 import { Logger } from 'winston';
 
 
-
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'notificationElasticSearchServer', 'debug');
 
 const elasticSearchClient = new Client({

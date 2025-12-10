@@ -61,7 +61,7 @@ const routesMiddleware = (app: Application): void => {
 };
 
 const startQueues = async (): Promise<void> => {
-  reviewChannel = await createConnection() as Channel;
+  reviewChannel = (await createConnection()) as Channel;
 };
 
 const startElasticSearch = (): void => {

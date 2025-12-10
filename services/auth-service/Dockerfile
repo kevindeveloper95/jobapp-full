@@ -23,6 +23,6 @@ RUN npm install -g pm2 npm@latest
 RUN npm ci --production
 COPY --from=builder /app/build ./build
 
-EXPOSE 4003
+EXPOSE 4009
 
 CMD [ "npm", "run", "start" ]

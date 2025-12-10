@@ -1,4 +1,3 @@
-import { Action } from '@reduxjs/toolkit';
 import { ChangeEvent, FC, lazy, LazyExoticComponent, ReactElement, useState } from 'react';
 import { useDeviceData, useMobileOrientation } from 'react-device-detect';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
@@ -46,12 +45,26 @@ const VerifyOTP: FC = (): ReactElement => {
       };
       const result: IResponse = await verifyOTP(data).unwrap();
       dispatch(addAuthUser({ authInfo: result.user }));
-      const buyerResponse = await dispatch(buyerApi.endpoints.getCurrentBuyerByUsername.initiate() as unknown as Action);
-      dispatch(addBuyer(buyerResponse.data?.buyer));
-      const sellerResponse = await dispatch(
-        sellerApi.endpoints.getSellerByUsername.initiate(`${result.user?.username}`) as unknown as Action
-      );
-      dispatch(addSeller(sellerResponse.data?.seller));
+      
+      try {
+        const buyerResponse = await dispatch(buyerApi.endpoints.getCurrentBuyerByUsername.initiate() as any);
+        if (buyerResponse?.data?.buyer) {
+          dispatch(addBuyer(buyerResponse.data.buyer));
+        }
+      } catch (error) {
+        console.error('Error fetching buyer data:', error);
+      }
+      
+      try {
+        const sellerResponse = await dispatch(
+          sellerApi.endpoints.getSellerByUsername.initiate(`${result.user?.username}`) as any
+        );
+        if (sellerResponse?.data?.seller) {
+          dispatch(addSeller(sellerResponse.data.seller));
+        }
+      } catch (error) {
+        console.error('Error fetching seller data:', error);
+      }
       dispatch(updateLogout(false));
       dispatch(updateHeader('home'));
       dispatch(updateCategoryContainer(true));

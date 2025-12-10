@@ -1,0 +1,27 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: jobber-gateway-cron-test
+  namespace: production
+spec:
+  scaleTargetRef:
+    name: jobber-gateway
+    kind: Deployment
+  minReplicaCount: 0      # Puede escalar a 0
+  maxReplicaCount: 2      # Máximo 2 réplicas
+  triggers:
+  # Horario activo: 08:00 - 22:00 (1 réplica)
+  - type: cron
+    metadata:
+      timezone: America/Mexico_City
+      start: "0 8 * * *"      # 08:00 AM todos los días
+      end: "0 22 * * *"       # 10:00 PM todos los días
+      desiredReplicas: "1"
+  # Horario inactivo: 22:00 - 08:00 (0 réplicas)
+  - type: cron
+    metadata:
+      timezone: America/Mexico_City
+      start: "0 22 * * *"     # 10:00 PM todos los días
+      end: "0 8 * * *"        # 08:00 AM (día siguiente)
+      desiredReplicas: "0"
+

@@ -15,7 +15,7 @@ spec:
       - jobberapp.com
       secretName: gateway-ingress-tls
   rules:
-  - host: jobberapp.com
+  - host: api.jobberapp.kevmendeveloper.com
     http:
       paths:
       - path: /api/gateway/v1

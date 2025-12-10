@@ -32,6 +32,22 @@ spec:
         ports:
         - name: review
           containerPort: 4009
+        readinessProbe:
+          httpGet:
+            path: /review-health
+            port: 4009
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /review-health
+            port: 4009
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
         env:
           - name: ENABLE_APM
             value: '1'

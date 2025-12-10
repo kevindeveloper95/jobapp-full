@@ -1,7 +1,6 @@
 import { filter } from 'lodash';
 import { ChangeEvent, FC, MouseEvent, ReactElement, useRef, useState } from 'react';
 import { FaChevronDown, FaChevronUp, FaTimes } from 'react-icons/fa';
-import { v4 as uuidv4 } from 'uuid';
 
 import Button from '../button/Button';
 import useDetectOutsideClick from '../hooks/useDetectOutsideClick';
@@ -23,19 +22,6 @@ const Dropdown: FC<IDropdownProps> = ({
   const [inputText, setInputText] = useState<string>(text);
   const dropdownRef = useRef<HTMLDivElement | null>(null);
   const [toggleDropdown, setToggleDropdown] = useDetectOutsideClick(dropdownRef, false);
-
-  const onHandleSelect = (event: MouseEvent): void => {
-    const selectedItem: string = (event.target as HTMLLIElement).textContent as string;
-    if (setValue) {
-      setValue(selectedItem);
-    }
-    setInputText(selectedItem);
-    setDropdownItems(values);
-    setToggleDropdown(false);
-    if (onClick) {
-      onClick(selectedItem);
-    }
-  };
 
   return (
     <div className={`w-full divide-y divide-gray-100 rounded border ${mainClassNames}`} style={style}>
