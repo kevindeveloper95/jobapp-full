@@ -1,4 +1,4 @@
-# JobApp - Plataforma de Marketplace de Servicios
+# JobApp - Service Marketplace Platform
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](https://nodejs.org/)
@@ -6,241 +6,241 @@
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=for-the-badge&logo=kubernetes&logoColor=white)](https://kubernetes.io/)
 
-**JobApp** es una plataforma completa de marketplace de servicios (similar a Fiverr) construida con una arquitectura de microservicios moderna. Permite a los usuarios comprar y vender servicios digitales, gestionar órdenes, comunicarse en tiempo real y gestionar reseñas.
+**JobApp** is a complete service marketplace platform (similar to Fiverr) built with a modern microservices architecture. It allows users to buy and sell digital services, manage orders, communicate in real-time, and handle reviews.
 
-## 📋 Tabla de Contenidos
+## 📋 Table of Contents
 
-- [Características Principales](#-características-principales)
-- [Arquitectura](#-arquitectura)
-- [Stack Tecnológico](#-stack-tecnológico)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Prerrequisitos](#-prerrequisitos)
-- [Instalación](#-instalación)
-- [Configuración](#-configuración)
-- [Uso](#-uso)
-- [Desarrollo](#-desarrollo)
-- [Despliegue](#-despliegue)
+- [Main Features](#-main-features)
+- [Architecture](#-architecture)
+- [Technology Stack](#-technology-stack)
+- [Project Structure](#-project-structure)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Usage](#-usage)
+- [Development](#-development)
+- [Deployment](#-deployment)
 - [API Endpoints](#-api-endpoints)
-- [Documentación Adicional](#-documentación-adicional)
-- [Contribución](#-contribución)
-- [Licencia](#-licencia)
+- [Additional Documentation](#-additional-documentation)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-## ✨ Características Principales
+## ✨ Main Features
 
-### 🔐 Autenticación y Autorización
-- Registro y login de usuarios
-- Verificación de email
-- Recuperación de contraseña
-- Gestión de sesiones con JWT
-- Autenticación basada en cookies (httpOnly, secure)
+### 🔐 Authentication & Authorization
+- User registration and login
+- Email verification
+- Password recovery
+- JWT session management
+- Cookie-based authentication (httpOnly, secure)
 
-### 👥 Gestión de Usuarios
-- Perfiles de compradores (Buyers)
-- Perfiles de vendedores (Sellers)
-- Gestión de habilidades y experiencia
-- Portafolios y certificaciones
-- Sistema de calificaciones
+### 👥 User Management
+- Buyer profiles
+- Seller profiles
+- Skills and experience management
+- Portfolios and certifications
+- Rating system
 
-### 💼 Gestión de Gigs (Servicios)
-- Creación y edición de servicios
-- Búsqueda avanzada con Elasticsearch
-- Categorización y etiquetas
-- Gestión de imágenes y portadas
-- Sistema de precios y paquetes
+### 💼 Gig (Service) Management
+- Service creation and editing
+- Advanced search with Elasticsearch
+- Categorization and tags
+- Image and cover management
+- Pricing and package system
 
-### 📦 Sistema de Órdenes
-- Creación de órdenes
-- Integración con Stripe para pagos
-- Gestión de entregas
-- Sistema de extensiones de tiempo
-- Tracking de estado de órdenes
+### 📦 Order System
+- Order creation
+- Stripe payment integration
+- Delivery management
+- Time extension system
+- Order status tracking
 
-### ⭐ Sistema de Reseñas
-- Reseñas de compradores y vendedores
-- Sistema de calificaciones (1-5 estrellas)
-- Analytics de reviews
-- Cálculo de promedios y estadísticas
+### ⭐ Review System
+- Buyer and seller reviews
+- Rating system (1-5 stars)
+- Review analytics
+- Average and statistics calculation
 
-### 💬 Chat en Tiempo Real
-- Mensajería instantánea entre usuarios
-- Notificaciones en tiempo real
-- Envío de ofertas personalizadas
-- Historial de conversaciones
+### 💬 Real-Time Chat
+- Instant messaging between users
+- Real-time notifications
+- Custom offer sending
+- Conversation history
 
-### 🔔 Notificaciones
-- Notificaciones por email
-- Notificaciones push en tiempo real
-- Templates personalizados
-- Sistema de eventos asíncronos
+### 🔔 Notifications
+- Email notifications
+- Real-time push notifications
+- Custom templates
+- Asynchronous event system
 
-## 🏗️ Arquitectura
+## 🏗️ Architecture
 
-JobApp está construido siguiendo los principios de **Arquitectura de Microservicios**, con los siguientes componentes principales:
+JobApp is built following **Microservices Architecture** principles, with the following main components:
 
-### Microservicios
+### Microservices
 
-1. **Gateway Service** (Puerto 4000)
-   - Punto de entrada único para todas las peticiones
-   - Routing y load balancing
-   - Autenticación centralizada
-   - WebSocket para comunicación en tiempo real
-   - Rate limiting y CORS
+1. **Gateway Service** (Port 4000)
+   - Single entry point for all requests
+   - Routing and load balancing
+   - Centralized authentication
+   - WebSocket for real-time communication
+   - Rate limiting and CORS
 
-2. **Auth Service** (Puerto 4003)
-   - Autenticación y autorización
-   - Gestión de usuarios y sesiones
+2. **Auth Service** (Port 4003)
+   - Authentication and authorization
+   - User and session management
    - JWT token management
-   - Base de datos: **MySQL**
+   - Database: **MySQL**
 
-3. **Users Service** (Puerto 4005)
-   - Gestión de perfiles de usuarios
-   - Perfiles de compradores y vendedores
-   - Base de datos: **MongoDB**
+3. **Users Service** (Port 4005)
+   - User profile management
+   - Buyer and seller profiles
+   - Database: **MongoDB**
 
-4. **Gig Service** (Puerto 4004)
-   - Gestión de servicios (gigs)
-   - Búsqueda con Elasticsearch
-   - Base de datos: **MongoDB**
+4. **Gig Service** (Port 4004)
+   - Service (gig) management
+   - Elasticsearch search
+   - Database: **MongoDB**
 
-5. **Order Service** (Puerto 4008)
-   - Gestión de órdenes
-   - Integración con Stripe
-   - Base de datos: **MongoDB**
+5. **Order Service** (Port 4008)
+   - Order management
+   - Stripe integration
+   - Database: **MongoDB**
 
-6. **Review Service** (Puerto 4009)
-   - Sistema de reseñas y calificaciones
-   - Analytics de reviews
-   - Bases de datos: **MongoDB** + **PostgreSQL**
+6. **Review Service** (Port 4009)
+   - Review and rating system
+   - Review analytics
+   - Databases: **MongoDB** + **PostgreSQL**
 
-7. **Chat Service** (Puerto 4007)
-   - Mensajería en tiempo real
-   - Gestión de conversaciones
-   - Base de datos: **MongoDB**
+7. **Chat Service** (Port 4007)
+   - Real-time messaging
+   - Conversation management
+   - Database: **MongoDB**
 
-8. **Notification Service** (Puerto 4002)
-   - Envío de emails
-   - Procesamiento de eventos asíncronos
-   - Sin base de datos propia (stateless)
+8. **Notification Service** (Port 4002)
+   - Email sending
+   - Asynchronous event processing
+   - No own database (stateless)
 
 ### Frontend
 
-- **Jobber Client** (Puerto 3000)
-  - Aplicación React con TypeScript
-  - Redux para gestión de estado
-  - Socket.io para comunicación en tiempo real
-  - Integración con Stripe
-  - UI moderna con Tailwind CSS
+- **Jobber Client** (Port 3000)
+  - React application with TypeScript
+  - Redux for state management
+  - Socket.io for real-time communication
+  - Stripe integration
+  - Modern UI with Tailwind CSS
 
-### Infraestructura
+### Infrastructure
 
-- **RabbitMQ**: Message broker para comunicación asíncrona
-- **Redis**: Caché y sesiones
-- **Elasticsearch**: Búsqueda y logging centralizado
-- **Kibana**: Visualización de logs
-- **Docker**: Containerización
-- **Kubernetes**: Orquestación (AWS EKS / Minikube)
+- **RabbitMQ**: Message broker for asynchronous communication
+- **Redis**: Cache and sessions
+- **Elasticsearch**: Search and centralized logging
+- **Kibana**: Log visualization
+- **Docker**: Containerization
+- **Kubernetes**: Orchestration (AWS EKS / Minikube)
 - **Jenkins**: CI/CD
 
-## 🛠️ Stack Tecnológico
+## 🛠️ Technology Stack
 
 ### Backend
 - **Node.js** + **TypeScript**
-- **Express.js** - Framework web
-- **Sequelize** - ORM para MySQL
-- **Mongoose** - ODM para MongoDB
+- **Express.js** - Web framework
+- **Sequelize** - ORM for MySQL
+- **Mongoose** - ODM for MongoDB
 - **Socket.io** - WebSockets
 - **RabbitMQ** - Message broker
-- **Redis** - Caché y sesiones
-- **Elasticsearch** - Búsqueda y logging
-- **JWT** - Autenticación
-- **Stripe** - Pagos
+- **Redis** - Cache and sessions
+- **Elasticsearch** - Search and logging
+- **JWT** - Authentication
+- **Stripe** - Payments
 
 ### Frontend
 - **React 18** + **TypeScript**
 - **Vite** - Build tool
-- **Redux Toolkit** - Gestión de estado
+- **Redux Toolkit** - State management
 - **React Router** - Routing
-- **Tailwind CSS** - Estilos
-- **Socket.io Client** - Comunicación en tiempo real
+- **Tailwind CSS** - Styling
+- **Socket.io Client** - Real-time communication
 - **Axios** - HTTP client
 
 ### DevOps
-- **Docker** - Containerización
-- **Kubernetes** - Orquestación
+- **Docker** - Containerization
+- **Kubernetes** - Orchestration
 - **Jenkins** - CI/CD
-- **AWS EKS** - Kubernetes en la nube
+- **AWS EKS** - Kubernetes in the cloud
 - **PM2** - Process manager
 
-### Bases de Datos
-- **MySQL** - Datos relacionales (Auth)
-- **MongoDB** - Documentos (Users, Gigs, Orders, Chat, Reviews)
+### Databases
+- **MySQL** - Relational data (Auth)
+- **MongoDB** - Documents (Users, Gigs, Orders, Chat, Reviews)
 - **PostgreSQL** - Analytics (Reviews)
-- **Redis** - Caché y sesiones
-- **Elasticsearch** - Búsqueda y logs
+- **Redis** - Cache and sessions
+- **Elasticsearch** - Search and logs
 
-## 📁 Estructura del Proyecto
+## 📁 Project Structure
 
 ```
 jobapp-full/
-├── services/                    # Microservicios backend
+├── services/                    # Backend microservices
 │   ├── gateway-service/         # API Gateway
-│   ├── auth-service/            # Autenticación
-│   ├── users-service/          # Gestión de usuarios
-│   ├── gig-service/             # Gestión de gigs
-│   ├── order-service/           # Gestión de órdenes
-│   ├── review-service/          # Sistema de reseñas
-│   ├── chat-service/            # Mensajería
-│   ├── notification-service/    # Notificaciones
-│   └── jobapp-shared/           # Librería compartida
-├── jobber-client/               # Frontend React
-├── jobber-k8s/                  # Configuración Kubernetes
-│   ├── AWS/                     # Configuración para AWS EKS
-│   └── minikube/                # Configuración para Minikube
-├── docs/                        # Documentación adicional
-├── diagrams/                    # Diagramas de arquitectura
-├── services/volumes/            # Docker Compose para bases de datos
-├── package.json                 # Scripts de desarrollo
-└── README.md                    # Este archivo
+│   ├── auth-service/            # Authentication
+│   ├── users-service/          # User management
+│   ├── gig-service/             # Gig management
+│   ├── order-service/           # Order management
+│   ├── review-service/          # Review system
+│   ├── chat-service/            # Messaging
+│   ├── notification-service/    # Notifications
+│   └── jobapp-shared/           # Shared library
+├── jobber-client/               # React frontend
+├── jobber-k8s/                  # Kubernetes configuration
+│   ├── AWS/                     # AWS EKS configuration
+│   └── minikube/                # Minikube configuration
+├── docs/                        # Additional documentation
+├── diagrams/                    # Architecture diagrams
+├── services/volumes/            # Docker Compose for databases
+├── package.json                 # Development scripts
+└── README.md                    # This file
 ```
 
-## 📦 Prerrequisitos
+## 📦 Prerequisites
 
-Antes de comenzar, asegúrate de tener instalado:
+Before starting, make sure you have installed:
 
 - **Node.js** >= 18.x
 - **npm** >= 9.x
-- **Docker** y **Docker Compose**
+- **Docker** and **Docker Compose**
 - **Git**
-- **PowerShell** (para Windows) o **Bash** (para Linux/Mac)
+- **PowerShell** (for Windows) or **Bash** (for Linux/Mac)
 
-### Opcional (para desarrollo local con Kubernetes)
-- **Minikube** (para desarrollo local con K8s)
-- **kubectl** (cliente de Kubernetes)
+### Optional (for local Kubernetes development)
+- **Minikube** (for local K8s development)
+- **kubectl** (Kubernetes client)
 
-## 🚀 Instalación
+## 🚀 Installation
 
-### 1. Clonar el Repositorio
+### 1. Clone the Repository
 
 ```bash
 git clone <repository-url>
 cd jobapp-full
 ```
 
-### 2. Instalar Dependencias
+### 2. Install Dependencies
 
-Instala todas las dependencias de todos los servicios y el cliente:
+Install all dependencies for all services and the client:
 
 ```bash
 npm run install:all
 ```
 
-O instala manualmente:
+Or install manually:
 
 ```bash
-# Instalar dependencias de la raíz
+# Install root dependencies
 npm install
 
-# Instalar dependencias de cada servicio
+# Install dependencies for each service
 cd services/gateway-service && npm install && cd ../..
 cd services/auth-service && npm install && cd ../..
 cd services/users-service && npm install && cd ../..
@@ -250,109 +250,109 @@ cd services/review-service && npm install && cd ../..
 cd services/chat-service && npm install && cd ../..
 cd services/notification-service && npm install && cd ../..
 
-# Instalar dependencias del cliente
+# Install client dependencies
 cd jobber-client && npm install && cd ..
 ```
 
-### 3. Iniciar Bases de Datos
+### 3. Start Databases
 
-**⚠️ IMPORTANTE:** Debes iniciar las bases de datos antes de ejecutar los servicios.
+**⚠️ IMPORTANT:** You must start the databases before running the services.
 
 ```bash
-# Opción 1: Usando el script
+# Option 1: Using the script
 npm run start-databases
 
-# Opción 2: Manualmente
+# Option 2: Manually
 cd services/volumes
 docker-compose up -d
 ```
 
-Esto iniciará:
-- Redis (puerto 6379)
-- MongoDB (puerto 27017)
-- MySQL (puerto 3307)
-- PostgreSQL (puerto 5432)
-- RabbitMQ (puertos 5672, 15672)
-- Elasticsearch (puerto 9200)
-- Kibana (puerto 5601)
-- APM Server (puerto 8200)
+This will start:
+- Redis (port 6379)
+- MongoDB (port 27017)
+- MySQL (port 3307)
+- PostgreSQL (port 5432)
+- RabbitMQ (ports 5672, 15672)
+- Elasticsearch (port 9200)
+- Kibana (port 5601)
+- APM Server (port 8200)
 
-**Espera 30-60 segundos** después de iniciar docker-compose para que Elasticsearch esté completamente listo.
+**Wait 30-60 seconds** after starting docker-compose for Elasticsearch to be completely ready.
 
-## ⚙️ Configuración
+## ⚙️ Configuration
 
-### Variables de Entorno
+### Environment Variables
 
-Cada servicio requiere su propio archivo `.env`. Consulta los READMEs individuales de cada servicio para más detalles:
+Each service requires its own `.env` file. Check the individual READMEs for each service for more details:
 
 - `services/gateway-service/README.md`
 - `services/auth-service/README.md`
 - `services/users-service/README.md`
 - etc.
 
-### Configuración Mínima Requerida
+### Minimum Required Configuration
 
-Cada servicio necesita configurar:
-- URLs de bases de datos
-- URLs de servicios externos (RabbitMQ, Redis, Elasticsearch)
+Each service needs to configure:
+- Database URLs
+- External service URLs (RabbitMQ, Redis, Elasticsearch)
 - Secrets (JWT, Stripe, Cloudinary, etc.)
-- Puertos
+- Ports
 
-## 🎯 Uso
+## 🎯 Usage
 
-### Desarrollo Local
+### Local Development
 
-#### Opción 1: Ejecutar Todos los Servicios (Recomendado)
+#### Option 1: Run All Services (Recommended)
 
 ```bash
-# Ejecutar todos los servicios + frontend
+# Run all services + frontend
 npm run dev
 
-# Ejecutar solo los servicios backend (sin frontend)
+# Run only backend services (without frontend)
 npm run dev:services
 ```
 
-Esto iniciará todos los servicios en paralelo usando `concurrently`, mostrando los logs de cada servicio con colores diferentes.
+This will start all services in parallel using `concurrently`, showing logs from each service with different colors.
 
-#### Opción 2: Ejecutar Servicios Individuales
+#### Option 2: Run Individual Services
 
 ```bash
-npm run dev:gateway      # Gateway Service (puerto 4000)
-npm run dev:auth         # Auth Service (puerto 4003)
-npm run dev:users        # Users Service (puerto 4005)
-npm run dev:notifications # Notification Service (puerto 4002)
-npm run dev:chat         # Chat Service (puerto 4007)
-npm run dev:gig          # Gig Service (puerto 4004)
-npm run dev:order        # Order Service (puerto 4008)
-npm run dev:review       # Review Service (puerto 4009)
-npm run dev:client       # Frontend (puerto 3000)
+npm run dev:gateway      # Gateway Service (port 4000)
+npm run dev:auth         # Auth Service (port 4003)
+npm run dev:users        # Users Service (port 4005)
+npm run dev:notifications # Notification Service (port 4002)
+npm run dev:chat         # Chat Service (port 4007)
+npm run dev:gig          # Gig Service (port 4004)
+npm run dev:order        # Order Service (port 4008)
+npm run dev:review       # Review Service (port 4009)
+npm run dev:client       # Frontend (port 3000)
 ```
 
-#### Opción 3: Script de PowerShell (Windows)
+#### Option 3: PowerShell Script (Windows)
 
 ```powershell
 .\dev-services.ps1
 ```
 
-Este script abre cada servicio en una ventana de PowerShell separada.
+This script opens each service in a separate PowerShell window.
 
-### Liberar Puertos
+### Free Ports
 
-Si encuentras errores de puertos en uso:
+If you encounter port in use errors:
 
 ```bash
 npm run kill-ports
 ```
 
-O manualmente:
+Or manually:
 
 ```powershell
 .\kill-ports.ps1
 ```
 
-### Acceder a la Aplicación
+### Access the Application
 
-Una vez que todos los servicios estén ejecutándose:
+Once all services are running:
 
 - **Frontend**: http://localhost:3000
 - **Gateway Health Check**: http://localhost:4000/gateway-health
@@ -360,64 +360,64 @@ Una vez que todos los servicios estén ejecutándose:
 - **Kibana**: http://localhost:5601
 - **Elasticsearch**: http://localhost:9200
 
-## 🔧 Desarrollo
+## 🔧 Development
 
-### Estructura de un Microservicio
+### Microservice Structure
 
-Cada microservicio sigue una estructura similar:
+Each microservice follows a similar structure:
 
 ```
 service-name/
 ├── src/
-│   ├── app.ts              # Punto de entrada
-│   ├── routes/              # Rutas de la API
-│   ├── controllers/         # Controladores
-│   ├── services/            # Lógica de negocio
-│   ├── models/              # Modelos de datos
-│   ├── middleware/          # Middleware personalizado
-│   └── config/              # Configuración
-├── Dockerfile               # Docker para producción
-├── Dockerfile.dev           # Docker para desarrollo
-├── Jenkinsfile              # Pipeline de CI/CD
+│   ├── app.ts              # Entry point
+│   ├── routes/              # API routes
+│   ├── controllers/         # Controllers
+│   ├── services/            # Business logic
+│   ├── models/              # Data models
+│   ├── middleware/          # Custom middleware
+│   └── config/              # Configuration
+├── Dockerfile               # Docker for production
+├── Dockerfile.dev           # Docker for development
+├── Jenkinsfile              # CI/CD pipeline
 ├── package.json
 └── README.md
 ```
 
-### Compilar un Servicio
+### Build a Service
 
 ```bash
 cd services/<service-name>
 npm run build
 ```
 
-### Ejecutar Tests
+### Run Tests
 
 ```bash
 cd services/<service-name>
 npm test
 ```
 
-### Linting y Formateo
+### Linting and Formatting
 
 ```bash
-# Verificar linting
+# Check linting
 npm run lint:check
 
-# Corregir problemas de linting
+# Fix linting issues
 npm run lint:fix
 
-# Verificar formateo
+# Check formatting
 npm run prettier:check
 
-# Aplicar formateo
+# Apply formatting
 npm run prettier:fix
 ```
 
-## 🚢 Despliegue
+## 🚢 Deployment
 
 ### Docker
 
-Cada servicio tiene su propio `Dockerfile`:
+Each service has its own `Dockerfile`:
 
 ```bash
 cd services/<service-name>
@@ -427,81 +427,81 @@ docker run -p <port>:<port> <service-name>:latest
 
 ### Kubernetes
 
-El proyecto incluye configuraciones de Kubernetes para:
+The project includes Kubernetes configurations for:
 
 - **AWS EKS**: `jobber-k8s/AWS/`
 - **Minikube**: `jobber-k8s/minikube/`
 
-Para desplegar en Kubernetes:
+To deploy to Kubernetes:
 
 ```bash
-# Aplicar configuraciones
+# Apply configurations
 kubectl apply -f jobber-k8s/AWS/
 
-# Verificar estado
+# Check status
 kubectl get pods
 kubectl get services
 ```
 
-### CI/CD con Jenkins
+### CI/CD with Jenkins
 
-Cada servicio tiene un `Jenkinsfile` configurado para:
-- Build automático
+Each service has a `Jenkinsfile` configured for:
+- Automatic build
 - Tests
 - Docker image creation
-- Deployment a Kubernetes
+- Kubernetes deployment
 
 ## 📡 API Endpoints
 
 ### Base URL
 
-**Desarrollo Local**: `http://localhost:4000/api/gateway/v1`
+**Local Development**: `http://localhost:4000/api/gateway/v1`
 
-### Documentación Completa
+### Complete Documentation
 
-Consulta el archivo [`API-ENDPOINTS-INSOMNIA.md`](./API-ENDPOINTS-INSOMNIA.md) para una lista completa de todos los endpoints disponibles.
+See the [`API-ENDPOINTS-INSOMNIA.md`](./API-ENDPOINTS-INSOMNIA.md) file for a complete list of all available endpoints.
 
-### Endpoints Principales
+### Main Endpoints
 
-#### Autenticación
-- `POST /auth/signup` - Registro de usuario
+#### Authentication
+- `POST /auth/signup` - User registration
 - `POST /auth/signin` - Login
-- `GET /auth/currentuser` - Usuario actual
-- `POST /auth/signout` - Cerrar sesión
+- `GET /auth/currentuser` - Current user
+- `POST /auth/signout` - Logout
 
 #### Gigs
-- `GET /gig/search/{from}/{size}/{type}` - Buscar gigs
-- `GET /gig/{gigId}` - Obtener gig por ID
-- `POST /gig/create` - Crear gig
-- `PUT /gig/{gigId}` - Actualizar gig
+- `GET /gig/search/{from}/{size}/{type}` - Search gigs
+- `GET /gig/{gigId}` - Get gig by ID
+- `POST /gig/create` - Create gig
+- `PUT /gig/{gigId}` - Update gig
 
-#### Órdenes
-- `POST /order` - Crear orden
-- `POST /order/create-payment-intent` - Crear payment intent
-- `GET /order/buyer/{buyerId}` - Órdenes del comprador
-- `GET /order/seller/{sellerId}` - Órdenes del vendedor
+#### Orders
+- `POST /order` - Create order
+- `POST /order/create-payment-intent` - Create payment intent
+- `GET /order/buyer/{buyerId}` - Buyer orders
+- `GET /order/seller/{sellerId}` - Seller orders
 
-#### Reseñas
-- `POST /review` - Crear reseña
-- `GET /review/gig/{gigId}` - Reseñas de un gig
-- `GET /review/seller/{sellerId}` - Reseñas de un vendedor
+#### Reviews
+- `POST /review` - Create review
+- `GET /review/gig/{gigId}` - Gig reviews
+- `GET /review/seller/{sellerId}` - Seller reviews
 
 #### Chat
-- `POST /message` - Enviar mensaje
-- `GET /message/conversations/{username}` - Lista de conversaciones
-- `GET /message/{conversationId}` - Mensajes de una conversación
+- `POST /message` - Send message
+- `GET /message/conversations/{username}` - Conversation list
+- `GET /message/{conversationId}` - Conversation messages
 
-## 📚 Documentación Adicional
+## 📚 Additional Documentation
 
-- **[API Endpoints](./API-ENDPOINTS-INSOMNIA.md)**: Documentación completa de la API
-- **[Patrones de Microservicios](./PATRONES-MICROSERVICIOS.md)**: Documentación detallada de los patrones arquitectónicos implementados
-- **[Scripts de Desarrollo](./DEV-SCRIPTS.md)**: Guía de scripts para desarrollo
-- **[Troubleshooting](./docs/troubleshooting/README.md)**: Solución de problemas comunes
-- **[Diagramas](./diagrams/)**: Diagramas de arquitectura del sistema
+- **[API Endpoints](./API-ENDPOINTS-INSOMNIA.md)**: Complete API documentation
+- **[Microservices Patterns](./PATRONES-MICROSERVICIOS.md)**: Detailed documentation of implemented architectural patterns
+- **[Development Scripts](./DEV-SCRIPTS.md)**: Guide to development scripts
+- **[Troubleshooting](./docs/troubleshooting/README.md)**: Common problem solutions
+- **[Diagrams](./diagrams/)**: System architecture diagrams
 
-### READMEs de Servicios
+### Service READMEs
 
-Cada servicio tiene su propio README con documentación específica:
+Each service has its own README with specific documentation:
 
 - [Gateway Service](./services/gateway-service/README.md)
 - [Auth Service](./services/auth-service/README.md)
@@ -512,37 +512,36 @@ Cada servicio tiene su propio README con documentación específica:
 - [Chat Service](./services/chat-service/README.md)
 - [Notification Service](./services/notification-service/README.md)
 
-## 🤝 Contribución
+## 🤝 Contributing
 
-Las contribuciones son bienvenidas. Por favor:
+Contributions are welcome. Please:
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-### Estándares de Código
+### Code Standards
 
-- Usa TypeScript para todo el código
-- Sigue las convenciones de ESLint y Prettier configuradas
-- Escribe tests para nuevas funcionalidades
-- Actualiza la documentación según sea necesario
+- Use TypeScript for all code
+- Follow configured ESLint and Prettier conventions
+- Write tests for new features
+- Update documentation as needed
 
-## 📄 Licencia
+## 📄 License
 
-Este proyecto está bajo la Licencia ISC.
+This project is licensed under the ISC License.
 
-## 👥 Autores
+## 👥 Authors
 
-- **Kevin Developer** - Desarrollo inicial
+- **Kevin Developer** - Initial development
 
-## 🙏 Agradecimientos
+## 🙏 Acknowledgments
 
-- A todos los contribuidores y la comunidad de código abierto
-- A las tecnologías y herramientas que hacen posible este proyecto
+- To all contributors and the open source community
+- To the technologies and tools that make this project possible
 
 ---
 
-**¿Necesitas ayuda?** Consulta la [documentación de troubleshooting](./docs/troubleshooting/README.md) o abre un issue en el repositorio.
-
+**Need help?** Check the [troubleshooting documentation](./docs/troubleshooting/README.md) or open an issue in the repository.
