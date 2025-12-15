@@ -1,7 +1,8 @@
 import http from 'http';
 
 import 'express-async-errors';
-import { CustomError, IAuthPayload, IErrorResponse, winstonLogger } from '@kevindeveloper95/jobapp-shared';
+import { CustomError, IAuthPayload, winstonLogger } from '@kevindeveloper95/jobapp-shared';
+import { StatusCodes } from 'http-status-codes';
 import { Logger } from 'winston';
 import { config } from '@auth/config';
 import { Application, Request, Response, NextFunction, json, urlencoded } from 'express';
@@ -14,6 +15,7 @@ import { checkConnection, createIndex } from '@auth/elasticsearch';
 import { appRoutes } from '@auth/routes';
 import { Channel } from 'amqplib';
 import { createConnection } from '@auth/queues/connection';
+import { serializeErrorForLogging } from '@auth/utils/error-serializer';
 
 const SERVER_PORT = 4003;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'authenticationServer', 'debug');
@@ -70,17 +72,61 @@ async function startElasticSearch(): Promise<void> {
     await checkConnection();
     await createIndex('gigs');
   } catch (error) {
-    log.error('Failed to initialize Elasticsearch:', error);
+    const serializedError = serializeErrorForLogging(error);
+    log.error('Failed to initialize Elasticsearch:', serializedError);
   }
 }
 
 function authErrorHandler(app: Application): void {
-  app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
-    log.log('error', `AuthService ${error.comingFrom}:`, error);
-    if (error instanceof CustomError) {
-      return res.status(error.statusCode).json(error.serializeErrors());
+  // Error handler para CustomError y errores con statusCode/comingFrom
+  app.use((error: unknown, _req: Request, res: Response, next: NextFunction) => {
+    // Verificar si es CustomError o tiene propiedades de CustomError
+    const hasCustomErrorProperties = error && typeof error === 'object' && 
+      'statusCode' in error && 
+      'comingFrom' in error &&
+      'message' in error;
+    
+    if (error instanceof CustomError || hasCustomErrorProperties) {
+      const customError = error as CustomError & { statusCode: number; comingFrom: string; message: string };
+      const serializedError = serializeErrorForLogging(error);
+      log.log('error', `AuthService ${customError.comingFrom}:`, serializedError);
+      
+      // Intentar usar serializeErrors si está disponible, sino construir manualmente
+      let errorResponse;
+      if (typeof (customError as any).serializeErrors === 'function') {
+        errorResponse = (customError as CustomError).serializeErrors();
+      } else {
+        errorResponse = {
+          message: customError.message,
+          statusCode: customError.statusCode,
+          status: (customError as any).status || 'error',
+          comingFrom: customError.comingFrom
+        };
+      }
+      
+      return res.status(customError.statusCode).json(errorResponse);
     }
+    
+    // Si no es un CustomError, pasarlo al siguiente handler
     next(error);
+  });
+
+  // Error handler final - siempre devuelve JSON para errores no manejados
+  app.use((error: unknown, _req: Request, res: Response, _next: NextFunction) => {
+    const serializedError = serializeErrorForLogging(error);
+    log.log('error', 'AuthService unhandled error:', serializedError);
+    
+    const statusCode = (error && typeof error === 'object' && 'statusCode' in error) 
+      ? (error as { statusCode: number }).statusCode 
+      : StatusCodes.INTERNAL_SERVER_ERROR;
+    const message = error instanceof Error ? error.message : 'An unexpected error occurred';
+    
+    res.status(statusCode).json({
+      message,
+      statusCode,
+      status: 'error',
+      comingFrom: 'AuthService error handler'
+    });
   });
 }
 
@@ -92,6 +138,7 @@ function startServer(app: Application): void {
       log.info(`Authentication server running on port ${SERVER_PORT}`);
     });
   } catch (error) {
-    log.log('error', 'AuthService startServer() method error:', error);
+    const serializedError = serializeErrorForLogging(error);
+    log.log('error', 'AuthService startServer() method error:', serializedError);
   }
 }

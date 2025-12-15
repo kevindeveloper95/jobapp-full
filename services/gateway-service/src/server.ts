@@ -25,6 +25,7 @@ import { axiosMessageInstance } from '@gateway/services/api/message.service';
 import { axiosOrderInstance } from '@gateway/services/api/order.service';
 import { axiosReviewInstance } from '@gateway/services/api/review.service';
 import { isAxiosError } from 'axios';
+import { serializeErrorForLogging } from '@gateway/utils/error-serializer';
 
 const SERVER_PORT = 4000;
 const DEFAULT_ERROR_CODE = 500;
@@ -147,7 +148,8 @@ export class GatewayServer {
       appRoutes(app);
       log.info('All routes registered successfully');
     } catch (error) {
-      log.log('error', 'Error registering routes:', error);
+      const serializedError = serializeErrorForLogging(error);
+      log.log('error', 'Error registering routes:', serializedError);
       throw error;
     }
   }
@@ -168,13 +170,18 @@ export class GatewayServer {
     // Errores personalizados definidos por el desarrollador
     app.use((error: IErrorResponse, _req: Request, res: Response) => {
       if (error instanceof CustomError) {
-        log.log('error', `GatewayService ${error.comingFrom}:`, error);
+        log.log('error', `GatewayService ${error.comingFrom}:`, {
+          message: error.message,
+          statusCode: error.statusCode,
+          comingFrom: error.comingFrom
+        });
         res.status(error.statusCode).json(error.serializeErrors());
       }
 
       // Errores provenientes de Axios al consumir otros servicios
       if (isAxiosError(error)) {
-        log.log('error', `GatewayService Axios Error - ${error?.response?.data?.comingFrom}:`, error);
+        const serializedError = serializeErrorForLogging(error);
+        log.log('error', `GatewayService Axios Error - ${error?.response?.data?.comingFrom}:`, serializedError);
         res.status(error?.response?.data?.statusCode ?? DEFAULT_ERROR_CODE).json({
           message: error?.response?.data?.message ?? 'Error occurred.'
         });
@@ -183,7 +190,8 @@ export class GatewayServer {
 
       // Errores de CORS
       if (error.message && error.message.includes('CORS')) {
-        log.log('error', 'GatewayService CORS Error:', error);
+        const serializedError = serializeErrorForLogging(error);
+        log.log('error', 'GatewayService CORS Error:', serializedError);
         res.status(StatusCodes.FORBIDDEN).json({
           message: 'Not allowed by CORS',
           origin: _req.headers.origin
@@ -192,7 +200,8 @@ export class GatewayServer {
       }
 
       // Error genérico no manejado
-      log.log('error', 'GatewayService Unhandled Error:', error);
+      const serializedError = serializeErrorForLogging(error);
+      log.log('error', 'GatewayService Unhandled Error:', serializedError);
       res.status(DEFAULT_ERROR_CODE).json({
         message: error?.message ?? 'An error occurred.'
       });
@@ -244,7 +253,8 @@ export class GatewayServer {
         log.info(`Gateway server running on port ${SERVER_PORT}`);
       });
     } catch (error) {
-      log.log('error', 'GatewayService startServer() error method:', error);
+      const serializedError = serializeErrorForLogging(error);
+      log.log('error', 'GatewayService startServer() error method:', serializedError);
     }
   }
 

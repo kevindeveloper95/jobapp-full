@@ -1,0 +1,28 @@
+{
+  "name": "jobapp-full",
+  "version": "1.0.0",
+  "description": "Script para ejecutar todos los servicios en desarrollo",
+  "scripts": {
+    "start-databases": "powershell -ExecutionPolicy Bypass -File ./start-databases.ps1",
+    "kill-ports": "powershell -ExecutionPolicy Bypass -File ./kill-ports.ps1",
+    "dev": "npm run kill-ports && concurrently -n \"GATEWAY,AUTH,USERS,NOTIFICATIONS,CHAT,GIG,ORDER,REVIEW,CLIENT\" -c \"bgBlue.bold,bgGreen.bold,bgYellow.bold,bgMagenta.bold,bgCyan.bold,bgRed.bold,bgWhite.bold,bgBlue.bold,bgGreen.bold\" \"npm run dev:gateway\" \"npm run dev:auth\" \"npm run dev:users\" \"npm run dev:notifications\" \"npm run dev:chat\" \"npm run dev:gig\" \"npm run dev:order\" \"npm run dev:review\" \"npm run dev:client\"",
+    "dev:gateway": "cd services/gateway-service && npm run dev",
+    "dev:auth": "cd services/auth-service && npm run dev",
+    "dev:users": "cd services/users-service && npm run dev",
+    "dev:notifications": "cd services/notification-service && npm run dev",
+    "dev:chat": "cd services/chat-service && npm run dev",
+    "dev:gig": "cd services/gig-service && npm run dev",
+    "dev:order": "cd services/order-service && npm run dev",
+    "dev:review": "cd services/review-service && npm run dev",
+    "dev:client": "cd jobber-client && npm run dev",
+    "dev:services": "npm run kill-ports && concurrently -n \"GATEWAY,AUTH,USERS,NOTIFICATIONS,CHAT,GIG,ORDER,REVIEW\" -c \"bgBlue.bold,bgGreen.bold,bgYellow.bold,bgMagenta.bold,bgCyan.bold,bgRed.bold,bgWhite.bold,bgBlue.bold\" \"npm run dev:gateway\" \"npm run dev:auth\" \"npm run dev:users\" \"npm run dev:notifications\" \"npm run dev:chat\" \"npm run dev:gig\" \"npm run dev:order\" \"npm run dev:review\"",
+    "install:all": "npm install && cd services/gateway-service && npm install && cd ../auth-service && npm install && cd ../users-service && npm install && cd ../notification-service && npm install && cd ../chat-service && npm install && cd ../gig-service && npm install && cd ../order-service && npm install && cd ../review-service && npm install && cd ../../jobber-client && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+

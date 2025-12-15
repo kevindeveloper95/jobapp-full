@@ -1,4 +1,4 @@
-# Patrones y Conceptos de Microservicios - JobApp
+ # Patrones y Conceptos de Microservicios - JobApp
 
 Este documento describe todos los patrones arquitectónicos y conceptos de microservicios implementados en el proyecto JobApp.
 
@@ -737,4 +737,10 @@ Order Created → Publish Event → Notification Service → Email Sent
 ---
 
 **Nota**: Este documento refleja los patrones implementados en el proyecto JobApp y puede evolucionar conforme se añadan nuevas funcionalidades o patrones.
+
+
+
+
+
+
 
