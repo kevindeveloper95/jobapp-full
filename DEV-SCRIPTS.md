@@ -1,59 +1,59 @@
-# Scripts para Ejecutar Servicios en Desarrollo
+# Scripts for Running Services in Development
 
-Este proyecto incluye varios scripts para ejecutar todos los servicios en paralelo durante el desarrollo. Todos los scripts **liberan automáticamente los puertos** antes de iniciar los servicios para evitar conflictos.
+This project includes several scripts to run all services in parallel during development. All scripts **automatically free ports** before starting services to avoid conflicts.
 
-## ⚠️ IMPORTANTE: Iniciar Bases de Datos Primero
+## ⚠️ IMPORTANT: Start Databases First
 
-**Antes de ejecutar los servicios, necesitas iniciar las bases de datos:**
+**Before running the services, you need to start the databases:**
 
 ```powershell
-# Opcion 1: Usando el script
+# Option 1: Using the script
 .\start-databases.ps1
 
-# Opcion 2: Usando npm
+# Option 2: Using npm
 npm run start-databases
 
-# Opcion 3: Manualmente
+# Option 3: Manually
 cd services\volumes
 docker-compose up -d
 ```
 
-Esto iniciará:
-- Redis (puerto 6379)
-- MongoDB (puerto 27017)
-- MySQL (puerto 3307)
-- PostgreSQL (puerto 5432)
-- RabbitMQ (puertos 5672, 15672)
-- **Elasticsearch (puerto 9200)** ← **Necesario para que los servicios funcionen**
-- Kibana (puerto 5601)
-- APM Server (puerto 8200)
+This will start:
+- Redis (port 6379)
+- MongoDB (port 27017)
+- MySQL (port 3307)
+- PostgreSQL (port 5432)
+- RabbitMQ (ports 5672, 15672)
+- **Elasticsearch (port 9200)** ← **Required for services to work**
+- Kibana (port 5601)
+- APM Server (port 8200)
 
-**Espera 30-60 segundos después de iniciar docker-compose para que Elasticsearch esté completamente listo.**
+**Wait 30-60 seconds** after starting docker-compose for Elasticsearch to be completely ready.
 
-## Opción 1: Usando npm con concurrently (Recomendado)
+## Option 1: Using npm with concurrently (Recommended)
 
-Esta es la opción más limpia y organizada. Muestra todos los logs en una sola ventana con colores diferentes para cada servicio.
+This is the cleanest and most organized option. Shows all logs in a single window with different colors for each service.
 
-### Instalación
-**IMPORTANTE:** Ejecuta desde la raíz del proyecto (donde está este package.json):
+### Installation
+**IMPORTANT:** Run from the project root (where this package.json is):
 ```bash
 cd "C:\Jobapp final\jobapp-full"
 npm install
 ```
 
-### Uso
+### Usage
 
-**Ejecutar todos los servicios (incluyendo el cliente):**
+**Run all services (including client):**
 ```bash
 npm run dev
 ```
 
-**Ejecutar solo los servicios backend (sin el cliente):**
+**Run only backend services (without client):**
 ```bash
 npm run dev:services
 ```
 
-**Ejecutar un servicio individual:**
+**Run an individual service:**
 ```bash
 npm run dev:gateway
 npm run dev:auth
@@ -66,30 +66,30 @@ npm run dev:review
 npm run dev:client
 ```
 
-**Liberar puertos manualmente:**
+**Free ports manually:**
 ```bash
 npm run kill-ports
 ```
 
-## Opción 2: Script de PowerShell (Windows)
+## Option 2: PowerShell Script (Windows)
 
-Abre una ventana de PowerShell y ejecuta (desde la raíz del proyecto):
+Open a PowerShell window and run (from the project root):
 ```powershell
 .\dev-services.ps1
 ```
 
-Este script abre cada servicio en una ventana de PowerShell separada. Cada servicio tiene su propia ventana con su propio log.
+This script opens each service in a separate PowerShell window. Each service has its own window with its own log.
 
-**Ventajas:**
-- No requiere instalación de dependencias adicionales
-- Cada servicio tiene su propia ventana
-- Fácil de ver los logs individuales
-- Cierra cada ventana para detener ese servicio
-- Libera puertos automáticamente antes de iniciar
+**Advantages:**
+- No additional dependencies required
+- Each service has its own window
+- Easy to see individual logs
+- Close each window to stop that service
+- Automatically frees ports before starting
 
-## Scripts para Liberar Puertos
+## Scripts to Free Ports
 
-Si necesitas liberar los puertos manualmente:
+If you need to free ports manually:
 
 **PowerShell:**
 ```powershell
@@ -101,7 +101,7 @@ Si necesitas liberar los puertos manualmente:
 npm run kill-ports
 ```
 
-Estos scripts liberan automáticamente los siguientes puertos:
+These scripts automatically free the following ports:
 - **4000** - Gateway Service
 - **4002** - Notification Service
 - **4003** - Auth Service
@@ -112,73 +112,73 @@ Estos scripts liberan automáticamente los siguientes puertos:
 - **4009** - Review Service
 - **3000** - Frontend Client
 
-## Servicios incluidos
+## Included Services
 
-- **GATEWAY** - Gateway Service (Puerto 4000)
-- **AUTH** - Auth Service (Puerto 4003)
-- **USERS** - Users Service (Puerto 4005)
-- **NOTIFICATIONS** - Notification Service (Puerto 4002)
-- **CHAT** - Chat Service (Puerto 4007)
-- **GIG** - Gig Service (Puerto 4004)
-- **ORDER** - Order Service (Puerto 4008)
-- **REVIEW** - Review Service (Puerto 4009)
-- **CLIENT** - Frontend Client (Puerto 3000 por defecto)
+- **GATEWAY** - Gateway Service (Port 4000)
+- **AUTH** - Auth Service (Port 4003)
+- **USERS** - Users Service (Port 4005)
+- **NOTIFICATIONS** - Notification Service (Port 4002)
+- **CHAT** - Chat Service (Port 4007)
+- **GIG** - Gig Service (Port 4004)
+- **ORDER** - Order Service (Port 4008)
+- **REVIEW** - Review Service (Port 4009)
+- **CLIENT** - Frontend Client (Port 3000 by default)
 
-## Solución de problemas
+## Troubleshooting
 
-### Error: "EADDRINUSE: address already in use" (Puerto en uso)
+### Error: "EADDRINUSE: address already in use" (Port in use)
 
-Si ves este error, significa que hay procesos anteriores aún ejecutándose en los puertos. 
+If you see this error, it means there are previous processes still running on the ports.
 
-**Solución rápida:**
+**Quick solution:**
 ```powershell
-# Desde la raíz del proyecto
+# From the project root
 .\kill-ports.ps1
 ```
 
-**O manualmente en PowerShell:**
+**Or manually in PowerShell:**
 ```powershell
-# Matar proceso en puerto específico (ejemplo: puerto 4000)
+# Kill process on specific port (example: port 4000)
 $port = 4000
 $process = Get-NetTCPConnection -LocalPort $port -ErrorAction SilentlyContinue | Select-Object -ExpandProperty OwningProcess -First 1
 if ($process) { Stop-Process -Id $process -Force }
 ```
 
-**Nota:** Los scripts principales (`npm run dev`, `dev-services.ps1`) ejecutan automáticamente `kill-ports` antes de iniciar los servicios para evitar este problema.
+**Note:** The main scripts (`npm run dev`, `dev-services.ps1`) automatically run `kill-ports` before starting services to avoid this problem.
 
-### Error: "concurrently no se reconoce"
+### Error: "concurrently is not recognized"
 
-- Asegúrate de estar en el directorio raíz del proyecto
-- Ejecuta `npm install` primero
-- O usa la opción 2 (PowerShell) que no requiere instalación adicional
+- Make sure you're in the project root directory
+- Run `npm install` first
+- Or use option 2 (PowerShell) which doesn't require additional installation
 
-### Error: "npm run dev" no funciona
+### Error: "npm run dev" doesn't work
 
-- Asegúrate de estar en la raíz del proyecto donde está el `package.json`
-- Verifica que hayas ejecutado `npm install` en la raíz
-- Si el problema persiste, usa el script alternativo (`dev-services.ps1`)
+- Make sure you're in the project root where the `package.json` is
+- Verify you've run `npm install` in the root
+- If the problem persists, use the alternative script (`dev-services.ps1`)
 
-## Notas
+## Notes
 
-- Asegúrate de tener todos los servicios instalados con `npm install` en cada directorio
-- Si prefieres instalar todas las dependencias de una vez, puedes usar:
+- Make sure you have all services installed with `npm install` in each directory
+- If you prefer to install all dependencies at once, you can use:
   ```bash
   npm run install:all
   ```
-- Los servicios requieren que las bases de datos estén corriendo (Redis, MongoDB, MySQL, PostgreSQL, RabbitMQ, Elasticsearch)
-- Para detener los servicios con concurrently, presiona `Ctrl+C`
-- Para detener los servicios con el script de PowerShell, cierra las ventanas correspondientes
-- Si los servicios crashean, ejecuta `kill-ports.ps1` antes de volver a iniciarlos
+- Services require databases to be running (Redis, MongoDB, MySQL, PostgreSQL, RabbitMQ, Elasticsearch)
+- To stop services with concurrently, press `Ctrl+C`
+- To stop services with the PowerShell script, close the corresponding windows
+- If services crash, run `kill-ports.ps1` before starting them again
 
-## Instalación de todas las dependencias
+## Installing All Dependencies
 
-Para instalar todas las dependencias de todos los servicios y el cliente de una vez:
+To install all dependencies for all services and the client at once:
 
 ```bash
 npm run install:all
 ```
 
-Esto instalará:
-- Dependencias de la raíz (concurrently)
-- Dependencias de cada servicio (gateway, auth, users, notifications, chat, gig, order, review)
-- Dependencias del cliente (jobber-client)
+This will install:
+- Root dependencies (concurrently)
+- Dependencies for each service (gateway, auth, users, notifications, chat, gig, order, review)
+- Client dependencies (jobber-client)

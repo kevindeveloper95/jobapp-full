@@ -1,437 +1,437 @@
- # Patrones y Conceptos de Microservicios - JobApp
+# Microservices Patterns and Concepts - JobApp
 
-Este documento describe todos los patrones arquitectónicos y conceptos de microservicios implementados en el proyecto JobApp.
-
----
-
-## 📋 Tabla de Contenidos
-
-1. [Patrones de Comunicación](#1-patrones-de-comunicación)
-2. [Patrones de Integración](#2-patrones-de-integración)
-3. [Patrones de Datos](#3-patrones-de-datos)
-4. [Patrones de Seguridad](#4-patrones-de-seguridad)
-5. [Patrones de Observabilidad](#5-patrones-de-observabilidad)
-6. [Patrones de Resiliencia](#6-patrones-de-resiliencia)
-7. [Patrones de Despliegue](#7-patrones-de-despliegue)
-8. [Conceptos de Arquitectura](#8-conceptos-de-arquitectura)
+This document describes all the architectural patterns and microservices concepts implemented in the JobApp project.
 
 ---
 
-## 1. Patrones de Comunicación
+## 📋 Table of Contents
+
+1. [Communication Patterns](#1-communication-patterns)
+2. [Integration Patterns](#2-integration-patterns)
+3. [Data Patterns](#3-data-patterns)
+4. [Security Patterns](#4-security-patterns)
+5. [Observability Patterns](#5-observability-patterns)
+6. [Resilience Patterns](#6-resilience-patterns)
+7. [Deployment Patterns](#7-deployment-patterns)
+8. [Architecture Concepts](#8-architecture-concepts)
+
+---
+
+## 1. Communication Patterns
 
 ### 1.1. API Gateway Pattern
 
-**Descripción**: Punto de entrada único para todas las peticiones del cliente.
+**Description**: Single entry point for all client requests.
 
-**Implementación**:
-- **Gateway Service** (`services/gateway-service/`): Actúa como reverse proxy
-- Todas las peticiones HTTP pasan por el gateway antes de llegar a los microservicios
-- Centraliza funcionalidades cross-cutting: autenticación, rate limiting, CORS, logging
+**Implementation**:
+- **Gateway Service** (`services/gateway-service/`): Acts as reverse proxy
+- All HTTP requests pass through the gateway before reaching microservices
+- Centralizes cross-cutting functionality: authentication, rate limiting, CORS, logging
 
-**Características**:
-- Routing de peticiones a microservicios apropiados
-- Validación de JWT tokens
+**Features**:
+- Request routing to appropriate microservices
+- JWT token validation
 - Rate limiting
-- Gestión de CORS
-- Health checks centralizados
-- Proxy inverso para microservicios internos
+- CORS management
+- Centralized health checks
+- Reverse proxy for internal microservices
 
-**Beneficios**:
-- Separación de concerns entre cliente y servicios
-- Reducción de acoplamiento
-- Punto único de seguridad y autenticación
-- Simplificación del cliente (no conoce múltiples endpoints)
+**Benefits**:
+- Separation of concerns between client and services
+- Reduced coupling
+- Single point of security and authentication
+- Client simplification (doesn't know multiple endpoints)
 
 ---
 
 ### 1.2. Event-Driven Architecture (EDA)
 
-**Descripción**: Comunicación asíncrona entre microservicios mediante eventos y colas de mensajes.
+**Description**: Asynchronous communication between microservices through events and message queues.
 
-**Implementación**:
-- **RabbitMQ** como message broker
-- Patrones de exchange: **Direct Exchange** y **Fanout Exchange**
-- Producers que publican eventos
-- Consumers que procesan eventos
+**Implementation**:
+- **RabbitMQ** as message broker
+- Exchange patterns: **Direct Exchange** and **Fanout Exchange**
+- Producers that publish events
+- Consumers that process events
 
-**Tipos de Exchanges Utilizados**:
+**Exchange Types Used**:
 
 #### Direct Exchange
-- Routing basado en routing keys exactas
-- Utilizado en: `auth-service`, `gig-service`, `chat-service`, `order-service`, `users-service`
-- Ejemplo: `jobber-auth`, `jobber-gig`, `jobber-order`
+- Routing based on exact routing keys
+- Used in: `auth-service`, `gig-service`, `chat-service`, `order-service`, `users-service`
+- Example: `jobber-auth`, `jobber-gig`, `jobber-order`
 
 #### Fanout Exchange
-- Broadcast a todas las colas vinculadas
-- Utilizado en: `review-service` para notificar a múltiples servicios
-- Ejemplo: `jobber-review` notifica a `order-service` cuando se crea una review
+- Broadcast to all linked queues
+- Used in: `review-service` to notify multiple services
+- Example: `jobber-review` notifies `order-service` when a review is created
 
-**Flujo de Eventos**:
+**Event Flow**:
 ```
 Service A → Producer → RabbitMQ Exchange → Queue → Consumer → Service B
 ```
 
-**Servicios Event-Driven**:
-- **Notification Service**: Consumidor puro, procesa colas de email (`auth-email-queue`, `order-email-queue`)
-- **Order Service**: Publica eventos de orden y consume eventos de reviews
-- **Review Service**: Publica eventos fanout cuando se crean reviews
-- Todos los servicios publican eventos para notificaciones
+**Event-Driven Services**:
+- **Notification Service**: Pure consumer, processes email queues (`auth-email-queue`, `order-email-queue`)
+- **Order Service**: Publishes order events and consumes review events
+- **Review Service**: Publishes fanout events when reviews are created
+- All services publish events for notifications
 
-**Beneficios**:
-- Desacoplamiento temporal entre servicios
-- Escalabilidad independiente
-- Tolerancia a fallos (mensajes persistentes)
-- Asincronía mejorada
+**Benefits**:
+- Temporal decoupling between services
+- Independent scalability
+- Fault tolerance (persistent messages)
+- Improved asynchrony
 
 ---
 
 ### 1.3. WebSocket / Real-time Communication
 
-**Descripción**: Comunicación bidireccional en tiempo real entre cliente y servidor.
+**Description**: Bidirectional real-time communication between client and server.
 
-**Implementación**:
-- **Socket.io** para WebSocket connections
-- **Redis Adapter** para escalabilidad horizontal
-- Implementado en Gateway Service para chat y notificaciones
+**Implementation**:
+- **Socket.io** for WebSocket connections
+- **Redis Adapter** for horizontal scaling
+- Implemented in Gateway Service for chat and notifications
 
-**Características**:
-- Chat en tiempo real entre usuarios
-- Notificaciones push instantáneas
-- Estado online/offline de usuarios
-- Room management para conversaciones privadas
-- Broadcasting de mensajes
+**Features**:
+- Real-time chat between users
+- Instant push notifications
+- User online/offline status
+- Room management for private conversations
+- Message broadcasting
 
-**Arquitectura**:
+**Architecture**:
 ```
-Cliente ←→ Gateway (Socket.io) ←→ Redis Adapter ←→ Múltiples instancias de Gateway
+Client ←→ Gateway (Socket.io) ←→ Redis Adapter ←→ Multiple Gateway instances
 ```
 
-**Beneficios**:
-- Actualizaciones en tiempo real
-- Mejor experiencia de usuario
-- Comunicación bidireccional eficiente
+**Benefits**:
+- Real-time updates
+- Better user experience
+- Efficient bidirectional communication
 
 ---
 
-## 2. Patrones de Integración
+## 2. Integration Patterns
 
 ### 2.1. Shared Library Pattern
 
-**Descripción**: Código común compartido entre microservicios mediante una librería.
+**Description**: Common code shared between microservices through a library.
 
-**Implementación**:
+**Implementation**:
 - **Package**: `@kevindeveloper95/jobapp-shared`
-- Publicado en GitHub Packages
-- Utilizado por todos los microservicios
+- Published on GitHub Packages
+- Used by all microservices
 
-**Contenido de la Shared Library**:
-- **Logging**: Winston logger con integración a Elasticsearch
-- **Error Handling**: Manejo centralizado de errores
-- **Interfaces**: Tipos TypeScript compartidos (Auth, Order, Review, etc.)
-- **Helpers**: Utilidades comunes (Cloudinary upload, validaciones)
-- **Gateway Middleware**: Middleware compartido para validación
+**Shared Library Content**:
+- **Logging**: Winston logger with Elasticsearch integration
+- **Error Handling**: Centralized error handling
+- **Interfaces**: Shared TypeScript types (Auth, Order, Review, etc.)
+- **Helpers**: Common utilities (Cloudinary upload, validations)
+- **Gateway Middleware**: Shared middleware for validation
 
-**Beneficios**:
+**Benefits**:
 - DRY (Don't Repeat Yourself)
-- Consistencia entre servicios
-- Actualización centralizada
-- Type safety compartida
+- Consistency between services
+- Centralized updates
+- Shared type safety
 
 **Trade-offs**:
-- Acoplamiento a versiones de la librería
-- Necesidad de versionado semántico cuidadoso
+- Coupling to library versions
+- Need for careful semantic versioning
 
 ---
 
 ### 2.2. Service Discovery
 
-**Descripción**: Mecanismo para que los servicios encuentren y se comuniquen entre sí.
+**Description**: Mechanism for services to find and communicate with each other.
 
-**Implementación**:
-- **Kubernetes DNS** (Service Discovery nativo)
+**Implementation**:
+- **Kubernetes DNS** (native Service Discovery)
 - Naming convention: `<service-name>.<namespace>.svc.cluster.local`
-- Ejemplo: `auth-service.production.svc.cluster.local`
+- Example: `auth-service.production.svc.cluster.local`
 
-**Configuración**:
-- Cada servicio tiene un Service en Kubernetes
-- Gateway Service conoce URLs de todos los servicios
-- Configuración mediante variables de entorno
+**Configuration**:
+- Each service has a Service in Kubernetes
+- Gateway Service knows URLs of all services
+- Configuration through environment variables
 
-**Ejemplo de URLs**:
+**URL Example**:
 ```env
 AUTH_BASE_URL=http://auth-service.production.svc.cluster.local:4002
 USERS_BASE_URL=http://users-service.production.svc.cluster.local:4001
 GIG_BASE_URL=http://gig-service.production.svc.cluster.local:4003
 ```
 
-**Beneficios**:
-- Desacoplamiento de ubicaciones físicas
-- Fácil escalado y reubicación
-- Integración nativa con Kubernetes
+**Benefits**:
+- Decoupling from physical locations
+- Easy scaling and relocation
+- Native integration with Kubernetes
 
 ---
 
-## 3. Patrones de Datos
+## 3. Data Patterns
 
 ### 3.1. Database per Service
 
-**Descripción**: Cada microservicio tiene su propia base de datos, sin compartir esquemas.
+**Description**: Each microservice has its own database, without sharing schemas.
 
-**Implementación**:
+**Implementation**:
 
-| Servicio | Base de Datos | Propósito |
-|----------|---------------|-----------|
-| **Auth Service** | MySQL | Autenticación y credenciales de usuario |
-| **Users Service** | MongoDB | Perfiles de usuarios (buyers/sellers) |
-| **Gig Service** | MongoDB | Anuncios de trabajos (gigs) |
-| **Chat Service** | MongoDB | Mensajes y conversaciones |
-| **Order Service** | MongoDB | Órdenes y pagos |
+| Service | Database | Purpose |
+|---------|----------|---------|
+| **Auth Service** | MySQL | User authentication and credentials |
+| **Users Service** | MongoDB | User profiles (buyers/sellers) |
+| **Gig Service** | MongoDB | Job postings (gigs) |
+| **Chat Service** | MongoDB | Messages and conversations |
+| **Order Service** | MongoDB | Orders and payments |
 | **Review Service** | MongoDB + PostgreSQL | Reviews (MongoDB) + Analytics (PostgreSQL) |
-| **Notification Service** | Sin BD propia | Solo procesa eventos |
+| **Notification Service** | No own DB | Only processes events |
 
-**Beneficios**:
-- Independencia de datos
-- Escalabilidad independiente
-- Elección de tecnología de BD apropiada por servicio
-- Aislamiento de fallos
+**Benefits**:
+- Data independence
+- Independent scalability
+- Appropriate database technology choice per service
+- Fault isolation
 
-**Desafíos**:
-- Transacciones distribuidas más complejas
-- Consistencia eventual (resuelto con eventos)
-- Joins entre servicios mediante APIs
+**Challenges**:
+- More complex distributed transactions
+- Eventual consistency (solved with events)
+- Joins between services through APIs
 
 ---
 
 ### 3.2. Polyglot Persistence
 
-**Descripción**: Uso de diferentes tipos de bases de datos según las necesidades de cada servicio.
+**Description**: Use of different database types according to each service's needs.
 
-**Implementación**:
-- **MySQL**: Para datos relacionales (Auth Service)
-- **MongoDB**: Para documentos flexibles (Users, Gigs, Chat, Orders, Reviews)
-- **PostgreSQL**: Para analytics y queries complejas (Review Service analytics)
-- **Redis**: Para caché y sesiones
+**Implementation**:
+- **MySQL**: For relational data (Auth Service)
+- **MongoDB**: For flexible documents (Users, Gigs, Chat, Orders, Reviews)
+- **PostgreSQL**: For analytics and complex queries (Review Service analytics)
+- **Redis**: For cache and sessions
 
-**Ejemplo**: Review Service usa MongoDB para almacenar documentos de reviews y PostgreSQL para analytics y cálculos agregados.
+**Example**: Review Service uses MongoDB to store review documents and PostgreSQL for analytics and aggregate calculations.
 
-**Beneficios**:
-- Tecnología óptima para cada caso de uso
-- Mejor rendimiento especializado
-- Flexibilidad en modelos de datos
+**Benefits**:
+- Optimal technology for each use case
+- Better specialized performance
+- Flexibility in data models
 
 ---
 
-### 3.3. CQRS (Command Query Responsibility Segregation) - Parcial
+### 3.3. CQRS (Command Query Responsibility Segregation) - Partial
 
-**Descripción**: Separación de modelos de lectura y escritura.
+**Description**: Separation of read and write models.
 
-**Implementación Parcial**:
-- **Review Service**: Separa storage (MongoDB) de analytics (PostgreSQL)
-- Los comandos (writes) van a MongoDB
-- Las queries de analytics van a PostgreSQL
+**Partial Implementation**:
+- **Review Service**: Separates storage (MongoDB) from analytics (PostgreSQL)
+- Commands (writes) go to MongoDB
+- Analytics queries go to PostgreSQL
 
-**Beneficios**:
-- Optimización independiente de lecturas y escrituras
-- Escalabilidad diferenciada
+**Benefits**:
+- Independent optimization of reads and writes
+- Differentiated scalability
 
 ---
 
 ### 3.4. Caching Pattern
 
-**Descripción**: Almacenamiento temporal de datos frecuentemente accedidos.
+**Description**: Temporary storage of frequently accessed data.
 
-**Implementación**:
-- **Redis** como sistema de caché distribuido
-- Implementado en:
-  - **Gateway Service**: Caché de sesiones y tokens
-  - **Gig Service**: Caché de gigs frecuentemente consultados
-  - **Socket.io Adapter**: Para escalado horizontal de WebSockets
+**Implementation**:
+- **Redis** as distributed cache system
+- Implemented in:
+  - **Gateway Service**: Session and token cache
+  - **Gig Service**: Cache for frequently accessed gigs
+  - **Socket.io Adapter**: For horizontal scaling of WebSockets
 
-**Estrategias**:
+**Strategies**:
 - Cache-aside pattern
-- TTL (Time To Live) para invalidación automática
-- Invalidación por eventos cuando los datos cambian
+- TTL (Time To Live) for automatic invalidation
+- Event-based invalidation when data changes
 
-**Beneficios**:
-- Reducción de carga en bases de datos
-- Mejora en tiempo de respuesta
-- Menor latencia
+**Benefits**:
+- Reduced database load
+- Improved response time
+- Lower latency
 
 ---
 
-## 4. Patrones de Seguridad
+## 4. Security Patterns
 
 ### 4.1. API Gateway Authentication
 
-**Descripción**: Centralización de autenticación y autorización en el API Gateway.
+**Description**: Centralization of authentication and authorization in the API Gateway.
 
-**Implementación**:
-- **JWT (JSON Web Tokens)** para autenticación
-- Gateway valida tokens antes de routing
-- Tokens almacenados en cookies (httpOnly, secure)
-- Middleware de autenticación: `authMiddleware.verifyUser`
+**Implementation**:
+- **JWT (JSON Web Tokens)** for authentication
+- Gateway validates tokens before routing
+- Tokens stored in cookies (httpOnly, secure)
+- Authentication middleware: `authMiddleware.verifyUser`
 
-**Flujo**:
+**Flow**:
 ```
-Cliente → Gateway (valida JWT) → Microservicio
+Client → Gateway (validates JWT) → Microservice
 ```
 
-**Características**:
-- Token validation en punto único
+**Features**:
+- Token validation at single point
 - Refresh token mechanism
-- Session management con Redis
-- Rate limiting por usuario/IP
+- Session management with Redis
+- Rate limiting per user/IP
 
 ---
 
 ### 4.2. Service-to-Service Authentication
 
-**Descripción**: Autenticación entre microservicios internos.
+**Description**: Authentication between internal microservices.
 
-**Implementación**:
-- **Gateway Token**: JWT firmado para comunicación Gateway → Microservicios
-- Cada servicio valida el `gatewayToken` en headers
+**Implementation**:
+- **Gateway Token**: Signed JWT for Gateway → Microservices communication
+- Each service validates the `gatewayToken` in headers
 - Middleware: `gatewayMiddleware.verifyGatewayRequest`
 
-**Ejemplo**:
+**Example**:
 ```typescript
 headers: {
   'gatewayToken': sign({ id: serviceName }, GATEWAY_JWT_TOKEN)
 }
 ```
 
-**Beneficios**:
-- Previene acceso directo a microservicios
-- Solo Gateway puede comunicarse con servicios
-- Seguridad en comunicación interna
+**Benefits**:
+- Prevents direct access to microservices
+- Only Gateway can communicate with services
+- Security in internal communication
 
 ---
 
 ### 4.3. Security Headers & CORS
 
-**Descripción**: Protección mediante headers HTTP y control de CORS.
+**Description**: Protection through HTTP headers and CORS control.
 
-**Implementación**:
-- **Helmet.js**: Headers de seguridad (XSS, CSRF, etc.)
-- **CORS**: Configuración restrictiva por origen
-- **HPP** (HTTP Parameter Pollution): Protección contra polución de parámetros
+**Implementation**:
+- **Helmet.js**: Security headers (XSS, CSRF, etc.)
+- **CORS**: Restrictive configuration by origin
+- **HPP** (HTTP Parameter Pollution): Protection against parameter pollution
 - **Cookie Security**: httpOnly, secure, sameSite
 
-**Beneficios**:
-- Protección contra ataques comunes
-- Control de acceso cross-origin
-- Seguridad en cookies y sesiones
+**Benefits**:
+- Protection against common attacks
+- Cross-origin access control
+- Security in cookies and sessions
 
 ---
 
-## 5. Patrones de Observabilidad
+## 5. Observability Patterns
 
 ### 5.1. Centralized Logging
 
-**Descripción**: Agregación de logs de todos los microservicios en un lugar centralizado.
+**Description**: Aggregation of logs from all microservices in a centralized location.
 
-**Implementación**:
-- **Elasticsearch** como almacén de logs
-- **Winston** logger con transport a Elasticsearch
-- **Winston-Elasticsearch** para integración
-- Cada servicio envía logs con metadatos (service name, timestamp, level)
+**Implementation**:
+- **Elasticsearch** as log storage
+- **Winston** logger with Elasticsearch transport
+- **Winston-Elasticsearch** for integration
+- Each service sends logs with metadata (service name, timestamp, level)
 
-**Estructura de Logs**:
+**Log Structure**:
 ```typescript
 {
   service: 'auth-service',
   level: 'info',
   message: 'User logged in',
   timestamp: '2024-01-01T00:00:00Z',
-  // ... más campos
+  // ... more fields
 }
 ```
 
-**Beneficios**:
-- Visibilidad completa del sistema
-- Búsqueda y análisis de logs
-- Troubleshooting simplificado
+**Benefits**:
+- Complete system visibility
+- Log search and analysis
+- Simplified troubleshooting
 
 ---
 
 ### 5.2. Application Performance Monitoring (APM)
 
-**Descripción**: Monitoreo de rendimiento y comportamiento de aplicaciones.
+**Description**: Monitoring of application performance and behavior.
 
-**Implementación**:
-- **Elastic APM**: Integrado en servicios
-- Tracking de transacciones
-- Métricas de rendimiento
-- Trazado de errores
+**Implementation**:
+- **Elastic APM**: Integrated in services
+- Transaction tracking
+- Performance metrics
+- Error tracing
 
-**Configuración**:
+**Configuration**:
 ```env
 ENABLE_APM=1
 ELASTIC_APM_SERVER_URL=<APM_SERVER_URL>
 ELASTIC_APM_SECRET_TOKEN=<APM_TOKEN>
 ```
 
-**Beneficios**:
-- Identificación de cuellos de botella
-- Monitoreo de tiempo de respuesta
-- Trazado de requests end-to-end
+**Benefits**:
+- Bottleneck identification
+- Response time monitoring
+- End-to-end request tracing
 
 ---
 
 ### 5.3. Health Check Pattern
 
-**Descripción**: Endpoints para verificar el estado de salud de los servicios.
+**Description**: Endpoints to verify service health status.
 
-**Implementación**:
-- Cada servicio expone endpoint `/` para health check
-- Gateway tiene `/gateway-health`
-- Checks de conectividad: BD, RabbitMQ, Elasticsearch
-- Utilizado por:
-  - **Kubernetes**: Liveness y Readiness probes
-  - **Heartbeat**: Monitoreo de uptime
+**Implementation**:
+- Each service exposes `/` endpoint for health check
+- Gateway has `/gateway-health`
+- Connectivity checks: DB, RabbitMQ, Elasticsearch
+- Used by:
+  - **Kubernetes**: Liveness and Readiness probes
+  - **Heartbeat**: Uptime monitoring
   - **Load Balancers**: Routing decisions
 
-**Ejemplo**:
+**Example**:
 ```typescript
 GET / → { status: 'healthy', service: 'auth-service', timestamp: ... }
 ```
 
-**Beneficios**:
-- Detección temprana de problemas
-- Auto-recuperación en Kubernetes
-- Monitoreo de disponibilidad
+**Benefits**:
+- Early problem detection
+- Auto-recovery in Kubernetes
+- Availability monitoring
 
 ---
 
-### 5.4. Distributed Tracing - Implícito
+### 5.4. Distributed Tracing - Implicit
 
-**Descripción**: Seguimiento de requests a través de múltiples servicios.
+**Description**: Tracking of requests across multiple services.
 
-**Implementación**:
-- Logs correlacionados mediante request IDs
-- Elasticsearch permite rastrear requests por campos comunes
-- APM proporciona traces automáticos
+**Implementation**:
+- Correlated logs through request IDs
+- Elasticsearch allows tracking requests by common fields
+- APM provides automatic traces
 
-**Beneficios**:
-- Visibilidad del flujo completo de requests
-- Identificación de servicios lentos
-- Debugging de problemas complejos
+**Benefits**:
+- Visibility of complete request flow
+- Identification of slow services
+- Debugging of complex problems
 
 ---
 
-## 6. Patrones de Resiliencia
+## 6. Resilience Patterns
 
 ### 6.1. Retry Pattern
 
-**Descripción**: Reintento automático de operaciones fallidas.
+**Description**: Automatic retry of failed operations.
 
-**Implementación**:
-- **Axios interceptors**: Para HTTP requests
+**Implementation**:
+- **Axios interceptors**: For HTTP requests
 - **Elasticsearch client**: `maxRetries: 2`
-- **RabbitMQ connection**: Reconnection automática
-- **Winston**: Retry en logs fallidos
+- **RabbitMQ connection**: Automatic reconnection
+- **Winston**: Retry on failed logs
 
-**Configuración**:
+**Configuration**:
 ```typescript
 axios.interceptors.response.use(
   response => response,
@@ -444,74 +444,74 @@ axios.interceptors.response.use(
 );
 ```
 
-**Beneficios**:
-- Tolerancia a fallos temporales
-- Mayor disponibilidad percibida
-- Recuperación automática
+**Benefits**:
+- Tolerance to temporary failures
+- Higher perceived availability
+- Automatic recovery
 
 ---
 
-### 6.2. Circuit Breaker Pattern - Implícito
+### 6.2. Circuit Breaker Pattern - Implicit
 
-**Descripción**: Prevención de cascading failures deteniendo llamadas a servicios caídos.
+**Description**: Prevention of cascading failures by stopping calls to downed services.
 
-**Implementación**:
-- Timeouts en Axios requests
-- Health checks previos al routing
-- Fallbacks en cliente (frontend) para servicios no disponibles
+**Implementation**:
+- Timeouts in Axios requests
+- Health checks before routing
+- Fallbacks in client (frontend) for unavailable services
 
-**Beneficios**:
-- Protección contra cascading failures
-- Mejor experiencia de usuario
-- Recuperación rápida cuando el servicio vuelve
+**Benefits**:
+- Protection against cascading failures
+- Better user experience
+- Quick recovery when service returns
 
 ---
 
-### 6.3. Bulkhead Pattern - Parcial
+### 6.3. Bulkhead Pattern - Partial
 
-**Descripción**: Aislamiento de recursos para prevenir que un fallo afecte a otros.
+**Description**: Resource isolation to prevent one failure from affecting others.
 
-**Implementación**:
-- **Database per Service**: Aislamiento de datos
-- **Separación de pools de conexión**: Por servicio
-- **Kubernetes Resource Limits**: CPU y memoria por pod
+**Implementation**:
+- **Database per Service**: Data isolation
+- **Connection pool separation**: Per service
+- **Kubernetes Resource Limits**: CPU and memory per pod
 
-**Beneficios**:
-- Aislamiento de fallos
-- Prevención de resource exhaustion
-- Mejor estabilidad del sistema
+**Benefits**:
+- Fault isolation
+- Prevention of resource exhaustion
+- Better system stability
 
 ---
 
 ### 6.4. Graceful Degradation
 
-**Descripción**: El sistema continúa funcionando con funcionalidades reducidas en caso de fallos.
+**Description**: System continues functioning with reduced features in case of failures.
 
-**Implementación**:
-- Si Notification Service falla, el resto del sistema sigue funcionando
-- Si Elasticsearch falla, logs se mantienen en consola
-- Cache fallback si Redis no está disponible
+**Implementation**:
+- If Notification Service fails, the rest of the system continues working
+- If Elasticsearch fails, logs are kept in console
+- Cache fallback if Redis is unavailable
 
-**Beneficios**:
-- Alta disponibilidad
-- Mejor experiencia de usuario
-- Resistencia a fallos parciales
+**Benefits**:
+- High availability
+- Better user experience
+- Resistance to partial failures
 
 ---
 
-## 7. Patrones de Despliegue
+## 7. Deployment Patterns
 
 ### 7.1. Containerization
 
-**Descripción**: Empaquetado de aplicaciones en contenedores.
+**Description**: Packaging of applications in containers.
 
-**Implementación**:
-- **Docker** para todos los servicios
-- **Dockerfile** para producción
-- **Dockerfile.dev** para desarrollo
-- Imágenes publicadas en Docker Hub
+**Implementation**:
+- **Docker** for all services
+- **Dockerfile** for production
+- **Dockerfile.dev** for development
+- Images published on Docker Hub
 
-**Estructura**:
+**Structure**:
 ```dockerfile
 FROM node:18-alpine
 WORKDIR /usr/src/app
@@ -522,33 +522,33 @@ RUN npm run build
 CMD ["npm", "start"]
 ```
 
-**Beneficios**:
-- Consistencia entre entornos
-- Portabilidad
-- Aislamiento de dependencias
-- Escalabilidad
+**Benefits**:
+- Consistency between environments
+- Portability
+- Dependency isolation
+- Scalability
 
 ---
 
 ### 7.2. Orchestration (Kubernetes)
 
-**Descripción**: Gestión y orquestación de contenedores.
+**Description**: Management and orchestration of containers.
 
-**Implementación**:
-- **Kubernetes** para orquestación
-- **Deployments** para servicios stateless
-- **StatefulSets** para bases de datos
-- **Services** para service discovery
-- **ConfigMaps** para configuración
-- **Secrets** para datos sensibles
+**Implementation**:
+- **Kubernetes** for orchestration
+- **Deployments** for stateless services
+- **StatefulSets** for databases
+- **Services** for service discovery
+- **ConfigMaps** for configuration
+- **Secrets** for sensitive data
 
-**Despliegue**:
-- AWS EKS (Elastic Kubernetes Service) para producción
-- Minikube para desarrollo local
+**Deployment**:
+- AWS EKS (Elastic Kubernetes Service) for production
+- Minikube for local development
 
-**Características**:
+**Features**:
 - Auto-scaling (HPA, VPA, KEDA)
-- Self-healing (restart automático)
+- Self-healing (automatic restart)
 - Rolling updates
 - Resource management
 
@@ -556,178 +556,178 @@ CMD ["npm", "start"]
 
 ### 7.3. Horizontal Pod Autoscaling (HPA)
 
-**Descripción**: Escalado automático de pods basado en métricas.
+**Description**: Automatic pod scaling based on metrics.
 
-**Implementación**:
-- HPA basado en CPU y memoria
-- Configurado para Gateway Service
-- Mínimo: 2 replicas, Máximo: 10 replicas
-- Target: 70% CPU, 80% memoria
+**Implementation**:
+- HPA based on CPU and memory
+- Configured for Gateway Service
+- Minimum: 2 replicas, Maximum: 10 replicas
+- Target: 70% CPU, 80% memory
 
-**Beneficios**:
-- Escalado automático según demanda
-- Optimización de recursos
-- Alta disponibilidad
+**Benefits**:
+- Automatic scaling according to demand
+- Resource optimization
+- High availability
 
 ---
 
 ### 7.4. Event-Driven Autoscaling (KEDA)
 
-**Descripción**: Escalado basado en eventos externos (colas de mensajes).
+**Description**: Scaling based on external events (message queues).
 
-**Implementación**:
-- **KEDA** para escalado basado en RabbitMQ
-- Notification Service escala según cantidad de mensajes en cola
-- Puede escalar a 0 cuando no hay trabajo
+**Implementation**:
+- **KEDA** for RabbitMQ-based scaling
+- Notification Service scales according to message count in queue
+- Can scale to 0 when there's no work
 
-**Ejemplo**:
+**Example**:
 ```yaml
 triggers:
   - type: rabbitmq
     metadata:
       queueName: auth-email-queue
-      queueLength: '5'  # Escala si hay más de 5 mensajes
+      queueLength: '5'  # Scales if more than 5 messages
 ```
 
-**Beneficios**:
-- Escalado reactivo a carga real
-- Optimización de costos (scale to zero)
-- Mejor utilización de recursos
+**Benefits**:
+- Reactive scaling to real load
+- Cost optimization (scale to zero)
+- Better resource utilization
 
 ---
 
 ### 7.5. Blue-Green Deployment
 
-**Descripción**: Despliegue con dos entornos idénticos, alternando entre ellos.
+**Description**: Deployment with two identical environments, alternating between them.
 
-**Implementación**:
-- **Kubernetes Rolling Updates**: Actualización gradual
+**Implementation**:
+- **Kubernetes Rolling Updates**: Gradual update
 - Zero-downtime deployments
-- Health checks antes de routing de tráfico
+- Health checks before traffic routing
 
-**Beneficios**:
-- Despliegues sin downtime
-- Rollback rápido en caso de problemas
-- Testing en producción antes de switch completo
+**Benefits**:
+- Deployments without downtime
+- Quick rollback in case of problems
+- Production testing before complete switch
 
 ---
 
-## 8. Conceptos de Arquitectura
+## 8. Architecture Concepts
 
 ### 8.1. Microservice Decomposition
 
-**Descripción**: División de la aplicación en servicios independientes por dominio de negocio.
+**Description**: Division of the application into independent services by business domain.
 
-**Servicios Implementados**:
+**Implemented Services**:
 
-1. **Auth Service**: Autenticación y autorización
-2. **Users Service**: Gestión de perfiles de usuarios
-3. **Gig Service**: Gestión de anuncios de trabajos
-4. **Order Service**: Procesamiento de órdenes y pagos
-5. **Review Service**: Sistema de reseñas y ratings
-6. **Chat Service**: Mensajería en tiempo real
-7. **Notification Service**: Envío de emails
-8. **Gateway Service**: Punto de entrada y routing
+1. **Auth Service**: Authentication and authorization
+2. **Users Service**: User profile management
+3. **Gig Service**: Job posting management
+4. **Order Service**: Order processing and payments
+5. **Review Service**: Review and rating system
+6. **Chat Service**: Real-time messaging
+7. **Notification Service**: Email sending
+8. **Gateway Service**: Entry point and routing
 
-**Principio**: Cada servicio maneja un dominio específico y es independiente.
+**Principle**: Each service handles a specific domain and is independent.
 
 ---
 
 ### 8.2. Bounded Context
 
-**Descripción**: Cada microservicio representa un contexto delimitado del dominio.
+**Description**: Each microservice represents a delimited domain context.
 
-**Ejemplos**:
-- **Auth Context**: Credenciales, tokens, sesiones
-- **Order Context**: Órdenes, pagos, entregas
-- **Review Context**: Calificaciones, comentarios, analytics
+**Examples**:
+- **Auth Context**: Credentials, tokens, sessions
+- **Order Context**: Orders, payments, deliveries
+- **Review Context**: Ratings, comments, analytics
 
-**Beneficios**:
-- Modelos de dominio claros
-- Menor acoplamiento
-- Facilidad de mantenimiento
+**Benefits**:
+- Clear domain models
+- Lower coupling
+- Ease of maintenance
 
 ---
 
-### 8.3. Saga Pattern - Implícito
+### 8.3. Saga Pattern - Implicit
 
-**Descripción**: Manejo de transacciones distribuidas mediante secuencia de eventos locales.
+**Description**: Handling of distributed transactions through sequence of local events.
 
-**Implementación**:
-- Cuando se crea una orden:
-  1. Order Service crea la orden
-  2. Publica evento a RabbitMQ
-  3. Notification Service envía email de confirmación
-  4. Si falla algún paso, eventos de compensación
+**Implementation**:
+- When an order is created:
+  1. Order Service creates the order
+  2. Publishes event to RabbitMQ
+  3. Notification Service sends confirmation email
+  4. If any step fails, compensation events
 
-**Ejemplo**:
+**Example**:
 ```
 Order Created → Publish Event → Notification Service → Email Sent
 ```
 
-**Beneficios**:
-- Consistencia eventual entre servicios
-- Sin necesidad de transacciones distribuidas costosas
-- Resiliencia mediante compensación
+**Benefits**:
+- Eventual consistency between services
+- No need for expensive distributed transactions
+- Resilience through compensation
 
 ---
 
 ### 8.4. Strangler Fig Pattern
 
-**Descripción**: Migración gradual de monolito a microservicios.
+**Description**: Gradual migration from monolith to microservices.
 
-**Aplicación**: Arquitectura diseñada desde cero como microservicios, pero conceptos aplicables para futuras migraciones.
-
----
-
-### 8.5. Backend for Frontend (BFF) - Parcial
-
-**Descripción**: Gateway adapta respuestas según el tipo de cliente.
-
-**Implementación**:
-- Gateway Service actúa como BFF simplificado
-- Unifica múltiples llamadas de microservicios
-- Adapta formatos de respuesta
-
-**Beneficios**:
-- Optimización por tipo de cliente
-- Reducción de latencia (menos roundtrips)
-- Desacoplamiento cliente-servicios
+**Application**: Architecture designed from scratch as microservices, but concepts applicable for future migrations.
 
 ---
 
-## 📊 Resumen de Tecnologías
+### 8.5. Backend for Frontend (BFF) - Partial
 
-| Categoría | Tecnología | Uso |
-|-----------|------------|-----|
-| **Lenguaje** | TypeScript + Node.js | Todos los servicios |
-| **Framework** | Express.js | Servidores HTTP |
+**Description**: Gateway adapts responses according to client type.
+
+**Implementation**:
+- Gateway Service acts as simplified BFF
+- Unifies multiple microservice calls
+- Adapts response formats
+
+**Benefits**:
+- Optimization by client type
+- Latency reduction (fewer roundtrips)
+- Client-service decoupling
+
+---
+
+## 📊 Technology Summary
+
+| Category | Technology | Usage |
+|----------|------------|-------|
+| **Language** | TypeScript + Node.js | All services |
+| **Framework** | Express.js | HTTP servers |
 | **Message Broker** | RabbitMQ | Event-driven communication |
-| **Cache** | Redis | Caching y sesiones |
-| **Bases de Datos** | MySQL, MongoDB, PostgreSQL | Database per Service |
-| **Search/Logs** | Elasticsearch | Centralized logging y búsqueda |
+| **Cache** | Redis | Caching and sessions |
+| **Databases** | MySQL, MongoDB, PostgreSQL | Database per Service |
+| **Search/Logs** | Elasticsearch | Centralized logging and search |
 | **Real-time** | Socket.io | WebSocket communication |
 | **Containers** | Docker | Containerization |
-| **Orchestration** | Kubernetes (EKS) | Despliegue y escalado |
-| **Autoscaling** | HPA, VPA, KEDA | Escalado automático |
-| **Monitoring** | Elastic APM, Kibana | Observabilidad |
+| **Orchestration** | Kubernetes (EKS) | Deployment and scaling |
+| **Autoscaling** | HPA, VPA, KEDA | Automatic scaling |
+| **Monitoring** | Elastic APM, Kibana | Observability |
 | **CI/CD** | Jenkins | Continuous Integration |
 
 ---
 
-## 🎯 Principios Aplicados
+## 🎯 Applied Principles
 
-1. **Single Responsibility**: Cada servicio tiene una responsabilidad clara
-2. **Independence**: Servicios desplegables y escalables independientemente
-3. **Decentralization**: Datos y lógica distribuidos
-4. **Failure Isolation**: Fallos aislados por servicio
+1. **Single Responsibility**: Each service has a clear responsibility
+2. **Independence**: Services deployable and scalable independently
+3. **Decentralization**: Distributed data and logic
+4. **Failure Isolation**: Failures isolated per service
 5. **Automated Operations**: CI/CD, auto-scaling, self-healing
 6. **Design for Failure**: Retry, circuit breakers, graceful degradation
-7. **Evolutionary Design**: Arquitectura que evoluciona con el negocio
+7. **Evolutionary Design**: Architecture that evolves with the business
 
 ---
 
-## 📚 Referencias y Lecturas Recomendadas
+## 📚 References and Recommended Reading
 
 - [Microservices Patterns - Chris Richardson](https://microservices.io/patterns/)
 - [Building Microservices - Sam Newman](https://www.oreilly.com/library/view/building-microservices/9781491950340/)
@@ -736,10 +736,7 @@ Order Created → Publish Event → Notification Service → Email Sent
 
 ---
 
-**Nota**: Este documento refleja los patrones implementados en el proyecto JobApp y puede evolucionar conforme se añadan nuevas funcionalidades o patrones.
-
-
-
+**Note**: This document reflects the patterns implemented in the JobApp project and may evolve as new features or patterns are added.
 
 
 

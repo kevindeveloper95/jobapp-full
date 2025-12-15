@@ -1,56 +1,55 @@
-# Imágenes para Pod Affinity/Anti-Affinity
+# Images for Pod Affinity/Anti-Affinity
 
-Coloca las capturas de pantalla en la carpeta `images/` y referencia las imágenes en los READMEs principales usando sintaxis Markdown.
+Place screenshots in the `images/` folder and reference the images in the main READMEs using Markdown syntax.
 
-## Estructura
+## Structure
 
 ```
 affinity/
-├── README.md          ← Este archivo (guía)
-└── images/            ← Guarda las imágenes aquí
+├── README.md          ← This file (guide)
+└── images/            ← Save images here
     ├── affinity-before.png
     ├── affinity-distributed.png
     └── ...
 ```
 
-## Cómo referenciar en los READMEs
+## How to reference in READMEs
 
-Usa esta sintaxis en los READMEs principales:
+Use this syntax in the main READMEs:
 
 ```markdown
-![Estado inicial con affinity](images/affinity-before.png)
+![Initial state with affinity](images/affinity-before.png)
 ```
 
-## Imágenes sugeridas:
+## Suggested images:
 
-1. **affinity-before.png** - Estado inicial (1 réplica, 1 nodo)
+1. **affinity-before.png** - Initial state (1 replica, 1 node)
    ```bash
    kubectl get pods -n production -o wide
    kubectl get nodes
    ```
-   Referencia: `![Estado inicial](images/affinity-before.png)`
+   Reference: `![Initial state](images/affinity-before.png)`
 
-2. **affinity-distributed.png** - Después de escalar (2 réplicas, 2 nodos, cada una en nodo diferente)
+2. **affinity-distributed.png** - After scaling (2 replicas, 2 nodes, each on different node)
    ```bash
    kubectl get pods -n production -o wide
    ```
-   Referencia: `![Pods distribuidos](images/affinity-distributed.png)`
+   Reference: `![Distributed pods](images/affinity-distributed.png)`
 
-3. **affinity-describe.png** - Describe del pod mostrando reglas de affinity
+3. **affinity-describe.png** - Pod describe showing affinity rules
    ```bash
    kubectl describe pod <pod-name> -n production
    ```
-   Referencia: `![Describe del pod](images/affinity-describe.png)`
+   Reference: `![Pod describe](images/affinity-describe.png)`
 
-4. **affinity-events.png** - Eventos del scheduler relacionados con affinity
+4. **affinity-events.png** - Scheduler events related to affinity
    ```bash
    kubectl get events -n production --sort-by='.lastTimestamp' | grep -i affinity
    ```
-   Referencia: `![Eventos del scheduler](images/affinity-events.png)`
+   Reference: `![Scheduler events](images/affinity-events.png)`
 
-5. **affinity-jsonpath.png** - Distribución con JSONPath
+5. **affinity-jsonpath.png** - Distribution with JSONPath
    ```bash
    kubectl get pods -n production -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.spec.nodeName}{"\n"}{end}' | sort
    ```
-   Referencia: `![Distribución JSONPath](images/affinity-jsonpath.png)`
-
+   Reference: `![JSONPath distribution](images/affinity-jsonpath.png)`

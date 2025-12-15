@@ -1,51 +1,50 @@
-# Imágenes para VPA
+# Images for VPA
 
-Coloca las capturas de pantalla en la carpeta `images/` y referencia las imágenes en los READMEs principales usando sintaxis Markdown.
+Place screenshots in the `images/` folder and reference the images in the main READMEs using Markdown syntax.
 
-## Estructura
+## Structure
 
 ```
 vpa/
-├── README.md          ← Este archivo (guía)
-├── README-VPA.md      ← Documentación principal
+├── README.md          ← This file (guide)
+├── README-VPA.md      ← Main documentation
 ├── gateway-vpa.yaml
-└── images/            ← Guarda las imágenes aquí
+└── images/            ← Save images here
     ├── vpa-configured.png
     ├── vpa-recommendations.png
     └── ...
 ```
 
-## Cómo referenciar en los READMEs
+## How to reference in READMEs
 
-Usa esta sintaxis en los READMEs principales:
+Use this syntax in the main READMEs:
 
 ```markdown
-![VPA configurado](images/vpa-configured.png)
+![VPA configured](images/vpa-configured.png)
 ```
 
-## Imágenes sugeridas:
+## Suggested images:
 
-1. **vpa-configured.png** - VPA creado y configurado
+1. **vpa-configured.png** - VPA created and configured
    ```powershell
    kubectl get vpa -n production
    kubectl describe vpa jobber-gateway-vpa -n production
    ```
-   Referencia: `![VPA configurado](images/vpa-configured.png)`
+   Reference: `![VPA configured](images/vpa-configured.png)`
 
-2. **vpa-recommendations.png** - Recomendaciones del VPA
+2. **vpa-recommendations.png** - VPA recommendations
    ```powershell
    kubectl describe vpa jobber-gateway-vpa -n production | Select-String -Pattern "Recommendation" -Context 0,20
    ```
-   Referencia: `![Recomendaciones VPA](images/vpa-recommendations.png)`
+   Reference: `![VPA recommendations](images/vpa-recommendations.png)`
 
-3. **vpa-before-after.png** - Comparación antes/después
-   - Antes: requests/limits originales del deployment
-   - Después: requests/limits recomendados por VPA
-   Referencia: `![Comparación antes/después](images/vpa-before-after.png)`
+3. **vpa-before-after.png** - Before/after comparison
+   - Before: original deployment requests/limits
+   - After: VPA recommended requests/limits
+   Reference: `![Before/after comparison](images/vpa-before-after.png)`
 
-4. **vpa-pod-adjusted.png** - Pod con recursos ajustados (modo Initial)
+4. **vpa-pod-adjusted.png** - Pod with adjusted resources (Initial mode)
    ```powershell
    kubectl describe pod <pod-name> -n production | Select-String -Pattern "Requests|Limits"
    ```
-   Referencia: `![Pod con recursos ajustados](images/vpa-pod-adjusted.png)`
-
+   Reference: `![Pod with adjusted resources](images/vpa-pod-adjusted.png)`

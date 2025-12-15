@@ -1,103 +1,102 @@
-# Infraestructura AWS - Jobber
+# AWS Infrastructure - Jobber
 
-Este directorio contiene la documentación y configuración de la infraestructura AWS para el proyecto Jobber.
+This directory contains the documentation and configuration for the AWS infrastructure for the Jobber project.
 
 ---
 
-## 📋 Índice de Documentación
+## 📋 Documentation Index
 
 ### 1. [Networking (VPC, Subnets, Security Groups)](README-NETWORKING.md)
-- Configuración de VPC
-- Subnets públicas y privadas
+- VPC configuration
+- Public and private subnets
 - Security Groups
-- NAT Gateway (si aplica)
+- NAT Gateway (if applicable)
 
 ### 2. [EKS Cluster Setup](README-EKS.md)
-- Creación del clúster EKS
-- Configuración de nodegroups
-- Comandos de instalación y verificación
+- EKS cluster creation
+- Nodegroup configuration
+- Installation and verification commands
 
 ### 2.1. [EKS Command Reference](EKS-COMMAND-REFERENCE.md)
-- Referencia rápida de comandos eksctl
-- Gestión de IAM Service Accounts
-- Instalación de controladores y add-ons
-- Comandos de escalado y operaciones
+- Quick reference for eksctl commands
+- IAM Service Accounts management
+- Controller and add-on installation
+- Scaling and operations commands
 
-### 3. [Bases de Datos](README-DATABASES.md)
-- RDS (si se usa)
-- ElastiCache (si se usa)
-- Bases de datos en Kubernetes
-- Decisiones arquitectónicas
+### 3. [Databases](README-DATABASES.md)
+- RDS (if used)
+- ElastiCache (if used)
+- Databases in Kubernetes
+- Architectural decisions
 
-### 4. [Seguridad](README-SECURITY.md)
-- IAM Roles y Policies
+### 4. [Security](README-SECURITY.md)
+- IAM Roles and Policies
 - IRSA (IAM Roles for Service Accounts)
 - Secrets Management
-- Security Groups críticos
+- Critical Security Groups
 
-### 5. [DNS y Route 53](README-DNS-ROUTE53.md)
-- Configuración de Route 53 Hosted Zone
-- Configuración del dominio original
-- Certificados SSL/TLS con ACM (wildcards)
+### 5. [DNS and Route 53](README-DNS-ROUTE53.md)
+- Route 53 Hosted Zone configuration
+- Original domain configuration
+- SSL/TLS certificates with ACM (wildcards)
 - CloudFront Distribution
-- Registros DNS y verificación
+- DNS records and verification
 
-### 6. [Costos y Recursos](COSTOS-Y-RECURSOS.md)
-- Planificación de capacidad
-- Cálculo de recursos requeridos
-- Comparación de escenarios (Producción vs Demo)
-- Estrategias de optimización de costos
+### 6. [Costs and Resources](COSTOS-Y-RECURSOS.md)
+- Capacity planning
+- Required resources calculation
+- Scenario comparison (Production vs Demo)
+- Cost optimization strategies
 
 ### 7. [Troubleshooting](../../../docs/troubleshooting/README.md)
-- Guías de solución de problemas comunes
-- Comandos de diagnóstico
-- Problemas resueltos por categoría
+- Common problem solution guides
+- Diagnostic commands
+- Problems resolved by category
 
 ---
 
-## 🏗️ Estructura de Archivos
+## 🏗️ File Structure
 
 ```
 infrastructure/
-├── README.md                    ← Este archivo (índice)
-├── README-NETWORKING.md         ← Networking y VPC
-├── README-EKS.md               ← EKS Cluster (guía completa)
-├── EKS-COMMAND-REFERENCE.md    ← Referencia rápida de comandos EKS
-├── README-DATABASES.md         ← Bases de datos
-├── README-SECURITY.md          ← Seguridad e IAM
-├── README-DNS-ROUTE53.md       ← DNS, Route 53, CloudFront y Certificados
-├── COSTOS-Y-RECURSOS.md        ← Planificación de costos y recursos
-└── eksctl-config.yaml          ← Configuración de eksctl (opcional)
+├── README.md                    ← This file (index)
+├── README-NETWORKING.md         ← Networking and VPC
+├── README-EKS.md               ← EKS Cluster (complete guide)
+├── EKS-COMMAND-REFERENCE.md    ← Quick reference for EKS commands
+├── README-DATABASES.md         ← Databases
+├── README-SECURITY.md          ← Security and IAM
+├── README-DNS-ROUTE53.md       ← DNS, Route 53, CloudFront and Certificates
+├── COSTOS-Y-RECURSOS.md        ← Cost and resource planning
+└── eksctl-config.yaml          ← eksctl configuration (optional)
 ```
 
 ---
 
 ## 🚀 Quick Start
 
-1. Revisar [README-NETWORKING.md](README-NETWORKING.md) para entender la arquitectura de red
-2. Seguir [README-EKS.md](README-EKS.md) para crear el clúster
-3. Configurar seguridad según [README-SECURITY.md](README-SECURITY.md)
-4. Revisar [README-DATABASES.md](README-DATABASES.md) para bases de datos
-5. Configurar DNS y certificados según [README-DNS-ROUTE53.md](README-DNS-ROUTE53.md)
+1. Review [README-NETWORKING.md](README-NETWORKING.md) to understand the network architecture
+2. Follow [README-EKS.md](README-EKS.md) to create the cluster
+3. Configure security according to [README-SECURITY.md](README-SECURITY.md)
+4. Review [README-DATABASES.md](README-DATABASES.md) for databases
+5. Configure DNS and certificates according to [README-DNS-ROUTE53.md](README-DNS-ROUTE53.md)
 
-**¿Problemas?** Consulta la [Guía de Troubleshooting](../../../docs/troubleshooting/README.md) para soluciones rápidas.
-
----
-
-## 📝 Notas
-
-- Esta documentación asume conocimiento básico de AWS y Kubernetes
-- Todos los comandos están probados en `us-east-1` (ajustar región si es necesario)
-- Para desarrollo local, ver `../minikube/`
+**Having issues?** Check the [Troubleshooting Guide](../../../docs/troubleshooting/README.md) for quick solutions.
 
 ---
 
-## 🔗 Referencias
+## 📝 Notes
 
-- [Documentación AWS EKS](https://docs.aws.amazon.com/eks/)
+- This documentation assumes basic knowledge of AWS and Kubernetes
+- All commands are tested in `us-east-1` (adjust region if necessary)
+- For local development, see `../minikube/`
+
+---
+
+## 🔗 References
+
+- [AWS EKS Documentation](https://docs.aws.amazon.com/eks/)
 - [eksctl Documentation](https://eksctl.io/)
 - [AWS VPC Documentation](https://docs.aws.amazon.com/vpc/)
-
 
 
 

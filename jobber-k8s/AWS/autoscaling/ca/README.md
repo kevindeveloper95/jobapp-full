@@ -1,62 +1,61 @@
-# Imágenes para Cluster Autoscaler
+# Images for Cluster Autoscaler
 
-Coloca las capturas de pantalla en la carpeta `images/` y referencia las imágenes en los READMEs principales usando sintaxis Markdown.
+Place screenshots in the `images/` folder and reference the images in the main READMEs using Markdown syntax.
 
-## Estructura
+## Structure
 
 ```
 ca/
-├── README.md          ← Este archivo (guía)
-└── images/            ← Guarda las imágenes aquí
+├── README.md          ← This file (guide)
+└── images/            ← Save images here
     ├── ca-initial-state.png
     ├── ca-pending-pods.png
     └── ...
 ```
 
-## Cómo referenciar en los READMEs
+## How to reference in READMEs
 
-Usa esta sintaxis en los READMEs principales:
+Use this syntax in the main READMEs:
 
 ```markdown
-![Estado inicial del clúster](images/ca-initial-state.png)
+![Initial cluster state](images/ca-initial-state.png)
 ```
 
-## Imágenes sugeridas:
+## Suggested images:
 
-1. **ca-initial-state.png** - Estado inicial del clúster (1 nodo)
+1. **ca-initial-state.png** - Initial cluster state (1 node)
    ```bash
    kubectl get nodes
    kubectl get pods -n production -o wide
    ```
-   Referencia: `![Estado inicial del clúster](images/ca-initial-state.png)`
+   Reference: `![Initial cluster state](images/ca-initial-state.png)`
 
-2. **ca-pending-pods.png** - Pods en estado Pending antes del escalado
+2. **ca-pending-pods.png** - Pods in Pending state before scaling
    ```bash
    kubectl get pods -n production | grep Pending
    ```
-   Referencia: `![Pods pendientes](images/ca-pending-pods.png)`
+   Reference: `![Pending pods](images/ca-pending-pods.png)`
 
-3. **ca-logs-scaling.png** - Logs del CA mostrando decisión de escalar
+3. **ca-logs-scaling.png** - CA logs showing scaling decision
    ```bash
    kubectl -n kube-system logs deployment/cluster-autoscaler | grep -i "scale\|node"
    ```
-   Referencia: `![Logs del CA escalando](images/ca-logs-scaling.png)`
+   Reference: `![CA logs scaling](images/ca-logs-scaling.png)`
 
-4. **ca-new-node.png** - Nuevo nodo creado
+4. **ca-new-node.png** - New node created
    ```bash
    kubectl get nodes
    ```
-   Referencia: `![Nuevo nodo creado](images/ca-new-node.png)`
+   Reference: `![New node created](images/ca-new-node.png)`
 
-5. **ca-pods-distributed.png** - Pods distribuidos en ambos nodos
+5. **ca-pods-distributed.png** - Pods distributed across both nodes
    ```bash
    kubectl get pods -n production -o wide
    ```
-   Referencia: `![Pods distribuidos](images/ca-pods-distributed.png)`
+   Reference: `![Distributed pods](images/ca-pods-distributed.png)`
 
-6. **ca-scale-down.png** - Escalado hacia abajo (cuando la carga baja)
+6. **ca-scale-down.png** - Scale down (when load decreases)
    ```bash
    kubectl -n kube-system logs deployment/cluster-autoscaler | grep -i "scale down"
    ```
-   Referencia: `![Escalado hacia abajo](images/ca-scale-down.png)`
-
+   Reference: `![Scale down](images/ca-scale-down.png)`
