@@ -1,0 +1,125 @@
+# Terraform Variables File - Example
+# Copy this file to terraform.tfvars and fill in your actual values
+# terraform.tfvars is in .gitignore and should NOT be committed to Git
+
+# ============================================
+# AWS Configuration
+# ============================================
+aws_region  = "us-east-1"
+project_name = "jobapp"
+environment  = "production"  # Options: dev, staging, production
+
+# ============================================
+# VPC Configuration
+# ============================================
+vpc_cidr = "10.0.0.0/16"
+
+# ============================================
+# RDS MySQL Configuration
+# ============================================
+rds_mysql_database_name = "jobber-auth"
+rds_mysql_username      = "jobberadmin"
+rds_mysql_password      = "CHANGE_ME_MySQL_Password123!"  # ⚠️ CHANGE THIS!
+rds_mysql_instance_class = "db.t3.micro"
+rds_mysql_allocated_storage = 20
+
+# ============================================
+# RDS PostgreSQL Configuration
+# ============================================
+rds_postgres_database_name = "jobber-auth-postgres"
+rds_postgres_username      = "jobberadmin"
+rds_postgres_password      = "CHANGE_ME_PostgreSQL_Password123!"  # ⚠️ CHANGE THIS!
+rds_postgres_instance_class = "db.t3.micro"
+rds_postgres_allocated_storage = 20
+
+# ============================================
+# EC2 Key Pair Configuration
+# ============================================
+# Generate SSH key pair:
+# ssh-keygen -t rsa -b 4096 -f ~/.ssh/jobapp-key
+# Then paste the PUBLIC key content here (from ~/.ssh/jobapp-key.pub)
+ec2_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC... your-public-key-here"
+
+# ============================================
+# EKS Cluster Configuration
+# ============================================
+eks_cluster_version = "1.28"
+eks_cluster_name    = ""  # Leave empty to auto-generate: {project_name}-{environment}
+
+# EKS Node Groups Configuration
+# Configure node groups for your EKS cluster
+eks_node_groups = {
+  main = {
+    instance_types = ["t3a.medium"]  # Instance types for the node group
+    capacity_type  = "ON_DEMAND"    # Options: ON_DEMAND or SPOT
+    min_size       = 1              # Minimum number of nodes
+    max_size       = 5              # Maximum number of nodes
+    desired_size   = 4              # Desired number of nodes
+    disk_size      = 20             # Disk size in GB
+    
+    labels = {
+      "node-group" = "main"
+      "env"        = "production"
+    }
+    
+    taints = []  # Optional: Node taints for scheduling
+  }
+  
+  # Uncomment to add more node groups
+  # spot = {
+  #   instance_types = ["t3.small", "t3.medium"]
+  #   capacity_type  = "SPOT"
+  #   min_size       = 0
+  #   max_size       = 10
+  #   desired_size   = 2
+  #   disk_size      = 20
+  #   
+  #   labels = {
+  #     "node-group" = "spot"
+  #     "capacity-type" = "SPOT"
+  #   }
+  #   
+  #   taints = [
+  #     {
+  #       key    = "spot"
+  #       value  = "true"
+  #       effect = "NO_SCHEDULE"
+  #     }
+  #   ]
+  # }
+}
+
+# ============================================
+# ElastiCache Redis Configuration
+# ============================================
+redis_node_type                = "cache.t3.small"  # Options: cache.t3.micro, cache.t3.small, etc.
+redis_engine_version           = "7.0"
+redis_num_cache_clusters       = 2                 # Number of cache clusters (1-6)
+redis_automatic_failover_enabled = true
+redis_multi_az_enabled         = true
+redis_snapshot_retention_limit = 7                 # Days to retain snapshots (0-35)
+redis_snapshot_window          = "03:00-05:00"    # Time window for snapshots (UTC)
+
+# ============================================
+# Route 53 DNS Configuration
+# ============================================
+domain_name        = "kevmendeveloper.com"                              # Main domain
+jobberapp_subdomain = "jobberapp.kevmendeveloper.com"                   # Frontend subdomain
+api_subdomain      = "api.jobberapp.kevmendeveloper.com"                # API subdomain
+
+# Main hosted zone ID (if created manually)
+# Get it from: AWS Console > Route 53 > Hosted zones > your-domain.com
+main_hosted_zone_id = "Z1234567890ABC"  # ⚠️ CHANGE THIS! Get from AWS Console
+
+# ============================================
+# Load Balancer Configuration (for later)
+# ============================================
+# These will be populated after creating ALBs
+# Uncomment and fill when you create the Load Balancers
+
+# main_alb_dns_name = "dualstack.jobber-frontend-1234567890.us-east-1.elb.amazonaws.com"
+# main_alb_zone_id  = "Z35SXDOTRQ7X7K"
+
+# www_alb_dns_name = "dualstack.jobber-www-1234567890.us-east-1.elb.amazonaws.com"  # Optional
+# www_alb_zone_id  = "Z35SXDOTRQ7X7K"  # Optional
+

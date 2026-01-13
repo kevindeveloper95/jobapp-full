@@ -128,3 +128,95 @@ variable "eks_node_groups" {
   }))
   default = {}
 }
+
+# ElastiCache Redis Variables
+variable "redis_node_type" {
+  description = "Instance type for ElastiCache Redis (e.g., cache.t3.micro, cache.t3.small)"
+  type        = string
+  default     = "cache.t3.small"
+}
+
+variable "redis_engine_version" {
+  description = "Redis engine version (e.g., 7.0, 6.2)"
+  type        = string
+  default     = "7.0"
+}
+
+variable "redis_num_cache_clusters" {
+  description = "Number of cache clusters (nodes) in the replication group (1-6)"
+  type        = number
+  default     = 2
+}
+
+variable "redis_automatic_failover_enabled" {
+  description = "Enable automatic failover for high availability"
+  type        = bool
+  default     = true
+}
+
+variable "redis_multi_az_enabled" {
+  description = "Enable Multi-AZ for high availability"
+  type        = bool
+  default     = true
+}
+
+variable "redis_snapshot_retention_limit" {
+  description = "Number of days to retain automatic snapshots (0-35)"
+  type        = number
+  default     = 7
+}
+
+variable "redis_snapshot_window" {
+  description = "Daily time range for snapshots (e.g., 03:00-05:00)"
+  type        = string
+  default     = "03:00-05:00"
+}
+
+# Route 53 Variables
+variable "domain_name" {
+  description = "Domain name for Route 53 hosted zone (e.g., kevmendeveloper.com)"
+  type        = string
+  default     = "kevmendeveloper.com"
+}
+
+variable "jobberapp_subdomain" {
+  description = "Subdomain for jobberapp (e.g., jobberapp.kevmendeveloper.com)"
+  type        = string
+  default     = "jobberapp.kevmendeveloper.com"
+}
+
+variable "api_subdomain" {
+  description = "Subdomain for API (e.g., api.jobberapp.kevmendeveloper.com)"
+  type        = string
+  default     = "api.jobberapp.kevmendeveloper.com"
+}
+
+variable "main_hosted_zone_id" {
+  description = "ID of the main Route 53 hosted zone (kevmendeveloper.com) - created manually"
+  type        = string
+}
+
+# Route 53 ALB Variables (para cuando crees los Load Balancers)
+variable "main_alb_dns_name" {
+  description = "DNS name of the main ALB (e.g., dualstack.jobber-frontend-1234567890.us-east-1.elb.amazonaws.com)"
+  type        = string
+  default     = null
+}
+
+variable "main_alb_zone_id" {
+  description = "Zone ID of the main ALB (e.g., Z35SXDOTRQ7X7K)"
+  type        = string
+  default     = null
+}
+
+variable "www_alb_dns_name" {
+  description = "DNS name of the www ALB (optional, if different from main ALB)"
+  type        = string
+  default     = null
+}
+
+variable "www_alb_zone_id" {
+  description = "Zone ID of the www ALB (optional, if different from main ALB)"
+  type        = string
+  default     = null
+}

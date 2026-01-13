@@ -51,7 +51,15 @@ terraform/
    terraform apply
    ```
 
-For detailed instructions, see [terraform/aws/README.md](./aws/README.md).
+For detailed instructions, see [terraform/aws/README.md](./aws/README.md) (if available).
+
+## 💰 Infrastructure Costs
+
+The estimated monthly infrastructure cost is **$440.94 USD/month** (~$5,291/year).
+
+For detailed cost information:
+- **[Infrastructure Costs Summary](./aws/INFRASTRUCTURE-COSTS.md)** - Executive summary with cost breakdown by service and category
+- **[AWS Pricing Calculator Guide](./aws/AWS-PRICING-CALCULATOR-GUIDE.md)** - Step-by-step guide for using AWS Pricing Calculator
 
 ## 📚 What's Included
 
