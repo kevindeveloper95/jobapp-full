@@ -15,16 +15,16 @@ The infrastructure is deployed in the `us-east-1` (N. Virginia) region and inclu
 
 | # | Service | Configuration | Monthly Cost (USD) | Cost Source |
 |---|---------|---------------|-------------------|-------------|
-| 1 | **Elastic Load Balancing** | Application Load Balancers (4x) | $163.81 | My Estimate |
+| 1 | **Elastic Load Balancing** | Application Load Balancers (4x) | $163.81 | jobbapp-costs |
 | 2 | **Amazon EKS** | Control Plane (1 cluster) | $73.00 | jobbapp-costs |
 | 3 | **Amazon EC2** | Node Groups (4 × t3a.medium) | $64.20 | jobbapp-costs |
 | 4 | **Amazon ElastiCache** | Redis (2 nodes) | $49.64 | jobbapp-costs |
 | 5 | **Amazon VPC** | NAT Gateway + Network | $35.10 | jobbapp-costs |
-| 6 | **AWS Data Transfer** | Egress + Intra-Region | $20.00 | My Estimate |
+| 6 | **AWS Data Transfer** | Egress + Intra-Region | $20.00 | jobbapp-costs |
 | 7 | **Amazon RDS PostgreSQL** | db.t3.micro (Single-AZ) | $15.44 | jobbapp-costs |
 | 8 | **Amazon RDS MySQL** | db.t3.micro (Single-AZ) | $14.71 | jobbapp-costs |
-| 9 | **Amazon Route 53** | DNS (2 hosted zones) | $1.80 | My Estimate |
-| 10 | **Amazon EBS** | Persistent Volumes (18 GB gp3) | $1.44 | My Estimate |
+| 9 | **Amazon Route 53** | DNS (2 hosted zones) | $1.80 | jobbapp-costs |
+| 10 | **Amazon EBS** | Persistent Volumes (18 GB gp3) | $1.44 | jobbapp-costs |
 
 **Total: $440.94 USD/month**
 
@@ -204,8 +204,7 @@ The infrastructure is deployed in the `us-east-1` (N. Virginia) region and inclu
 
 ### Data Sources
 
-- **jobbapp-costs**: Core infrastructure services (EKS, EC2, RDS, ElastiCache, VPC)
-- **My Estimate**: Additional services (ALBs, Data Transfer, Route 53, EBS PVCs)
+- **jobbapp-costs**: All infrastructure services (EKS, EC2, RDS, ElastiCache, VPC, ALBs, Data Transfer, Route 53, EBS PVCs)
 
 ### Calculation Notes
 
