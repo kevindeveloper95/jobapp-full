@@ -1,0 +1,8 @@
+# Archivo de prueba para Talisman - ELIMINAR después de probar
+# Talisman debería detectar las siguientes cadenas como sensibles:
+
+AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+password=SuperSecret123!
+api_key=sk_live_51a2b3c4d5e6f7890
