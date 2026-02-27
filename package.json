@@ -19,7 +19,7 @@
     "install:all": "npm install && cd services/gateway-service && npm install && cd ../auth-service && npm install && cd ../users-service && npm install && cd ../notification-service && npm install && cd ../chat-service && npm install && cd ../gig-service && npm install && cd ../order-service && npm install && cd ../review-service && npm install && cd ../../jobber-client && npm install"
   },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "7.6.0"
   },
   "keywords": [],
   "author": "",

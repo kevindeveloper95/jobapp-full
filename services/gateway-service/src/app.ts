@@ -1,3 +1,4 @@
+import './instrumentation';
 import express, { Express } from 'express';
 import { GatewayServer } from '@gateway/server';
 /* import { redisConnection } from '@gateway/redis/redis.connection';

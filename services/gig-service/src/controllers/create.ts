@@ -1,4 +1,5 @@
 import { getDocumentCount } from '@gig/elasticsearch';
+import { gigsCreatedTotal } from '@gig/metrics';
 import { gigCreateSchema } from '@gig/schemes/gig';
 import { createGig } from '@gig/services/gig.service';
 import { BadRequestError, ISellerGig, uploads } from '@kevindeveloper95/jobapp-shared';
@@ -34,6 +35,8 @@ const gigCreate = async (req: Request, res: Response): Promise<void> => {
     sortId: count + 1
   };
   const createdGig: ISellerGig = await createGig(gig);
+  const categories = Array.isArray(gig.categories) ? gig.categories.join(',') : String(gig.categories ?? '');
+  gigsCreatedTotal.inc({ categories: categories || 'unknown' });
   res.status(StatusCodes.CREATED).json({ message: 'Gig created successfully.', gig: createdGig });
 };
 

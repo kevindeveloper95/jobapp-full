@@ -4,7 +4,7 @@ import 'express-async-errors';
 import { CustomError, IAuthPayload, IErrorResponse, winstonLogger } from '@kevindeveloper95/jobapp-shared';
 import { Logger } from 'winston';
 import { config } from '@gig/config';
-import { Application, Request, Response, NextFunction, json, urlencoded } from 'express';
+import { Application, ErrorRequestHandler, Request, Response, NextFunction, json, urlencoded } from 'express';
 import hpp from 'hpp';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -12,6 +12,7 @@ import { verify } from 'jsonwebtoken';
 import compression from 'compression';
 import { checkConnection, createIndex } from '@gig/elasticsearch';
 import { appRoutes } from '@gig/routes';
+import { httpMetricsMiddleware } from '@gig/middleware/http-metrics';
 import { createConnection } from '@gig/queues/connection';
 import { Channel } from 'amqplib';
 import { consumeGigDirectMessage, consumeSeedDirectMessages } from '@gig/queues/gig.consumer';
@@ -55,6 +56,7 @@ const standardMiddleware = (app: Application): void => {
   app.use(compression());
   app.use(json({ limit: '200mb' }));
   app.use(urlencoded({ extended: true, limit: '200mb' }));
+  app.use(httpMetricsMiddleware);
 };
 
 const routesMiddleware = (app: Application): void => {
@@ -73,13 +75,16 @@ const startElasticSearch = (): void => {
 };
 
 const gigErrorHandler = (app: Application): void => {
-  app.use((error: IErrorResponse, _req: Request, res: Response, next: NextFunction) => {
-    log.log('error', `GigService ${error.comingFrom}:`, error);
-    if (error instanceof CustomError) {
-      return res.status(error.statusCode).json(error.serializeErrors());
+  const errorHandler: ErrorRequestHandler = (error, _req, res, next) => {
+    const err = error as IErrorResponse;
+    log.log('error', `GigService ${err.comingFrom}:`, err);
+    if (err instanceof CustomError) {
+      res.status(err.statusCode).json(err.serializeErrors());
+      return;
     }
     next(error);
-  });
+  };
+  app.use(errorHandler);
 };
 
 const startServer = (app: Application): void => {

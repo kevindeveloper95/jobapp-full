@@ -1,0 +1,1126 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e4]:
+      - link "Home" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img [ref=e7]
+      - generic [ref=e17]:
+        - button "Search grafana.com" [ref=e18] [cursor=pointer]:
+          - img [ref=e19]
+        - button [ref=e24] [cursor=pointer]:
+          - img [ref=e25]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - link "Create free account":
+                  - /url: /auth/sign-up/create-user?plcmt=mobile-nav&cta=create-free-account
+                - link "Contact us":
+                  - /url: /contact/?plcmt=mobile-nav&cta=myaccount
+            - generic:
+              - generic:
+                - generic:
+                  - button "Products":
+                    - text: Products
+                    - generic:
+                      - img
+                  - generic:
+                    - button "All":
+                      - generic:
+                        - img
+                      - paragraph: All
+                    - paragraph: Products
+                    - generic:
+                      - paragraph: Grafana Cloud
+                      - generic:
+                        - paragraph: Monitor, analyze, and act faster with AI-powered observability.
+                        - generic:
+                          - generic:
+                            - img "Grafana Cloud"
+                          - link "Grafana Cloud overview →":
+                            - /url: /products/cloud
+                    - generic:
+                      - generic:
+                        - paragraph: LGTM+ Stack
+                        - generic:
+                          - generic:
+                            - link "Grafana Cloud Logs Logs powered by Grafana Loki":
+                              - /url: /products/cloud/logs/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Grafana Cloud Logs"
+                                - paragraph: Logs
+                              - paragraph: powered by Grafana Loki
+                          - generic:
+                            - link "Grafana Grafana for visualization":
+                              - /url: /grafana/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Grafana"
+                                - paragraph: Grafana
+                              - paragraph: for visualization
+                          - generic:
+                            - link "Grafana Cloud Traces Traces powered by Grafana Tempo":
+                              - /url: /products/cloud/traces/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Grafana Cloud Traces"
+                                - paragraph: Traces
+                              - paragraph: powered by Grafana Tempo
+                          - generic:
+                            - link "Grafana Cloud Metrics Metrics powered by Grafana Mimir and Prometheus":
+                              - /url: /products/cloud/metrics/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Grafana Cloud Metrics"
+                                - paragraph: Metrics
+                              - paragraph: powered by Grafana Mimir and Prometheus
+                      - generic:
+                        - paragraph: Key Capabilities
+                        - generic:
+                          - generic:
+                            - link "AI/ML AI/ML insights Identify anomalies and reduce toil":
+                              - /url: /products/cloud/ai-tools-for-observability/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "AI/ML"
+                                - paragraph: AI/ML insights
+                              - paragraph: Identify anomalies and reduce toil
+                          - generic:
+                            - link "Grafana Cloud Asserts Contextual root cause analysis Automated anomaly correlation":
+                              - /url: /products/cloud/asserts/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Grafana Cloud Asserts"
+                                - paragraph: Contextual root cause analysis
+                              - paragraph: Automated anomaly correlation
+                          - generic:
+                            - link "Grafana SLO SLO management Create SLOs and error budget alerts":
+                              - /url: /products/cloud/slo/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Grafana SLO"
+                                - paragraph: SLO management
+                              - paragraph: Create SLOs and error budget alerts
+                          - generic:
+                            - link "Grafana Alerting Alerting Trigger alerts from any data source":
+                              - /url: /products/cloud/alerting/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Grafana Alerting"
+                                - paragraph: Alerting
+                              - paragraph: Trigger alerts from any data source
+                          - generic:
+                            - link "Plugins Plugins Connect Grafana to data sources, apps, and more":
+                              - /url: /grafana/plugins/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Plugins"
+                                - paragraph: Plugins
+                              - paragraph: Connect Grafana to data sources, apps, and more
+                      - generic:
+                        - paragraph: Observability Solutions
+                        - generic:
+                          - generic:
+                            - link "Application Observability Application Observability Monitor application performance":
+                              - /url: /products/cloud/application-observability/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Application Observability"
+                                - paragraph: Application Observability
+                              - paragraph: Monitor application performance
+                          - generic:
+                            - link "Infrastructure Observability Infrastructure observability Ensure infrastructure health and performance":
+                              - /url: /solutions/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Infrastructure Observability"
+                                - paragraph: Infrastructure observability
+                              - paragraph: Ensure infrastructure health and performance
+                      - generic:
+                        - paragraph: Testing
+                        - generic:
+                          - generic:
+                            - link "Grafana Cloud k6 Performance testing Powered by Grafana k6":
+                              - /url: /products/cloud/k6/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Grafana Cloud k6"
+                                - paragraph: Performance testing
+                              - paragraph: Powered by Grafana k6
+                          - generic:
+                            - link "Synthetic Monitoring Synthetic Monitoring powered by Grafana k6":
+                              - /url: /products/cloud/synthetic-monitoring/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Synthetic Monitoring"
+                                - paragraph: Synthetic Monitoring
+                              - paragraph: powered by Grafana k6
+                      - generic:
+                        - paragraph: IRM
+                        - generic:
+                          - generic:
+                            - link "Incident Incident response Routine task automation for incidents":
+                              - /url: /products/cloud/incident/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "Incident"
+                                - paragraph: Incident response
+                              - paragraph: Routine task automation for incidents
+                          - generic:
+                            - link "OnCall On-call management Flexible on-call management":
+                              - /url: /products/cloud/oncall/?plcmt=products-nav
+                              - generic:
+                                - generic:
+                                  - img "OnCall"
+                                - paragraph: On-call management
+                              - paragraph: Flexible on-call management
+                - generic:
+                  - button "Open Source":
+                    - text: Open Source
+                    - generic:
+                      - img
+                  - generic:
+                    - button "All":
+                      - generic:
+                        - img
+                      - paragraph: All
+                    - paragraph: Open Source
+                    - generic:
+                      - generic:
+                        - link "Grafana Loki Multi-tenant log aggregation system":
+                          - /url: /oss/loki/?plcmt=oss-nav
+                          - paragraph: Grafana Loki
+                          - paragraph: Multi-tenant log aggregation system
+                    - generic:
+                      - generic:
+                        - link "Grafana Query, visualize, and alert on data":
+                          - /url: /oss/grafana/?plcmt=oss-nav
+                          - paragraph: Grafana
+                          - paragraph: Query, visualize, and alert on data
+                    - generic:
+                      - generic:
+                        - link "Grafana Tempo High-scale distributed tracing backend":
+                          - /url: /oss/tempo/?plcmt=oss-nav
+                          - paragraph: Grafana Tempo
+                          - paragraph: High-scale distributed tracing backend
+                    - generic:
+                      - generic:
+                        - link "Grafana Mimir Scalable and performant metrics backend":
+                          - /url: /oss/mimir/?plcmt=oss-nav
+                          - paragraph: Grafana Mimir
+                          - paragraph: Scalable and performant metrics backend
+                    - generic:
+                      - generic:
+                        - link "Grafana Pyroscope Scalable continuous profiling backend":
+                          - /url: /oss/pyroscope/?plcmt=oss-nav
+                          - paragraph: Grafana Pyroscope
+                          - paragraph: Scalable continuous profiling backend
+                    - generic:
+                      - generic:
+                        - link "Grafana Beyla eBPF auto-instrumentation":
+                          - /url: /oss/beyla-ebpf/?plcmt=oss-nav
+                          - paragraph: Grafana Beyla
+                          - paragraph: eBPF auto-instrumentation
+                    - generic:
+                      - generic:
+                        - link "Grafana Faro Frontend application observability web SDK":
+                          - /url: /oss/faro/?plcmt=oss-nav
+                          - paragraph: Grafana Faro
+                          - paragraph: Frontend application observability web SDK
+                    - generic:
+                      - generic:
+                        - link "Grafana Alloy OpenTelemetry Collector distribution with Prometheus pipelines":
+                          - /url: /oss/alloy-opentelemetry-collector/?plcmt=oss-nav
+                          - paragraph: Grafana Alloy
+                          - paragraph: OpenTelemetry Collector distribution with Prometheus pipelines
+                    - generic:
+                      - generic:
+                        - link "Grafana k6 Load testing for engineering teams":
+                          - /url: /oss/k6/?plcmt=oss-nav
+                          - paragraph: Grafana k6
+                          - paragraph: Load testing for engineering teams
+                    - generic:
+                      - generic:
+                        - link "Prometheus Monitor Kubernetes and cloud native":
+                          - /url: /oss/prometheus/?plcmt=oss-nav
+                          - paragraph: Prometheus
+                          - paragraph: Monitor Kubernetes and cloud native
+                    - generic:
+                      - generic:
+                        - link "OpenTelemetry Instrument and collect telemetry data":
+                          - /url: /oss/opentelemetry/?plcmt=oss-nav
+                          - paragraph: OpenTelemetry
+                          - paragraph: Instrument and collect telemetry data
+                    - generic:
+                      - generic:
+                        - link "Graphite Scalable monitoring for time series data":
+                          - /url: /oss/graphite/?plcmt=oss-nav
+                          - paragraph: Graphite
+                          - paragraph: Scalable monitoring for time series data
+                    - generic:
+                      - generic:
+                        - link "All":
+                          - /url: /oss/?plcmt=oss-nav
+                          - paragraph: All
+                    - paragraph: Community resources
+                    - link "Dashboard templates Try out and share prebuilt visualizations":
+                      - /url: /grafana/dashboards/?plcmt=oss-nav
+                      - paragraph: Dashboard templates
+                      - paragraph: Try out and share prebuilt visualizations
+                    - link "Prometheus exporters Get your metrics into Prometheus quickly":
+                      - /url: /oss/prometheus/exporters/?plcmt=oss-nav
+                      - paragraph: Prometheus exporters
+                      - paragraph: Get your metrics into Prometheus quickly
+                - generic:
+                  - button "Solutions":
+                    - text: Solutions
+                    - generic:
+                      - img
+                  - generic:
+                    - button "All":
+                      - generic:
+                        - img
+                      - paragraph: All
+                    - paragraph: end-to-end solutions
+                    - paragraph: Opinionated solutions that help you get there easier and faster
+                    - generic:
+                      - generic:
+                        - link "Kubernetes Monitoring Get K8s health, performance, and cost monitoring from cluster to container":
+                          - /url: /solutions/kubernetes/?plcmt=solutions-nav
+                          - paragraph: Kubernetes Monitoring
+                          - paragraph: Get K8s health, performance, and cost monitoring from cluster to container
+                    - generic:
+                      - generic:
+                        - link "Application Observability Monitor application performance":
+                          - /url: /products/cloud/application-observability/?plcmt=solutions-nav
+                          - paragraph: Application Observability
+                          - paragraph: Monitor application performance
+                    - generic:
+                      - generic:
+                        - link "Frontend Observability Gain real user monitoring insights":
+                          - /url: /products/cloud/frontend-observability-for-real-user-monitoring/?plcmt=solutions-nav
+                          - paragraph: Frontend Observability
+                          - paragraph: Gain real user monitoring insights
+                    - generic:
+                      - generic:
+                        - link "Incident Response & Management Detect and respond to incidents with a simplified workflow":
+                          - /url: /products/cloud/irm/?plcmt=solutions-nav
+                          - paragraph: Incident Response & Management
+                          - paragraph: Detect and respond to incidents with a simplified workflow
+                    - generic:
+                      - link "All monitoring and visualization solutions →":
+                        - /url: /solutions/?plcmt=nav-solutions-cta1
+                    - paragraph: monitor infrastructure
+                    - paragraph: Out-of-the-box KPIs, dashboards, and alerts for observability
+                    - generic:
+                      - generic:
+                        - img "linux server logo"
+                      - link "Linux":
+                        - /url: /solutions/linux-node/monitor/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "windows logo"
+                      - link "Windows":
+                        - /url: /solutions/windows/monitor/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "docker logo"
+                      - link "Docker":
+                        - /url: /solutions/docker/monitor/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "postgresql logo"
+                      - link "Postgres":
+                        - /url: /solutions/postgresql/monitor/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "mysql logo"
+                      - link "MySQL":
+                        - /url: /solutions/mysql/monitor/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "aws logo"
+                      - link "AWS":
+                        - /url: /solutions/cloud-monitoring-aws/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "kafka logo"
+                      - link "Kafka":
+                        - /url: /solutions/kafka/monitor/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "jenkins logo"
+                      - link "Jenkins":
+                        - /url: /solutions/jenkins/monitor/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "rabbitmq logo"
+                      - link "RabbitMQ":
+                        - /url: /solutions/rabbitmq/monitor/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "mongodb logo"
+                      - link "MongoDB":
+                        - /url: /solutions/mongodb/monitor/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "microsoft azure observability logo"
+                      - link "Microsoft Azure":
+                        - /url: /solutions/cloud-monitoring-microsoft-azure/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "google cloud observability with grafana cloud logo"
+                      - link "Google Cloud":
+                        - /url: /solutions/cloud-monitoring-google-cloud/?plcmt=solutions-nav
+                    - generic:
+                      - link "All monitoring solutions →":
+                        - /url: /solutions/monitoring/?plcmt=nav-solutions-cta2
+                    - paragraph: visualize any data
+                    - paragraph: Instantly connect all your data sources to Grafana
+                    - generic:
+                      - generic:
+                        - img "mongodb logo"
+                      - link "MongoDB":
+                        - /url: /solutions/mongodb/visualize/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "appdynamics logo"
+                      - link "AppDynamics":
+                        - /url: /solutions/appdynamics/visualize/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "oracle database logo"
+                      - link "Oracle":
+                        - /url: /solutions/oracle-database/visualize/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "gitlab logo"
+                      - link "GitLab":
+                        - /url: /solutions/gitlab/visualize/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "jira logo"
+                      - link "Jira":
+                        - /url: /solutions/jira/visualize/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "salesforce logo"
+                      - link "Salesforce":
+                        - /url: /solutions/salesforce/visualize/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "splunk logo"
+                      - link "Splunk":
+                        - /url: /solutions/splunk/visualize/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "datadog logo"
+                      - link "Datadog":
+                        - /url: /solutions/datadog/visualize/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "new relic logo"
+                      - link "New Relic":
+                        - /url: /solutions/new-relic/visualize/?plcmt=solutions-nav
+                    - generic:
+                      - generic:
+                        - img "snowflake logo"
+                      - link "Snowflake":
+                        - /url: /solutions/snowflake/visualize/?plcmt=solutions-nav
+                    - generic:
+                      - link "All visualization solutions →":
+                        - /url: /solutions/visualization/?plcmt=nav-solutions-cta3
+                - generic:
+                  - button "Learn":
+                    - text: Learn
+                    - generic:
+                      - img
+                  - generic:
+                    - button "All":
+                      - generic:
+                        - img
+                      - paragraph: All
+                    - paragraph: Learn
+                    - generic:
+                      - generic:
+                        - paragraph: Community and events
+                        - generic:
+                          - generic:
+                            - generic:
+                              - link "Events Upcoming in-person and virtual events":
+                                - /url: /events/?plcmt=learn-nav
+                                - paragraph: Events
+                                - paragraph: Upcoming in-person and virtual events
+                          - generic:
+                            - generic:
+                              - link "ObservabilityCON 2025 Our flagship observability event":
+                                - /url: /events/observabilitycon/?plcmt=learn-nav
+                                - paragraph: ObservabilityCON 2025
+                                - paragraph: Our flagship observability event
+                          - generic:
+                            - generic:
+                              - link "GrafanaCON 2026 Our annual OSS community conference":
+                                - /url: /events/grafanacon/?plcmt=learn-nav
+                                - paragraph: GrafanaCON 2026
+                                - paragraph: Our annual OSS community conference
+                          - generic:
+                            - generic:
+                              - link "ObservabilityCON on the Road Our observability conference on the road":
+                                - /url: /events/observabilitycon-on-the-road/?plcmt=learn-nav
+                                - paragraph: ObservabilityCON on the Road
+                                - paragraph: Our observability conference on the road
+                          - generic:
+                            - generic:
+                              - link "Community Join the Grafana community":
+                                - /url: /community/?plcmt=learn-nav
+                                - paragraph: Community
+                                - paragraph: Join the Grafana community
+                          - generic:
+                            - generic:
+                              - link "Community forums Ask the community for help":
+                                - /url: https://community.grafana.com/?plcmt=learn-nav
+                                - paragraph: Community forums
+                                - paragraph: Ask the community for help
+                      - generic:
+                        - paragraph: Resources
+                        - generic:
+                          - generic:
+                            - generic:
+                              - link "Blog News, releases, cool stories, and more":
+                                - /url: /blog/?plcmt=learn-nav
+                                - paragraph: Blog
+                                - paragraph: News, releases, cool stories, and more
+                          - generic:
+                            - generic:
+                              - link "4th annual Observability Survey Share your thoughts on the state of observability":
+                                - /url: /observability-survey/?plcmt=learn-nav
+                                - paragraph: 4th annual Observability Survey
+                                - paragraph: Share your thoughts on the state of observability
+                          - generic:
+                            - generic:
+                              - link "Benefits of Observability New research, reports, and insights":
+                                - /url: /observability-benefits-for-business/?plcmt=learn-nav
+                                - paragraph: Benefits of Observability
+                                - paragraph: New research, reports, and insights
+                          - generic:
+                            - generic:
+                              - link "Success stories By use case, product, and industry":
+                                - /url: /success/?plcmt=learn-nav
+                                - paragraph: Success stories
+                                - paragraph: By use case, product, and industry
+                      - generic:
+                        - paragraph: How-to
+                        - generic:
+                          - generic:
+                            - generic:
+                              - link "Documentation All the docs":
+                                - /url: /docs/?plcmt=learn-nav
+                                - paragraph: Documentation
+                                - paragraph: All the docs
+                          - generic:
+                            - generic:
+                              - link "Webinars and videos Demos, webinars, and feature tours":
+                                - /url: /videos/?plcmt=learn-nav
+                                - paragraph: Webinars and videos
+                                - paragraph: Demos, webinars, and feature tours
+                          - generic:
+                            - generic:
+                              - link "Tutorials Step-by-step guides":
+                                - /url: /tutorials/?plcmt=learn-nav
+                                - paragraph: Tutorials
+                                - paragraph: Step-by-step guides
+                          - generic:
+                            - generic:
+                              - link "Workshops Free, in-person or online":
+                                - /url: /workshops/?plcmt=learn-nav
+                                - paragraph: Workshops
+                                - paragraph: Free, in-person or online
+                          - generic:
+                            - generic:
+                              - link "Learning Journeys Expert guidance for mastering our platform":
+                                - /url: /docs/learning-journeys/?plcmt=learn-nav
+                                - paragraph: Learning Journeys
+                                - paragraph: Expert guidance for mastering our platform
+                          - generic:
+                            - generic:
+                              - link "Professional Services Expert guidance and training":
+                                - /url: /professional-services/?plcmt=learn-nav
+                                - paragraph: Professional Services
+                                - paragraph: Expert guidance and training
+                - generic:
+                  - link "Docs":
+                    - /url: /docs/
+              - generic:
+                - link "Pricing":
+                  - /url: /pricing/?plcmt=mobile-nav
+            - generic:
+              - paragraph:
+                - text: Help build the future of open source observability software
+                - generic:
+                  - link "Open positions":
+                    - /url: /about/careers/?plcmt=mobile-nav&cta=career
+              - paragraph:
+                - text: Check out the open source projects we support
+                - generic:
+                  - link "Downloads":
+                    - /url: /get/?plcmt=mobile-nav&cta=downloads
+            - generic:
+              - link "Sign in":
+                - /url: /auth/sign-in?plcmt=mobile-nav&cta=myaccount
+    - text: → → →
+  - generic [ref=e28]:
+    - generic [ref=e30]:
+      - generic [ref=e31]: Enable service graphs
+      - button "open table of contents" [ref=e32] [cursor=pointer]:
+        - img "open table of contents" [ref=e33]
+    - navigation [ref=e34]:
+      - generic [ref=e36]:
+        - generic [ref=e39]:
+          - textbox "Search docs (⌘K to open)" [ref=e40]
+          - img [ref=e42]
+        - generic [ref=e43]:
+          - link "Technical documentation" [ref=e44] [cursor=pointer]:
+            - /url: /docs/
+          - link "Plugin catalog" [ref=e45] [cursor=pointer]:
+            - /url: /grafana/plugins/
+        - generic [ref=e46]:
+          - generic [ref=e47]:
+            - generic [ref=e48]: Choose a product
+            - combobox [ref=e51]:
+              - option "Cloud"
+              - option "AI and Machine Learning"
+              - option "Alerting"
+              - option "Application Observability"
+              - option "Knowledge graph"
+              - option "Cloud Provider Observability"
+              - option "Drilldown apps"
+              - option "Fleet Management"
+              - option "Frontend Observability"
+              - option "IRM"
+              - option "k6 Performance Testing"
+              - option "Kubernetes Monitoring"
+              - option "Logs"
+              - option "Metrics"
+              - option "Profiles"
+              - option "Service Center"
+              - option "SLO"
+              - option "Synthetic Monitoring"
+              - option "Traces"
+              - option "Grafana Enterprise"
+              - option "Alerting"
+              - option "Drilldown apps"
+              - option "Helm Charts"
+              - option "Logs"
+              - option "Metrics"
+              - option "Traces"
+              - option "Alerting"
+              - option "Alloy"
+              - option "Beyla"
+              - option "Drilldown apps"
+              - option "Faro"
+              - option "Grafana"
+              - option "Helm Charts"
+              - option "k6"
+              - option "k6 Studio"
+              - option "Loki"
+              - option "Mimir"
+              - option "OnCall"
+              - option "OpenTelemetry"
+              - option "Pyroscope"
+              - option "Tempo" [selected]
+              - option "Federal Cloud"
+          - generic [ref=e52]:
+            - generic [ref=e53]: "Viewing: v2.8.x"
+            - link "Find another version" [ref=e54] [cursor=pointer]:
+              - /url: /docs/versions/?project=/docs/tempo/
+          - list [ref=e55]:
+            - listitem [ref=e57]:
+              - link "Grafana Tempo" [ref=e58] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/
+            - listitem [ref=e60]:
+              - button [ref=e61] [cursor=pointer]
+              - link "Release notes" [ref=e62] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/release-notes/
+            - listitem [ref=e64]:
+              - button [ref=e65] [cursor=pointer]
+              - link "Introduction" [ref=e66] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/introduction/
+            - listitem [ref=e68]:
+              - button [ref=e69] [cursor=pointer]
+              - link "Get started" [ref=e70] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/getting-started/
+            - listitem [ref=e72]:
+              - button [ref=e73] [cursor=pointer]
+              - link "Set up" [ref=e74] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/setup/
+            - listitem [ref=e76]:
+              - button [ref=e77] [cursor=pointer]
+              - link "Configure" [ref=e78] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/configuration/
+            - listitem [ref=e80]:
+              - button [ref=e81] [cursor=pointer]
+              - link "Manage" [ref=e82] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/operations/
+            - generic [ref=e83]:
+              - listitem [ref=e84]:
+                - button [ref=e85] [cursor=pointer]
+                - link "Metrics-generator" [ref=e86] [cursor=pointer]:
+                  - /url: /docs/tempo/v2.8.x/metrics-generator/
+              - list [ref=e88]:
+                - listitem [ref=e90]:
+                  - link "Active series" [ref=e91] [cursor=pointer]:
+                    - /url: /docs/tempo/v2.8.x/metrics-generator/active-series/
+                - listitem [ref=e93]:
+                  - link "Cardinality" [ref=e94] [cursor=pointer]:
+                    - /url: /docs/tempo/v2.8.x/metrics-generator/cardinality/
+                - listitem [ref=e96]:
+                  - link "Span metrics" [ref=e97] [cursor=pointer]:
+                    - /url: /docs/tempo/v2.8.x/metrics-generator/span_metrics/
+                - generic [ref=e98]:
+                  - listitem [ref=e99]:
+                    - button [ref=e100] [cursor=pointer]
+                    - link "Service graphs" [ref=e101] [cursor=pointer]:
+                      - /url: /docs/tempo/v2.8.x/metrics-generator/service_graphs/
+                  - list [ref=e103]:
+                    - listitem [ref=e105]:
+                      - link "Enable service graphs" [ref=e106] [cursor=pointer]:
+                        - /url: /docs/tempo/v2.8.x/metrics-generator/service_graphs/enable-service-graphs/
+                    - listitem [ref=e108]:
+                      - link "Create custom service graphs" [ref=e109] [cursor=pointer]:
+                        - /url: /docs/tempo/v2.8.x/metrics-generator/service_graphs/custom-service-graphs/
+                    - listitem [ref=e111]:
+                      - link "Estimate cardinality" [ref=e112] [cursor=pointer]:
+                        - /url: /docs/tempo/v2.8.x/metrics-generator/service_graphs/estimate-cardinality/
+                    - listitem [ref=e114]:
+                      - link "Metrics queries" [ref=e115] [cursor=pointer]:
+                        - /url: /docs/tempo/v2.8.x/metrics-generator/service_graphs/metrics-queries/
+                - listitem [ref=e117]:
+                  - link "Service graph view" [ref=e118] [cursor=pointer]:
+                    - /url: /docs/tempo/v2.8.x/metrics-generator/service-graph-view/
+                - listitem [ref=e120]:
+                  - link "Multitenancy support" [ref=e121] [cursor=pointer]:
+                    - /url: /docs/tempo/v2.8.x/metrics-generator/multitenancy/
+            - listitem [ref=e123]:
+              - button [ref=e124] [cursor=pointer]
+              - link "TraceQL" [ref=e125] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/traceql/
+            - listitem [ref=e127]:
+              - button [ref=e128] [cursor=pointer]
+              - link "Troubleshoot" [ref=e129] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/troubleshooting/
+            - listitem [ref=e131]:
+              - button [ref=e132] [cursor=pointer]
+              - link "API" [ref=e133] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/api_docs/
+            - listitem [ref=e135]:
+              - link "Community" [ref=e136] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/community/
+            - listitem [ref=e138]:
+              - link "Copyright notice" [ref=e139] [cursor=pointer]:
+                - /url: /docs/copyright-notice/
+    - main [ref=e140]:
+      - generic [ref=e141]:
+        - generic [ref=e142]:
+          - paragraph [ref=e143]:
+            - text: "Important: This documentation is about an older version. It's relevant only to the release noted, many of the features and functions have been updated or replaced."
+            - link "Please view the current version" [ref=e144] [cursor=pointer]:
+              - /url: /docs/tempo/latest/
+            - text: .
+          - generic "breadcrumb" [ref=e145]:
+            - generic [ref=e146]:
+              - link "Documentation" [ref=e147] [cursor=pointer]:
+                - /url: /docs/
+              - img "breadcrumb arrow" [ref=e148]
+            - generic [ref=e149]:
+              - link "Grafana Tempo" [ref=e150] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/
+              - img "breadcrumb arrow" [ref=e151]
+            - generic [ref=e152]:
+              - link "Metrics-generator" [ref=e153] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/metrics-generator/
+              - img "breadcrumb arrow" [ref=e154]
+            - generic [ref=e155]:
+              - link "Service graphs" [ref=e156] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/metrics-generator/service_graphs/
+              - img "breadcrumb arrow" [ref=e157]
+            - text: Enable service graphs
+          - generic [ref=e159]:
+            - text: Open source
+            - img [ref=e162] [cursor=pointer]
+          - heading "Enable service graphs" [level=2] [ref=e165]
+          - paragraph [ref=e166]: Service graphs are generated in Tempo and pushed to a metrics storage. Then, they can be represented in Grafana as a graph. You need those components to fully use service graphs.
+          - blockquote [ref=e168]:
+            - paragraph [ref=e169]: Note
+            - paragraph [ref=e170]:
+              - text: Cardinality can pose a problem when you have lots of services. To learn more about cardinality and how to perform a dry run of the metrics-generator, refer to the
+              - link "Cardinality documentation" [ref=e171] [cursor=pointer]:
+                - /url: /docs/tempo/v2.8.x/metrics-generator/cardinality/
+              - text: .
+          - heading "Enable service graphs in Tempo/GET" [level=3] [ref=e172]
+          - paragraph [ref=e173]:
+            - text: To enable service graphs in Tempo/GET, enable the metrics generator and add an overrides section which enables the
+            - code [ref=e174]: service-graphs
+            - text: generator.
+          - paragraph [ref=e175]:
+            - text: To enable service graphs when using Grafana Alloy, refer to the
+            - link "Grafana Alloy and service graphs documentation" [ref=e176] [cursor=pointer]:
+              - /url: /docs/tempo/v2.8.x/configuration/grafana-alloy/service-graphs/
+            - text: .
+          - heading "Enable service graphs in Grafana" [level=3] [ref=e177]
+          - blockquote [ref=e179]:
+            - paragraph [ref=e180]: Note
+            - paragraph [ref=e181]:
+              - text: Service graphs are enabled by default in Grafana. Prior to Grafana 9.0.4, service graphs were hidden under the
+              - link "feature toggle" [ref=e182] [cursor=pointer]:
+                - /url: /docs/grafana/latest/setup-grafana/configure-grafana/
+              - code [ref=e183]: tempoServiceGraph
+              - text: .
+          - paragraph [ref=e184]: "Configure a Tempo data source’s service graphs by linking to the Prometheus backend where metrics are being sent:"
+          - generic [ref=e185]:
+            - button "Copy code to clipboard Copy" [ref=e188] [cursor=pointer]:
+              - img "Copy code to clipboard" [ref=e189]
+              - generic [ref=e190]: Copy
+            - code [ref=e193]: "apiVersion: 1 datasources: # Prometheus backend where metrics are sent - name: Prometheus type: prometheus uid: prometheus url: <prometheus-url> jsonData: httpMethod: GET version: 1 - name: Tempo type: tempo uid: tempo url: <tempo-url> jsonData: httpMethod: GET serviceMap: datasourceUid: 'prometheus' version: 1"
+        - generic [ref=e195]:
+          - generic [ref=e196]:
+            - heading "Was this page helpful?" [level=2] [ref=e197]
+            - generic [ref=e198]:
+              - button "👍 Yes" [ref=e199] [cursor=pointer]:
+                - generic [ref=e200]:
+                  - img "👍" [ref=e201]
+                  - text: "Yes"
+              - button "👎 No" [ref=e202] [cursor=pointer]:
+                - generic [ref=e203]:
+                  - img "👎" [ref=e204]
+                  - text: "No"
+          - generic [ref=e206]:
+            - link "Create a GitHub issue" [ref=e207] [cursor=pointer]:
+              - /url: https://github.com/grafana/tempo/issues/new?title=Documentation%20feedback:%20/docs/sources/tempo/metrics-generator/service_graphs/enable-service-graphs.md
+              - img [ref=e209]
+              - generic [ref=e212]: Create a GitHub issue
+            - link "Email docs@grafana.com" [ref=e213] [cursor=pointer]:
+              - /url: mailto:docs@grafana.com
+              - img [ref=e215]
+              - generic [ref=e220]: Email docs@grafana.com
+            - link "Help and support" [ref=e221] [cursor=pointer]:
+              - /url: /help/
+              - img [ref=e223]
+              - generic [ref=e226]: Help and support
+            - link "Community" [ref=e227] [cursor=pointer]:
+              - /url: /community/
+              - img [ref=e229]
+              - generic [ref=e237]: Community
+          - generic [ref=e239]:
+            - heading "Related resources from Grafana Labs" [level=2] [ref=e240]
+            - generic [ref=e241]: "Additional helpful documentation, links, and articles:"
+            - generic [ref=e242]:
+              - link "video icon Video Getting started with tracing and Grafana Tempo In this webinar, we'll show you how to get started setting up Grafana Tempo, our open source, easy-to-use and high-volume distributed tracing backend." [ref=e243] [cursor=pointer]:
+                - /url: https://grafana.com/go/webinar/getting-started-with-tracing-and-grafana-tempo/?pg=docs-tempo-v2.8.x-metrics-generator-service_graphs-enable-service-graphs&plcmt=related
+                - generic [ref=e245]:
+                  - generic [ref=e247]:
+                    - img "video icon" [ref=e250]
+                    - generic [ref=e252]: Video
+                  - generic [ref=e254]:
+                    - generic [ref=e255]: Getting started with tracing and Grafana Tempo
+                    - generic [ref=e256]: In this webinar, we'll show you how to get started setting up Grafana Tempo, our open source, easy-to-use and high-volume distributed tracing backend.
+              - link "video icon Video Scaling your distributed tracing with Grafana Tempo In this demo, we’ll show how Grafana Tempo allows you to scale tracing as far as possible with less operational cost and complexity than ever before." [ref=e257] [cursor=pointer]:
+                - /url: https://grafana.com/go/webinar/grafana-tempo-for-distributed-tracing/?pg=docs-tempo-v2.8.x-metrics-generator-service_graphs-enable-service-graphs&plcmt=related-2
+                - generic [ref=e259]:
+                  - generic [ref=e261]:
+                    - img "video icon" [ref=e264]
+                    - generic [ref=e266]: Video
+                  - generic [ref=e268]:
+                    - generic [ref=e269]: Scaling your distributed tracing with Grafana Tempo
+                    - generic [ref=e270]: In this demo, we’ll show how Grafana Tempo allows you to scale tracing as far as possible with less operational cost and complexity than ever before.
+  - contentinfo [ref=e271]:
+    - generic [ref=e274]:
+      - generic [ref=e275]:
+        - img [ref=e277]
+        - generic [ref=e303]: Sign up for Grafana stack updates
+      - generic [ref=e304]:
+        - generic [ref=e308]:
+          - textbox "Email" [ref=e310]
+          - button "Subscribe" [ref=e312] [cursor=pointer]
+        - generic [ref=e313]: "Note: By signing up, you agree to be emailed related product-level information."
+    - generic [ref=e315]:
+      - separator [ref=e316]
+      - generic [ref=e317]:
+        - link [ref=e319] [cursor=pointer]:
+          - /url: /
+          - img [ref=e320]
+        - generic [ref=e334]:
+          - link "Grafana Labs on Facebook" [ref=e335] [cursor=pointer]:
+            - /url: https://www.facebook.com/grafana/
+            - generic [ref=e336]: 
+          - link "Grafana Labs on X" [ref=e337] [cursor=pointer]:
+            - /url: https://twitter.com/grafana
+            - generic [ref=e338]: 
+          - link "Grafana Labs on LinkedIn" [ref=e339] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/grafana-labs/
+            - generic [ref=e340]: 
+          - link "Grafana Labs on GitHub" [ref=e341] [cursor=pointer]:
+            - /url: https://github.com/grafana/
+            - generic [ref=e342]: 
+          - link "Grafana Labs on YouTube" [ref=e343] [cursor=pointer]:
+            - /url: https://www.youtube.com/channel/UCYCwgQAMm9sTJv0rgwQLCxw
+            - generic [ref=e344]: 
+          - link "Grafana Labs on Reddit" [ref=e345] [cursor=pointer]:
+            - /url: https://www.reddit.com/r/grafana/
+            - generic [ref=e346]: 
+      - separator [ref=e347]
+      - generic [ref=e349]:
+        - navigation [ref=e351]:
+          - strong [ref=e353]: Products
+          - list [ref=e354]:
+            - listitem [ref=e355]:
+              - link "Grafana Cloud" [ref=e356] [cursor=pointer]:
+                - /url: /products/cloud/
+            - listitem [ref=e357]:
+              - link "Grafana Enterprise Stack" [ref=e358] [cursor=pointer]:
+                - /url: /products/enterprise/
+            - listitem [ref=e359]:
+              - link "Grafana visualizations" [ref=e360] [cursor=pointer]:
+                - /url: /grafana/
+            - listitem [ref=e361]:
+              - link "Plugins" [ref=e362] [cursor=pointer]:
+                - /url: /grafana/plugins/
+            - listitem [ref=e363]:
+              - link "Grafana Cloud Logs" [ref=e364] [cursor=pointer]:
+                - /url: /products/cloud/logs/
+            - listitem [ref=e365]:
+              - link "Grafana Cloud Metrics" [ref=e366] [cursor=pointer]:
+                - /url: /products/cloud/metrics/
+            - listitem [ref=e367]:
+              - link "Grafana Cloud Traces" [ref=e368] [cursor=pointer]:
+                - /url: /products/cloud/traces/
+            - listitem [ref=e369]:
+              - link "Grafana Cloud Profiles" [ref=e370] [cursor=pointer]:
+                - /url: /products/cloud/profiles-for-continuous-profiling/
+            - listitem [ref=e371]:
+              - link "AI/ML tools for observability" [ref=e372] [cursor=pointer]:
+                - /url: /products/cloud/ai-tools-for-observability/
+            - listitem [ref=e373]:
+              - link "Application Observability" [ref=e374] [cursor=pointer]:
+                - /url: /products/cloud/application-observability/
+            - listitem [ref=e375]:
+              - link "Frontend Observability" [ref=e376] [cursor=pointer]:
+                - /url: /products/cloud/frontend-observability-for-real-user-monitoring/
+            - listitem [ref=e377]:
+              - link "Grafana Cloud Asserts" [ref=e378] [cursor=pointer]:
+                - /url: /products/cloud/asserts/
+            - listitem [ref=e379]:
+              - link "Grafana IRM" [ref=e380] [cursor=pointer]:
+                - /url: /products/cloud/irm/
+            - listitem [ref=e381]:
+              - link "Grafana k6" [ref=e382] [cursor=pointer]:
+                - /url: /products/cloud/k6/
+            - listitem [ref=e383]:
+              - link "Grafana SLO" [ref=e384] [cursor=pointer]:
+                - /url: /products/cloud/slo/
+            - listitem [ref=e385]:
+              - link "Synthetic Monitoring" [ref=e386] [cursor=pointer]:
+                - /url: /products/cloud/synthetic-monitoring/
+            - listitem [ref=e387]:
+              - link "Solutions" [ref=e388] [cursor=pointer]:
+                - /url: /solutions/
+            - listitem [ref=e389]:
+              - link "Pricing" [ref=e390] [cursor=pointer]:
+                - /url: /pricing/
+        - navigation [ref=e392]:
+          - strong [ref=e394]: Open Source
+          - list [ref=e395]:
+            - listitem [ref=e396]:
+              - link "Grafana" [ref=e397] [cursor=pointer]:
+                - /url: /oss/grafana/
+            - listitem [ref=e398]:
+              - link "Grafana Alloy" [ref=e399] [cursor=pointer]:
+                - /url: /oss/alloy-opentelemetry-collector/
+            - listitem [ref=e400]:
+              - link "Grafana Beyla" [ref=e401] [cursor=pointer]:
+                - /url: /oss/beyla-ebpf/
+            - listitem [ref=e402]:
+              - link "Grafana Faro" [ref=e403] [cursor=pointer]:
+                - /url: /oss/faro/
+            - listitem [ref=e404]:
+              - link "Grafana k6" [ref=e405] [cursor=pointer]:
+                - /url: /oss/k6/
+            - listitem [ref=e406]:
+              - link "Grafana Loki" [ref=e407] [cursor=pointer]:
+                - /url: /oss/loki/
+            - listitem [ref=e408]:
+              - link "Grafana Mimir" [ref=e409] [cursor=pointer]:
+                - /url: /oss/mimir/
+            - listitem [ref=e410]:
+              - link "Grafana OnCall" [ref=e411] [cursor=pointer]:
+                - /url: /oss/oncall/
+            - listitem [ref=e412]:
+              - link "Grafana Pyroscope" [ref=e413] [cursor=pointer]:
+                - /url: /oss/pyroscope/
+            - listitem [ref=e414]:
+              - link "Grafana Tanka" [ref=e415] [cursor=pointer]:
+                - /url: /oss/tanka/
+            - listitem [ref=e416]:
+              - link "Grafana Tempo" [ref=e417] [cursor=pointer]:
+                - /url: /oss/tempo/
+            - listitem [ref=e418]:
+              - link "Graphite" [ref=e419] [cursor=pointer]:
+                - /url: /oss/graphite/
+            - listitem [ref=e420]:
+              - link "OpenTelemetry" [ref=e421] [cursor=pointer]:
+                - /url: /oss/opentelemetry/
+            - listitem [ref=e422]:
+              - link "Prometheus" [ref=e423] [cursor=pointer]:
+                - /url: /oss/prometheus/
+            - listitem [ref=e424]:
+              - link "Dashboard templates" [ref=e425] [cursor=pointer]:
+                - /url: /grafana/dashboards/
+            - listitem [ref=e426]:
+              - link "Downloads" [ref=e427] [cursor=pointer]:
+                - /url: /get/
+            - listitem [ref=e428]:
+              - link " GitHub" [ref=e429] [cursor=pointer]:
+                - /url: https://github.com/grafana/
+                - generic [ref=e430]: 
+                - text: GitHub
+        - navigation [ref=e432]:
+          - strong [ref=e434]: Learn
+          - list [ref=e435]:
+            - listitem [ref=e436]:
+              - link "Documentation" [ref=e437] [cursor=pointer]:
+                - /url: /docs/
+            - listitem [ref=e438]:
+              - link "Grafana Labs blog" [ref=e439] [cursor=pointer]:
+                - /url: /blog/
+            - listitem [ref=e440]:
+              - link "Webinars and videos" [ref=e441] [cursor=pointer]:
+                - /url: /videos/
+            - listitem [ref=e442]:
+              - link "Tutorials" [ref=e443] [cursor=pointer]:
+                - /url: /tutorials/
+            - listitem [ref=e444]:
+              - link "Workshops" [ref=e445] [cursor=pointer]:
+                - /url: /workshops/
+            - listitem [ref=e446]:
+              - link "Events" [ref=e447] [cursor=pointer]:
+                - /url: /events/
+            - listitem [ref=e448]:
+              - link "Community" [ref=e449] [cursor=pointer]:
+                - /url: /community/
+            - listitem [ref=e450]:
+              - link "Professional Services" [ref=e451] [cursor=pointer]:
+                - /url: /professional-services/
+            - listitem [ref=e452]:
+              - link "Community forums" [ref=e453] [cursor=pointer]:
+                - /url: https://community.grafana.com/
+            - listitem [ref=e454]:
+              - link "Community Slack" [ref=e455] [cursor=pointer]:
+                - /url: https://slack.grafana.com/
+            - listitem [ref=e456]:
+              - link "Grafana Champions" [ref=e457] [cursor=pointer]:
+                - /url: /community/champions/
+            - listitem [ref=e458]:
+              - link "Community organizers" [ref=e459] [cursor=pointer]:
+                - /url: /community/meetups/
+            - listitem [ref=e460]:
+              - link "Observability Survey Report 2025" [ref=e461] [cursor=pointer]:
+                - /url: /observability-survey/
+            - listitem [ref=e462]:
+              - link "OSS vs Cloud" [ref=e463] [cursor=pointer]:
+                - /url: /oss-vs-cloud/
+            - listitem [ref=e464]:
+              - link "Writers' Toolkit" [ref=e465] [cursor=pointer]:
+                - /url: /docs/writers-toolkit/
+            - listitem [ref=e466]:
+              - link "Plugin development" [ref=e467] [cursor=pointer]:
+                - /url: /developers/
+            - listitem [ref=e468]:
+              - link "Load testing" [ref=e469] [cursor=pointer]:
+                - /url: /load-testing/
+            - listitem [ref=e470]:
+              - link "OpenTelemetry Report" [ref=e471] [cursor=pointer]:
+                - /url: /opentelemetry-report/
+            - listitem [ref=e472]:
+              - link "Log monitoring" [ref=e473] [cursor=pointer]:
+                - /url: /resources/log-monitoring/
+        - navigation [ref=e475]:
+          - strong [ref=e477]: Company
+          - list [ref=e478]:
+            - listitem [ref=e479]:
+              - link "Partnerships" [ref=e480] [cursor=pointer]:
+                - /url: /partnerships/
+            - listitem [ref=e481]:
+              - link "Our team" [ref=e482] [cursor=pointer]:
+                - /url: /about/team/
+            - listitem [ref=e483]:
+              - link "Careers" [ref=e484] [cursor=pointer]:
+                - /url: /about/careers/
+            - listitem [ref=e485]:
+              - link "Success stories" [ref=e486] [cursor=pointer]:
+                - /url: /success/
+            - listitem [ref=e487]:
+              - link "Newsroom" [ref=e488] [cursor=pointer]:
+                - /url: /about/press/
+            - listitem [ref=e489]:
+              - link "Contact us" [ref=e490] [cursor=pointer]:
+                - /url: /contact/
+            - listitem [ref=e491]:
+              - link "Getting help" [ref=e492] [cursor=pointer]:
+                - /url: /help/
+            - listitem [ref=e493]:
+              - link "Merch" [ref=e494] [cursor=pointer]:
+                - /url: /community/merch/
+            - listitem [ref=e495]:
+              - link "Open positions" [ref=e496] [cursor=pointer]:
+                - /url: /about/careers/open-positions/
+              - paragraph [ref=e497]: We're hiring
+            - listitem [ref=e498]:
+              - link "The Story of Grafana" [ref=e499] [cursor=pointer]:
+                - /url: /story-of-grafana/
+          - strong [ref=e501]: Compare
+          - list [ref=e502]:
+            - listitem [ref=e503]:
+              - link "Grafana vs. Datadog" [ref=e504] [cursor=pointer]:
+                - /url: /compare/grafana-vs-datadog/
+        - navigation [ref=e506]:
+          - strong [ref=e508]: Localized content
+          - list [ref=e509]:
+            - listitem [ref=e510]:
+              - link "Japanese pages" [ref=e511] [cursor=pointer]:
+                - /url: /ja/content/
+            - listitem [ref=e512]:
+              - link "German pages" [ref=e513] [cursor=pointer]:
+                - /url: /de/content/
+            - listitem [ref=e514]:
+              - link "French pages" [ref=e515] [cursor=pointer]:
+                - /url: /fr/content/
+            - listitem [ref=e516]:
+              - link "Spanish pages" [ref=e517] [cursor=pointer]:
+                - /url: /es/content/
+            - listitem [ref=e518]:
+              - link "Portuguese pages" [ref=e519] [cursor=pointer]:
+                - /url: /pt-br/content/
+      - separator [ref=e520]
+      - navigation [ref=e521]:
+        - generic [ref=e522]:
+          - list [ref=e524]:
+            - listitem [ref=e525]:
+              - link "Grafana Cloud status" [ref=e526] [cursor=pointer]:
+                - /url: https://status.grafana.com
+          - list [ref=e528]:
+            - listitem
+            - listitem [ref=e529]:
+              - link "Legal and Security" [ref=e530] [cursor=pointer]:
+                - /url: /legal/
+            - listitem [ref=e531]:
+              - link "Terms of Service" [ref=e532] [cursor=pointer]:
+                - /url: /legal/terms/
+            - listitem [ref=e533]:
+              - link "Privacy Policy" [ref=e534] [cursor=pointer]:
+                - /url: /legal/privacy-policy/
+            - listitem [ref=e535]:
+              - link "Trademark Policy" [ref=e536] [cursor=pointer]:
+                - /url: /trademark-policy/
+      - generic [ref=e538]: Copyright 2026 © Grafana Labs
+  - iframe [ref=e539]:
+    

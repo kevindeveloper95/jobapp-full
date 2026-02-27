@@ -90,6 +90,11 @@ pipeline {
       }
     }
 
+    // --- Seguridad: antes del build ---
+    // SonarQube (SAST): análisis estático de código (vulnerabilidades, bugs, malas prácticas).
+    // Trivy FS: escaneo de dependencias (package.json) y Dockerfile; CVEs y secretos en repo.
+    // OPA (Dockerfile): validación de políticas (policy as code) sobre el Dockerfile.
+
     stage("Build and Push") {
       steps {
         script {
@@ -105,12 +110,19 @@ pipeline {
       }
     }
 
+    // --- Seguridad: después del build, antes de borrar imagen ---
+    // Trivy Image: escaneo de la imagen Docker construida (CVEs en capas y paquetes).
+
     stage("Clean Artifacts") {
       steps {
         sh "docker rmi $IMAGE_NAME:$IMAGE_TAG"
         sh "docker rmi $IMAGE_NAME:stable"
       }
     }
+
+    // --- Seguridad: antes del deploy a Kubernetes ---
+    // Kubesec: análisis de manifiestos YAML de K8s para detectar malas configuraciones de seguridad.
+    // OPA (K8s): validación de políticas sobre recursos Kubernetes antes de aplicar.
 
     stage("Create New Pods") {
       steps {
@@ -127,6 +139,9 @@ pipeline {
         }
       }
     }
+
+    // --- Seguridad: en pipeline de staging/QA (no en este pipeline de prod) ---
+    // DAST: pruebas dinámicas contra la app desplegada en test/QA (XSS, inyecciones, etc.).
   }
   post {
     success {

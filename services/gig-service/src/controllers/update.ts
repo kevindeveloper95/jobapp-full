@@ -1,3 +1,4 @@
+import { gigsUpdatedTotal } from '@gig/metrics';
 import { gigUpdateSchema } from '@gig/schemes/gig';
 import { updateActiveGigProp, updateGig } from '@gig/services/gig.service';
 import { BadRequestError, ISellerGig, isDataURL, uploads } from '@kevindeveloper95/jobapp-shared';
@@ -34,11 +35,13 @@ const gigUpdate = async (req: Request, res: Response): Promise<void> => {
     coverImage
   };
   const updatedGig: ISellerGig = await updateGig(req.params.gigId, gig);
+  gigsUpdatedTotal.inc({ type: 'full' });
   res.status(StatusCodes.OK).json({ message: 'Gig updated successfully.', gig: updatedGig });
 };
 
 const gigUpdateActive = async (req: Request, res: Response): Promise<void> => {
   const updatedGig: ISellerGig = await updateActiveGigProp(req.params.gigId, req.body.active);
+  gigsUpdatedTotal.inc({ type: 'active' });
   res.status(StatusCodes.OK).json({ message: 'Gig updated successfully.', gig: updatedGig });
 };
 

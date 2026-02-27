@@ -1,4 +1,4 @@
-
+import { gigSearchRequestsTotal } from '@gig/metrics';
 import { gigsSearch } from '@gig/services/search.service';
 import { IPaginateProps, ISearchResult, ISellerGig } from '@kevindeveloper95/jobapp-shared';
 import { Request, Response } from 'express';
@@ -9,6 +9,7 @@ const gigs = async (req: Request, res: Response): Promise<void> => {
   const { from, size, type } = req.params;
   let resultHits: ISellerGig[] = [];
   const paginate: IPaginateProps = { from, size: parseInt(`${size}`), type };
+  gigSearchRequestsTotal.inc({ type: 'search' });
   const gigs: ISearchResult = await gigsSearch(
     `${req.query.query}`,
     paginate,

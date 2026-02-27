@@ -1,3 +1,4 @@
+import './instrumentation';
 import { databaseConnection } from '@gig/database';
 import { config } from '@gig/config';
 import express, { Express } from 'express';
